@@ -322,6 +322,7 @@ def tmdb_handle_yt_videos(item):
         return 404
 
     list_item = xbmcgui.ListItem(label=item['name'])
+    list_item.setLabel2(item.get('type',''))
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon})
     list_item.setProperty('ytid', str(item['key']))
     list_item.setProperty('call', 'youtube')
