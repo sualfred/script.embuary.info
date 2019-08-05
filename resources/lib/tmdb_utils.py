@@ -40,11 +40,11 @@ def omdb_call(imdbnumber):
         request = requests.get(url)
         result = request.json()
 
-        omdb['awards'] = result['Awards']
-        omdb['mpaa'] = result['Rated']
-        omdb['imdbRating'] = result['imdbRating']
-        omdb['imdbVotes'] = result['imdbVotes']
-        omdb['DVD'] = result['DVD']
+        omdb['awards'] = result['Awards'] if result['Awards'] != 'N/A' else ''
+        omdb['mpaa'] = result['Rated'] if result['Rated'] != 'N/A' else ''
+        omdb['imdbRating'] = result['imdbRating'] if result['imdbRating'] != 'N/A' else ''
+        omdb['imdbVotes'] = result['imdbVotes'] if result['imdbVotes'] != 'N/A' else ''
+        omdb['DVD'] = result['DVD'] if result['DVD'] != 'N/A' else ''
 
         for rating in result['Ratings']:
             if rating['Source'] == 'Rotten Tomatoes':
