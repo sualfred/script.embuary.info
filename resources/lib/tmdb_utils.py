@@ -27,7 +27,37 @@ API_KEY = ADDON.getSettingString('tmdb_api_key')
 DEFAULT_LANGUAGE = ADDON.getSettingString('language_code')
 FALLBACK_LANGUAGE = 'en'
 
+OMDB_API_KEY = ADDON.getSettingString('omdb_api_key')
+OMDB_URL = 'http://www.omdbapi.com/'
+
 ########################
+
+def omdb_call(imdbnumber):
+    omdb = {}
+
+    try:
+        url = '%s?i=%s&apikey=%s' % (OMDB_URL,imdbnumber,OMDB_API_KEY)
+        request = requests.get(url)
+        result = request.json()
+
+        omdb['awards'] = result['Awards']
+        omdb['mpaa'] = result['Rated']
+        omdb['imdbRating'] = result['imdbRating']
+        omdb['imdbVotes'] = result['imdbVotes']
+        omdb['DVD'] = result['DVD']
+
+        for rating in result['Ratings']:
+            if rating['Source'] == 'Rotten Tomatoes':
+                omdb['rotten'] = rating['Value'][:-1]
+            elif rating['Source'] == 'Metacritic':
+                omdb['metacritic'] = rating['Value'][:-4]
+
+    except Exception as error:
+        log('OMDB Error: %s' % error)
+        pass
+
+    return omdb
+
 
 def tmdb_call(request,error_check=False,error=ADDON.getLocalizedString(32019)):
     try:
@@ -259,6 +289,17 @@ def tmdb_handle_movie(item,local_items):
     list_item.setProperty('call', 'movie')
     list_item.setProperty('budget', str(tmdb_integer(item.get('budget',''))))
     list_item.setProperty('revenue', str(tmdb_integer(item.get('revenue',''))))
+
+    if imdbnumber and OMDB_API_KEY:
+        omdb = omdb_call(imdbnumber)
+        if omdb:
+            list_item.setProperty('rating.metacritic', omdb.get('metacritic'))
+            list_item.setProperty('rating.rotten', omdb.get('rotten'))
+            list_item.setProperty('rating.imdb', omdb.get('imdbRating'))
+            list_item.setProperty('votes.imdb', omdb.get('imdbVotes'))
+            list_item.setProperty('awards', omdb.get('awards'))
+            list_item.setProperty('release', omdb.get('DVD'))
+            list_item.setInfo('video', {'mpaa': omdb.get('mpaa')})
 
     return list_item
 

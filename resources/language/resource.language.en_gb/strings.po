@@ -1,6 +1,6 @@
-# Embuary Helper language file
-# Addon Name: Embuary Helper
-# Addon id: script.embuary.helper
+# Embuary Info language file
+# Addon Name: Embuary Info
+# Addon id: script.embuary.info
 # Addon Provider: sualfred
 msgid ""
 msgstr ""
@@ -30,6 +30,11 @@ msgstr ""
 #: /resources/lib/tmdb_utils.py
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
+msgstr ""
+
+#: /resources/settings.xml
+msgctxt "#32002"
+msgid "(Get free API key on www.omdbapi.com)"
 msgstr ""
 
 #: /resources/settings.xml
