@@ -287,8 +287,8 @@ def tmdb_handle_movie(item,local_items):
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon,'fanart': backdrop})
     list_item.setProperty('id', str(item.get('id','')))
     list_item.setProperty('call', 'movie')
-    list_item.setProperty('budget', str(tmdb_integer(item.get('budget',''))))
-    list_item.setProperty('revenue', str(tmdb_integer(item.get('revenue',''))))
+    list_item.setProperty('budget', format_currency(item.get('budget')))
+    list_item.setProperty('revenue', format_currency(item.get('revenue')))
 
     if OMDB_API_KEY and imdbnumber:
         omdb = omdb_call(imdbnumber)
@@ -386,12 +386,6 @@ def tmdb_join_items(item,key='name'):
         values.append(value[key])
 
     return get_joined_items(values)
-
-
-def tmdb_integer(item):
-    if item > 0:
-        return item
-    return ''
 
 
 def tmdb_get_year(item):

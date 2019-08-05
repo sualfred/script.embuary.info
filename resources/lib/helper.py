@@ -43,6 +43,18 @@ def log(txt,loglevel=NOTICE,force=False):
         xbmc.log(msg=message, level=loglevel)
 
 
+def format_currency(integer):
+    try:
+        integer = int(integer)
+        if integer < 1:
+            raise Exception
+
+        return '{:,.0f}'.format(integer)
+
+    except Exception:
+        return ''
+
+
 def sort_dict(items,key,reverse=False):
     try:
         return sorted(items,key=operator.itemgetter(key),reverse=reverse)
