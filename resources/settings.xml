@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="128">
+        <setting label="TheMovieDB" type="lsep"/>
+        <setting label="$ADDON[script.embuary.info 32024]" type="select" values="bg|cs|da|de|el|en|es|fi|fr|he|hr|hu|it|ja|ko|nl|no|pl|pt|ru|sl|sv|tr|zh" id="language_code" default="en"/>
+        <setting label="$ADDON[script.embuary.info 32023]" type="text" id="tmdb_api_key" default="fc168650632c6597038cf7072a7c20da"/>
+	</category>
+</settings>

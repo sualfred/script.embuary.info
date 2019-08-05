@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<controls>
+		<control type="image">
+			<width>1920</width>
+			<height>1080</height>
+			<aspectratio>stretch</aspectratio>
+			<texture colordiffuse="ff000000">white.jpg</texture>
+		</control>
+		<control type="image" id="1">
+			<width>1920</width>
+			<height>1080</height>
+			<aspectratio>keep</aspectratio>
+			<texture/>
+		</control>
+	</controls>
+</window>

@@ -1,0 +1,43 @@
+# Embuary Helper language file
+# Addon Name: Embuary Helper
+# Addon id: script.embuary.helper
+# Addon Provider: sualfred
+msgid ""
+msgstr ""
+"Project-Id-Version: Embuary Helper\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Error"
+msgstr ""
+
+msgctxt "#32001"
+msgid "This is a tool to provide features to a skin and requires skin integration."
+msgstr ""
+
+#: /resources/lib/tmdb.py
+msgctxt "#32019"
+msgid "No information found"
+msgstr ""
+
+#: /resources/lib/tmdb_utils.py
+msgctxt "#32022"
+msgid "Invalid TheMovieDB API key"
+msgstr ""
+
+#: /resources/settings.xml
+msgctxt "#32023"
+msgid "API key"
+msgstr ""
+
+#: /resources/settings.xml
+msgctxt "#32024"
+msgid "Default language"
+msgstr ""

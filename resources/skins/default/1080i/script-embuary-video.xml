@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<onload>SetFocus(100)</onload>
+	<controls>
+		<control type="list" id="100">
+			<description>My first list container</description>
+			<left>80</left>
+			<width>250</width>
+			<height>1080</height>
+			<visible>true</visible>
+			<onup>2</onup>
+			<ondown>3</ondown>
+			<onleft>1</onleft>
+			<onright>1</onright>
+			<viewtype label="3D list">list</viewtype>
+			<orientation>vertical</orientation>
+			<pagecontrol>25</pagecontrol>
+			<autoscroll>false</autoscroll>
+			<scrolltime tween="sine" easing="out">200</scrolltime>
+			<itemlayout width="650" height="29">
+				<control type="image">
+					<left>5</left>
+					<top>3</top>
+					<width>22</width>
+					<height>22</height>
+					<texture>$INFO[ListItem.Icon]</texture>
+				</control>
+				<control type="label">
+					<left>30</left>
+					<top>3</top>
+					<width>430</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<align>left</align>
+					<label>$INFO[ListItem.Label]</label>
+				</control>
+				<control type="label">
+					<left>475</left>
+					<top>3</top>
+					<width>300</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<textcolor>grey</textcolor>
+					<align>right</align>
+					<label>$INFO[ListItem.Label2]</label>
+				</control>
+			</itemlayout>
+			<focusedlayout height="29" width="650">
+				<control type="image">
+					<width>485</width>
+					<height>29</height>
+					<left>0</left>
+					<top>0</top>
+					<visible>Control.HasFocus(50)</visible>
+					<texture>list-focus.png</texture>
+				</control>
+				<control type="image">
+					<left>5</left>
+					<top>3</top>
+					<width>22</width>
+					<height>22</height>
+					<texture>$INFO[ListItem.Icon]</texture>
+				</control>
+				<control type="label">
+					<left>30</left>
+					<top>3</top>
+					<width>430</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<align>left</align>
+					<label>$INFO[ListItem.Label]</label>
+				</control>
+				<control type="label">
+					<left>475</left>
+					<top>3</top>
+					<width>300</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<textcolor>grey</textcolor>
+					<align>right</align>
+					<label>$INFO[ListItem.Label2]</label>
+				</control>
+			</focusedlayout>
+		</control>
+		<control type="list" id="200">
+			<description>My first list container</description>
+			<left>380</left>
+			<width>250</width>
+			<height>1080</height>
+			<visible>true</visible>
+			<onup>2</onup>
+			<ondown>3</ondown>
+			<onleft>1</onleft>
+			<onright>1</onright>
+			<viewtype label="3D list">list</viewtype>
+			<orientation>vertical</orientation>
+			<pagecontrol>25</pagecontrol>
+			<autoscroll>false</autoscroll>
+			<scrolltime tween="sine" easing="out">200</scrolltime>
+			<itemlayout width="650" height="29">
+				<control type="image">
+					<left>5</left>
+					<top>3</top>
+					<width>22</width>
+					<height>22</height>
+					<texture>$INFO[ListItem.Icon]</texture>
+				</control>
+				<control type="label">
+					<left>30</left>
+					<top>3</top>
+					<width>430</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<align>left</align>
+					<label>$INFO[ListItem.Label]</label>
+				</control>
+				<control type="label">
+					<left>475</left>
+					<top>3</top>
+					<width>300</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<textcolor>grey</textcolor>
+					<align>right</align>
+					<label>$INFO[ListItem.Label2]</label>
+				</control>
+			</itemlayout>
+			<focusedlayout height="29" width="650">
+				<control type="image">
+					<width>485</width>
+					<height>29</height>
+					<left>0</left>
+					<top>0</top>
+					<visible>Control.HasFocus(50)</visible>
+					<texture>list-focus.png</texture>
+				</control>
+				<control type="image">
+					<left>5</left>
+					<top>3</top>
+					<width>22</width>
+					<height>22</height>
+					<texture>$INFO[ListItem.Icon]</texture>
+				</control>
+				<control type="label">
+					<left>30</left>
+					<top>3</top>
+					<width>430</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<align>left</align>
+					<label>$INFO[ListItem.Label]</label>
+				</control>
+				<control type="label">
+					<left>475</left>
+					<top>3</top>
+					<width>300</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<textcolor>grey</textcolor>
+					<align>right</align>
+					<label>$INFO[ListItem.Label2]</label>
+				</control>
+			</focusedlayout>
+		</control>
+		<control type="list" id="300">
+			<description>My first list container</description>
+			<left>780</left>
+			<width>250</width>
+			<height>1080</height>
+			<visible>true</visible>
+			<onup>2</onup>
+			<ondown>3</ondown>
+			<onleft>1</onleft>
+			<onright>1</onright>
+			<viewtype label="3D list">list</viewtype>
+			<orientation>vertical</orientation>
+			<pagecontrol>25</pagecontrol>
+			<autoscroll>false</autoscroll>
+			<scrolltime tween="sine" easing="out">200</scrolltime>
+			<itemlayout width="650" height="29">
+				<control type="image">
+					<left>5</left>
+					<top>3</top>
+					<width>22</width>
+					<height>22</height>
+					<texture>$INFO[ListItem.Icon]</texture>
+				</control>
+				<control type="label">
+					<left>30</left>
+					<top>3</top>
+					<width>430</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<align>left</align>
+					<label>$INFO[ListItem.Label]</label>
+				</control>
+				<control type="label">
+					<left>475</left>
+					<top>3</top>
+					<width>300</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<textcolor>grey</textcolor>
+					<align>right</align>
+					<label>$INFO[ListItem.Label2]</label>
+				</control>
+			</itemlayout>
+			<focusedlayout height="29" width="650">
+				<control type="image">
+					<width>485</width>
+					<height>29</height>
+					<left>0</left>
+					<top>0</top>
+					<visible>Control.HasFocus(50)</visible>
+					<texture>list-focus.png</texture>
+				</control>
+				<control type="image">
+					<left>5</left>
+					<top>3</top>
+					<width>22</width>
+					<height>22</height>
+					<texture>$INFO[ListItem.Icon]</texture>
+				</control>
+				<control type="label">
+					<left>30</left>
+					<top>3</top>
+					<width>430</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<align>left</align>
+					<label>$INFO[ListItem.Label]</label>
+				</control>
+				<control type="label">
+					<left>475</left>
+					<top>3</top>
+					<width>300</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<textcolor>grey</textcolor>
+					<align>right</align>
+					<label>$INFO[ListItem.Label2]</label>
+				</control>
+			</focusedlayout>
+		</control>
+		<control type="list" id="400">
+			<description>My first list container</description>
+			<left>1080</left>
+			<width>250</width>
+			<height>1080</height>
+			<visible>true</visible>
+			<onup>2</onup>
+			<ondown>3</ondown>
+			<onleft>1</onleft>
+			<onright>1</onright>
+			<viewtype label="3D list">list</viewtype>
+			<orientation>vertical</orientation>
+			<pagecontrol>25</pagecontrol>
+			<autoscroll>false</autoscroll>
+			<scrolltime tween="sine" easing="out">200</scrolltime>
+			<itemlayout width="650" height="29">
+				<control type="image">
+					<left>5</left>
+					<top>3</top>
+					<width>22</width>
+					<height>22</height>
+					<texture>$INFO[ListItem.Icon]</texture>
+				</control>
+				<control type="label">
+					<left>30</left>
+					<top>3</top>
+					<width>430</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<align>left</align>
+					<label>$INFO[ListItem.Label]</label>
+				</control>
+				<control type="label">
+					<left>475</left>
+					<top>3</top>
+					<width>300</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<textcolor>grey</textcolor>
+					<align>right</align>
+					<label>$INFO[ListItem.Label2]</label>
+				</control>
+			</itemlayout>
+			<focusedlayout height="29" width="650">
+				<control type="image">
+					<width>485</width>
+					<height>29</height>
+					<left>0</left>
+					<top>0</top>
+					<visible>Control.HasFocus(50)</visible>
+					<texture>list-focus.png</texture>
+				</control>
+				<control type="image">
+					<left>5</left>
+					<top>3</top>
+					<width>22</width>
+					<height>22</height>
+					<texture>$INFO[ListItem.Icon]</texture>
+				</control>
+				<control type="label">
+					<left>30</left>
+					<top>3</top>
+					<width>430</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<align>left</align>
+					<label>$INFO[ListItem.Label]</label>
+				</control>
+				<control type="label">
+					<left>475</left>
+					<top>3</top>
+					<width>300</width>
+					<height>22</height>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<selectedcolor>green</selectedcolor>
+					<textcolor>grey</textcolor>
+					<align>right</align>
+					<label>$INFO[ListItem.Label2]</label>
+				</control>
+			</focusedlayout>
+		</control>
+	</controls>
+</window>
