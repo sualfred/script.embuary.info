@@ -13,7 +13,6 @@ from resources.lib.tmdb_utils import *
 ########################
 
 class TMDBPersons(object):
-
     def __init__(self,call_request):
         self.query = call_request['query']
         self.tmdb_id = call_request['tmdb_id']
@@ -34,14 +33,13 @@ class TMDBPersons(object):
 
         busydialog(close=True)
 
-
     def __getitem__(self, key):
         try:
             value = self.result[key]
             return value
+
         except KeyError:
             return
-
 
     def search_person(self):
         person = tmdb_search('person',self.query)
@@ -63,24 +61,22 @@ class TMDBPersons(object):
 
         return tmdb_id
 
-
     def get_person_details(self):
         details = tmdb_item_details('person',self.tmdb_id)
-
         li = list()
+
         list_item = tmdb_handle_person(details)
         li.append(list_item)
 
         return li
 
-
     def get_movie_list(self):
         movies = tmdb_item_details('person',self.tmdb_id,'movie_credits')
         movies = movies['cast']
         movies = sort_dict(movies,'release_date',True)
-
         li = list()
         duplicate_handler = list()
+
         for item in movies:
             if item['id'] not in duplicate_handler:
                 list_item = tmdb_handle_movie(item,self.local_movies)
@@ -89,14 +85,13 @@ class TMDBPersons(object):
 
         return li
 
-
     def get_tvshow_list(self):
         tvshows = tmdb_item_details('person',self.tmdb_id,'tv_credits')
         tvshows = tvshows['cast']
         tvshows = sort_dict(tvshows,'first_air_date',True)
-
         li = list()
         duplicate_handler = list()
+
         for item in tvshows:
             if item['id'] not in duplicate_handler:
                 list_item = tmdb_handle_tvshow(item,self.local_shows)
@@ -105,16 +100,13 @@ class TMDBPersons(object):
 
         return li
 
-
     def get_person_images(self):
         images = tmdb_item_details('person',self.tmdb_id,'images',use_language=False)
         images = images['profiles']
-
         li = list()
+
         for item in images:
             list_item = tmdb_handle_images(item)
             li.append(list_item)
 
         return li
-
-

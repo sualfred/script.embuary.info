@@ -13,15 +13,13 @@ from resources.lib.tmdb_utils import *
 ########################
 
 class TMDBVideos(object):
-
     def __init__(self,call_request):
+        self.result = {}
         self.call = call_request['call']
         self.query = call_request['query']
         self.tmdb_id = call_request['tmdb_id']
         self.local_movies = call_request['local_movies']
         self.local_shows = call_request['local_shows']
-        self.result = {}
-
         self.movie = get_bool(self.call,'movie')
         self.tvshow = get_bool(self.call,'tv')
 
@@ -40,14 +38,12 @@ class TMDBVideos(object):
 
         busydialog(close=True)
 
-
     def __getitem__(self, key):
         try:
             value = self.result[key]
             return value
         except KeyError:
             return
-
 
     def search_video(self):
         items = tmdb_search(self.call,self.query)
@@ -69,7 +65,6 @@ class TMDBVideos(object):
 
         return tmdb_id
 
-
     def get_details(self):
         details = tmdb_item_details(self.call,self.tmdb_id)
         details['crew'] = self.crew_dict
@@ -83,7 +78,6 @@ class TMDBVideos(object):
         li.append(list_item)
         return li
 
-
     def get_credits(self):
         credits = tmdb_item_details(self.call,self.tmdb_id,'credits')
         cast = credits['cast']
@@ -96,35 +90,26 @@ class TMDBVideos(object):
 
         return li, cast, crew
 
-
     def get_similar(self):
         similar = tmdb_item_details(self.call,self.tmdb_id,'similar')
         similar = similar['results']
-
         li = list()
 
         if self.movie:
-            for item in similar:
-                if not item.get('release_date'):
-                    item['release_date'] = '0'
-
             similar = sort_dict(similar,'release_date',True)
+
             for item in similar:
                 list_item = tmdb_handle_movie(item,self.local_movies)
                 li.append(list_item)
 
         elif self.tvshow:
-            for item in similar:
-                if not item.get('first_air_date'):
-                    item['first_air_date'] = '0'
-
             similar = sort_dict(similar,'first_air_date',True)
+
             for item in similar:
                 list_item = tmdb_handle_tvshow(item,self.local_shows)
                 li.append(list_item)
 
         return li
-
 
     def get_images(self):
         images = tmdb_item_details(self.call,self.tmdb_id,'images',use_language=False)
@@ -136,7 +121,6 @@ class TMDBVideos(object):
             li.append(list_item)
 
         return li
-
 
     def get_yt_videos(self):
         videos = tmdb_item_details(self.call,self.tmdb_id,'videos')
@@ -150,6 +134,3 @@ class TMDBVideos(object):
                     li.append(list_item)
 
         return li
-
-
-

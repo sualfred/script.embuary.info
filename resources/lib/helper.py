@@ -43,11 +43,16 @@ def log(txt,loglevel=NOTICE,force=False):
         xbmc.log(msg=message, level=loglevel)
 
 
-def sort_dict(item,by,reverse=False):
+def sort_dict(items,key,reverse=False):
     try:
-        return sorted(item, key=operator.itemgetter(by), reverse=reverse)
+        return sorted(items,key=operator.itemgetter(key),reverse=reverse)
+
     except KeyError:
-        return item
+        for item in items:
+            if not item.get(key):
+                item[key] = '0'
+
+        return sorted(items,key=operator.itemgetter(key),reverse=reverse)
 
 
 def remove_quotes(label):

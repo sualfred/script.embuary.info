@@ -185,9 +185,9 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         self.cont2 = self.getControl(10053)
         self.cont2.addItems(self.similar)
         self.cont3 = self.getControl(10054)
-        self.cont3.addItems(self.backdrops)
+        self.cont3.addItems(self.youtube)
         self.cont4 = self.getControl(10055)
-        self.cont4.addItems(self.youtube)
+        self.cont4.addItems(self.backdrops)
 
     def onAction(self, action):
         if action.getId() in [92,10]:
