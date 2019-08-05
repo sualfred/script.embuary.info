@@ -263,7 +263,7 @@ def tmdb_handle_movie(item,local_items):
     icon = IMAGEPATH + item['poster_path'] if item['poster_path'] is not None else ''
     backdrop = IMAGEPATH + item['backdrop_path'] if item['backdrop_path'] is not None else ''
 
-    label = item.get('title','')
+    label = item['title'] or item['original_title']
     originaltitle = item.get('original_title','')
     imdbnumber = item.get('imdb_id','')
     premiered = item.get('release_date','')
@@ -290,7 +290,7 @@ def tmdb_handle_movie(item,local_items):
     list_item.setProperty('budget', str(tmdb_integer(item.get('budget',''))))
     list_item.setProperty('revenue', str(tmdb_integer(item.get('revenue',''))))
 
-    if imdbnumber and OMDB_API_KEY:
+    if OMDB_API_KEY and imdbnumber:
         omdb = omdb_call(imdbnumber)
         if omdb:
             list_item.setProperty('rating.metacritic', omdb.get('metacritic'))
@@ -308,7 +308,7 @@ def tmdb_handle_tvshow(item,local_items):
     icon = IMAGEPATH + item['poster_path'] if item['poster_path'] is not None else ''
     backdrop = IMAGEPATH + item['backdrop_path'] if item['backdrop_path'] is not None else ''
 
-    label = item.get('name','')
+    label = item['name'] or item['original_name']
     originaltitle = item.get('original_name','')
     premiered = item.get('first_air_date','')
     if premiered == '0': premiered = ''
