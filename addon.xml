@@ -3,6 +3,7 @@
 	<requires>
 		<import addon="xbmc.python" version="2.26.0"/>
 		<import addon="script.module.requests" version="2.9.1"/>
+		<import addon="script.module.arrow" version="0.10.0"/>
 	</requires>
 	<extension point="xbmc.python.script" library="default.py" />
 	<extension point="xbmc.addon.metadata">
