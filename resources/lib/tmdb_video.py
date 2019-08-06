@@ -20,6 +20,7 @@ class TMDBVideos(object):
         self.tmdb_id = call_request['tmdb_id']
         self.local_movies = call_request['local_movies']
         self.local_shows = call_request['local_shows']
+        self.year = call_request['year']
         self.movie = get_bool(self.call,'movie')
         self.tvshow = get_bool(self.call,'tv')
 
@@ -46,7 +47,7 @@ class TMDBVideos(object):
             return
 
     def search_video(self):
-        items = tmdb_search(self.call,self.query)
+        items = tmdb_search(self.call,self.query,self.year)
 
         try:
             result = items['results']

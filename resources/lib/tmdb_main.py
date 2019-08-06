@@ -20,6 +20,7 @@ class TheMovieDB(object):
         self.call = call
         self.tmdb_id = params.get('tmdb_id')
         self.query = remove_quotes(params.get('query'))
+        self.query_year = params.get('year')
 
         self.call_params = {}
         self.call_params['local_shows'] = self.get_local_media('tvshow','VideoLibrary.GetTVShows',['title', 'originaltitle', 'year'])
@@ -42,9 +43,10 @@ class TheMovieDB(object):
         return local_items
 
     def entry_point(self):
+        self.call_params['call'] = self.call
         self.call_params['tmdb_id'] = self.tmdb_id
         self.call_params['query'] = self.query
-        self.call_params['call'] = self.call
+        self.call_params['year'] = self.query_year
 
         dialog = self.fetch_person() if self.call == 'person' else self.fetch_video()
 

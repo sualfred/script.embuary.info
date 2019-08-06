@@ -110,14 +110,33 @@ def tmdb_query(action=None,call=None,get=None,use_language=True,language=DEFAULT
     return tmdb_call(url,error_check)
 
 
-def tmdb_search(call,query,include_adult='false'):
+def tmdb_search(call,query,year=None,include_adult='false'):
     #/search/{call}?api_key=&language=&query={query}&page=1&include_adult=false
-    result = tmdb_query(action='search',
-                        call=call,
-                        query=query,
-                        include_adult=include_adult,
-                        error_check=True
-                        )
+    if call == 'person':
+        result = tmdb_query(action='search',
+                            call=call,
+                            query=query,
+                            include_adult=include_adult,
+                            error_check=True
+                            )
+
+    elif call == 'movie':
+        result = tmdb_query(action='search',
+                            call=call,
+                            query=query,
+                            year=year,
+                            include_adult=include_adult,
+                            error_check=True
+                            )
+
+    elif call == 'tv':
+        result = tmdb_query(action='search',
+                            call=call,
+                            query=query,
+                            first_air_date_year=year,
+                            error_check=True
+                            )
+
     return result
 
 
