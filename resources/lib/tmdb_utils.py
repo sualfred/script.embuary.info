@@ -32,19 +32,25 @@ OMDB_URL = 'http://www.omdbapi.com/'
 
 ########################
 
-def omdb_call(imdbnumber):
+def omdb_call(imdbnumber=None,title=None,year=None,content_type=None):
     omdb = {}
 
-    try:
+    if imdbnumber:
         url = '%s?i=%s&apikey=%s' % (OMDB_URL,imdbnumber,OMDB_API_KEY)
+    elif title and year and content_type:
+        url = '%s?t=%s&year=%s&type=%s&apikey=%s' % (OMDB_URL,title,year,content_type,OMDB_API_KEY)
+    else:
+        return omdb
+
+    try:
         request = requests.get(url)
         result = request.json()
 
-        omdb['awards'] = result['Awards']
-        omdb['mpaa'] = result['Rated']
-        omdb['imdbRating'] = result['imdbRating']
-        omdb['imdbVotes'] = result['imdbVotes']
-        omdb['DVD'] = date_format(result['DVD'])
+        omdb['awards'] = result.get('Awards')
+        omdb['mpaa'] = result.get('Rated')
+        omdb['imdbRating'] = result.get('imdbRating')
+        omdb['imdbVotes'] = result.get('imdbVotes')
+        omdb['DVD'] = date_format(result.get('DVD'))
 
         delete_keys = [key for key,value in omdb.iteritems() if value == 'N/A' or value == 'NA']
         for key in delete_keys:
@@ -309,7 +315,7 @@ def tmdb_check_localdb(local_items,title,originaltitle,year,imdbnumber=False):
     return -1
 
 
-def tmdb_handle_movie(item,local_items):
+def tmdb_handle_movie(item,local_items,omdb=False):
     icon = IMAGEPATH + item['poster_path'] if item['poster_path'] is not None else ''
     backdrop = IMAGEPATH + item['backdrop_path'] if item['backdrop_path'] is not None else ''
 
@@ -340,7 +346,7 @@ def tmdb_handle_movie(item,local_items):
     list_item.setProperty('budget', format_currency(item.get('budget')))
     list_item.setProperty('revenue', format_currency(item.get('revenue')))
 
-    if OMDB_API_KEY and imdbnumber:
+    if omdb and OMDB_API_KEY and imdbnumber:
         omdb = omdb_call(imdbnumber)
         if omdb:
             list_item.setProperty('rating.metacritic', omdb.get('metacritic'))
@@ -354,7 +360,7 @@ def tmdb_handle_movie(item,local_items):
     return list_item
 
 
-def tmdb_handle_tvshow(item,local_items):
+def tmdb_handle_tvshow(item,local_items,omdb=False):
     icon = IMAGEPATH + item['poster_path'] if item['poster_path'] is not None else ''
     backdrop = IMAGEPATH + item['backdrop_path'] if item['backdrop_path'] is not None else ''
 
@@ -381,6 +387,16 @@ def tmdb_handle_tvshow(item,local_items):
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon,'fanart': backdrop})
     list_item.setProperty('id', str(item.get('id','')))
     list_item.setProperty('call', 'tv')
+
+    if omdb and OMDB_API_KEY and premiered:
+        omdb_title = originaltitle if originaltitle else label
+        omdb = omdb_call(title=omdb_title,year=tmdb_get_year(premiered),content_type='series')
+        if omdb:
+            list_item.setProperty('rating.metacritic', omdb.get('metacritic'))
+            list_item.setProperty('rating.rotten', omdb.get('rotten'))
+            list_item.setProperty('rating.imdb', omdb.get('imdbRating'))
+            list_item.setProperty('votes.imdb', omdb.get('imdbVotes'))
+            list_item.setInfo('video', {'mpaa': omdb.get('mpaa')})
 
     return list_item
 

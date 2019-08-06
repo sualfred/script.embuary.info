@@ -43,9 +43,9 @@ class TMDBVideos(object):
 
         li = list()
         if self.movie:
-            list_item = tmdb_handle_movie(details,self.local_movies)
+            list_item = tmdb_handle_movie(details,self.local_movies,omdb=True)
         elif self.tvshow:
-            list_item = tmdb_handle_tvshow(details,self.local_shows)
+            list_item = tmdb_handle_tvshow(details,self.local_shows,omdb=True)
 
         li.append(list_item)
         return li
