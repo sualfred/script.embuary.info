@@ -14,24 +14,16 @@ from resources.lib.tmdb_utils import *
 
 class TMDBPersons(object):
     def __init__(self,call_request):
-        self.query = call_request['query']
         self.tmdb_id = call_request['tmdb_id']
         self.local_movies = call_request['local_movies']
         self.local_shows = call_request['local_shows']
         self.result = {}
-
-        busydialog()
-
-        if not self.tmdb_id:
-            self.tmdb_id = self.search_person()
 
         if self.tmdb_id:
             self.result['person'] = self.get_person_details()
             self.result['movies'] = self.get_movie_list()
             self.result['tvshows'] = self.get_tvshow_list()
             self.result['images'] = self.get_person_images()
-
-        busydialog(close=True)
 
     def __getitem__(self, key):
         try:
@@ -40,26 +32,6 @@ class TMDBPersons(object):
 
         except KeyError:
             return
-
-    def search_person(self):
-        person = tmdb_search('person',self.query)
-
-        try:
-            person = person['results']
-
-            if len(person) > 1:
-                position = tmdb_select_dialog(person,'person')
-                if position < 0:
-                    raise Exception
-            else:
-                position = 0
-
-            tmdb_id = person[position]['id']
-
-        except Exception:
-            return ''
-
-        return tmdb_id
 
     def get_person_details(self):
         details = tmdb_item_details('person',self.tmdb_id)

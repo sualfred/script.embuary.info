@@ -16,18 +16,11 @@ class TMDBVideos(object):
     def __init__(self,call_request):
         self.result = {}
         self.call = call_request['call']
-        self.query = call_request['query']
         self.tmdb_id = call_request['tmdb_id']
         self.local_movies = call_request['local_movies']
         self.local_shows = call_request['local_shows']
-        self.year = call_request['year']
         self.movie = get_bool(self.call,'movie')
         self.tvshow = get_bool(self.call,'tv')
-
-        busydialog()
-
-        if not self.tmdb_id:
-            self.tmdb_id = self.search_video()
 
         if self.tmdb_id:
             self.cast, self.cast_dict, self.crew_dict = self.get_credits()
@@ -37,34 +30,12 @@ class TMDBVideos(object):
             self.result['youtube'] = self.get_yt_videos()
             self.result['images'] = self.get_images()
 
-        busydialog(close=True)
-
     def __getitem__(self, key):
         try:
             value = self.result[key]
             return value
         except KeyError:
             return
-
-    def search_video(self):
-        items = tmdb_search(self.call,self.query,self.year)
-
-        try:
-            result = items['results']
-
-            if len(result) > 1:
-                position = tmdb_select_dialog(result,self.call)
-                if position < 0:
-                    raise Exception
-            else:
-                position = 0
-
-            tmdb_id = result[position]['id']
-
-        except Exception:
-            return ''
-
-        return tmdb_id
 
     def get_details(self):
         details = tmdb_item_details(self.call,self.tmdb_id)

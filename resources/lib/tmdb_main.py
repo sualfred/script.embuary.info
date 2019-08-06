@@ -21,13 +21,50 @@ class TheMovieDB(object):
         self.tmdb_id = params.get('tmdb_id')
         self.query = remove_quotes(params.get('query'))
         self.query_year = params.get('year')
+        self.external_id = params.get('external_id')
+
+        busydialog()
+
+        if self.external_id or self.query:
+            self.tmdb_id = self.find_id()
 
         self.call_params = {}
         self.call_params['local_shows'] = self.get_local_media('tvshow','VideoLibrary.GetTVShows',['title', 'originaltitle', 'year'])
         self.call_params['local_movies'] = self.get_local_media('movie','VideoLibrary.GetMovies',['title', 'originaltitle', 'year', 'imdbnumber'])
+        self.call_params['local_movies'] = self.get_local_media('movie','VideoLibrary.GetMovies',['title', 'originaltitle', 'year', 'imdbnumber'])
 
-        self.entry_point()
+        if self.tmdb_id:
+            self.entry_point()
 
+        busydialog(close=True)
+
+
+    ''' Search for tmdb_id based one a query string or external ID (IMDb or TVDb)
+    '''
+    def find_id(self):
+        if self.external_id:
+            result = tmdb_find(self.call,self.external_id)
+        else:
+            result = tmdb_search(self.call,self.query,self.query_year)
+
+        try:
+            if len(result) > 1:
+                position = tmdb_select_dialog(result,self.call)
+                if position < 0:
+                    raise Exception
+            else:
+                position = 0
+
+            tmdb_id = result[position]['id']
+
+        except Exception:
+            return ''
+
+        return tmdb_id
+
+
+    ''' Get local media for listitem.dbid recognization.
+    '''
     def get_local_media(self,dbtype,get,properties):
         items = json_call(get,properties,sort={'order': 'descending', 'method': 'year'})
 
@@ -42,13 +79,16 @@ class TheMovieDB(object):
 
         return local_items
 
+
+    ''' Collect all data by the tmdb_id and build the dialogs.
+    '''
     def entry_point(self):
         self.call_params['call'] = self.call
         self.call_params['tmdb_id'] = self.tmdb_id
-        self.call_params['query'] = self.query
-        self.call_params['year'] = self.query_year
 
+        busydialog()
         dialog = self.fetch_person() if self.call == 'person' else self.fetch_video()
+        busydialog(close=True)
 
         if dialog:
             self.dialog_manager(dialog)
@@ -67,6 +107,10 @@ class TheMovieDB(object):
 
         return DialogVideo('script-embuary-video.xml', ADDON_PATH, 'default', '1080i', details=data['details'], cast=data['cast'], similar=data['similar'], youtube=data['youtube'], backdrops=data['images'])
 
+
+    ''' Dialog handler. Creates the window history, reopens dialogs from a stack
+        and is responsible for keeping the script alive.
+    '''
     def dialog_manager(self,dialog):
         dialog.doModal()
 
@@ -102,6 +146,8 @@ class TheMovieDB(object):
         self.window_stack = []
 
 
+''' Person dialog
+'''
 class DialogPerson(xbmcgui.WindowXMLDialog):
     def __init__(self,*args,**kwargs):
         self.first_load = True
@@ -156,6 +202,8 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
         self.close()
 
 
+''' Show & movie dialog
+'''
 class DialogVideo(xbmcgui.WindowXMLDialog):
     def __init__(self,*args,**kwargs):
         self.first_load = True
@@ -218,6 +266,8 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         self.close()
 
 
+''' Slideshow dialog
+'''
 class FullScreenImage(object):
     def __init__(self,controlId):
         slideshow = []

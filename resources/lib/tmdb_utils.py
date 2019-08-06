@@ -137,6 +137,33 @@ def tmdb_search(call,query,year=None,include_adult='false'):
                             error_check=True
                             )
 
+    try:
+        return result['results']
+    except TypeError:
+        return ''
+
+
+def tmdb_find(call,external_id):
+    #/find/{id}?api_key=&language=en-US&external_source=tvdb_id
+    if external_id.startswith('tt'):
+        external_source = 'imdb_id'
+    else:
+        external_source = 'tvdb_id'
+
+    result = tmdb_query(action='find',
+                        call=str(external_id),
+                        external_source=external_source,
+                        use_language=False
+                        )
+
+    if call == 'movie':
+        result = result['movie_results']
+    else:
+        result = result['tv_results']
+
+    if not result:
+        tmdb_error(ADDON.getLocalizedString(32019))
+
     return result
 
 
