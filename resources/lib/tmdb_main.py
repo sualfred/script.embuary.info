@@ -148,7 +148,7 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
             self.quit()
 
         elif next_call == 'image':
-            FullScreenImage(xbmc.getInfoLabel('Container(%s).ListItem.Art(thumb)' % controlId))
+            FullScreenImage(controlId)
 
     def quit(self):
         self.close()
@@ -205,7 +205,7 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
             self.quit()
 
         elif next_call == 'image':
-            FullScreenImage(xbmc.getInfoLabel('Container(%s).ListItem.Art(thumb)' % controlId))
+            FullScreenImage(controlId)
 
         elif next_call == 'youtube':
             self.action['call'] = 'close'
@@ -217,15 +217,28 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
 
 
 class FullScreenImage(object):
-    def __init__(self,image):
-        dialog = self.ShowImage('script-embuary-image.xml', ADDON_PATH, 'default', '1080i', image=image)
+    def __init__(self,controlId):
+        slideshow = []
+        for i in range(int(xbmc.getInfoLabel('Container(%s).NumItems' % controlId))):
+            slideshow.append(xbmc.getInfoLabel('Container(%s).ListItemAbsolute(%s).Art(thumb)' % (controlId,i)))
+
+        current_img = xbmc.getInfoLabel('Container(%s).ListItem.Art(thumb)' % controlId)
+        slideshow.remove(current_img)
+        slideshow.insert(0,current_img)
+
+        dialog = self.ShowImage('script-embuary-image.xml', ADDON_PATH, 'default', '1080i', slideshow=slideshow)
         dialog.doModal()
         del dialog
 
     class ShowImage(xbmcgui.WindowXMLDialog):
         def __init__(self,*args,**kwargs):
-            self.path = kwargs['image']
+            self.slideshow = list()
+            for item in kwargs['slideshow']:
+                list_item = xbmcgui.ListItem(label='')
+                list_item.setArt({'icon': item})
+                self.slideshow.append(list_item)
 
         def onInit(self):
-            self.image = self.getControl(1)
-            self.image.setImage(self.path, False)
+            self.cont = self.getControl(1)
+            self.cont.addItems(self.slideshow)
+            self.setFocusId(2)
