@@ -343,8 +343,8 @@ def tmdb_handle_movie(item,local_items,full_info=False):
     label = item['title'] or item['original_title']
     originaltitle = item.get('original_title','')
     imdbnumber = item.get('imdb_id','')
-    premiered = item.get('release_date','')
-    if premiered == '0': premiered = ''
+    premiered = item.get('release_date') if item.get('release_date') != '0' else ''
+    duration = item.get('runtime') * 60 if item.get('runtime') > 0 else ''
 
     list_item = xbmcgui.ListItem(label=label)
     list_item.setInfo('video', {'title': label,
@@ -356,6 +356,7 @@ def tmdb_handle_movie(item,local_items,full_info=False):
                                  'premiered': premiered,
                                  'mpaa': tmdb_get_cert(item,True),
                                  'tagline': item.get('tagline',''),
+                                 'duration': duration,
                                  'plot': item.get('overview',''),
                                  'director': tmdb_join_items_by(item.get('crew',''),key_is='job',value_is='Director'),
                                  'country': tmdb_join_items(item.get('production_countries','')),
