@@ -18,6 +18,7 @@ except ImportError:
     from urllib.parse import urlencode
 
 from resources.lib.helper import *
+from resources.lib.tmdb_cert_map import *
 
 ########################
 
@@ -47,7 +48,6 @@ def omdb_call(imdbnumber=None,title=None,year=None,content_type=None):
         result = request.json()
 
         omdb['awards'] = result.get('Awards')
-        omdb['mpaa'] = result.get('Rated')
         omdb['imdbRating'] = result.get('imdbRating')
         omdb['imdbVotes'] = result.get('imdbVotes')
         omdb['DVD'] = date_format(result.get('DVD'))
@@ -173,12 +173,13 @@ def tmdb_find(call,external_id):
     return result
 
 
-def tmdb_item_details(action,tmdb_id,get=None,use_language=True):
+def tmdb_item_details(action,tmdb_id,get=None,append_to_response=None,use_language=True):
     #{action}/{id}?api_key=&language=
     #{action}/{id}/{get}?api_key=&language=
     result = tmdb_query(action=action,
                         call=str(tmdb_id),
                         get=get,
+                        append_to_response=append_to_response,
                         use_language=use_language
                         )
 
@@ -335,7 +336,7 @@ def tmdb_check_localdb(local_items,title,originaltitle,year,imdbnumber=False):
     return -1
 
 
-def tmdb_handle_movie(item,local_items,omdb=False):
+def tmdb_handle_movie(item,local_items,full_info=False):
     icon = IMAGEPATH + item['poster_path'] if item['poster_path'] is not None else ''
     backdrop = IMAGEPATH + item['backdrop_path'] if item['backdrop_path'] is not None else ''
 
@@ -353,6 +354,7 @@ def tmdb_handle_movie(item,local_items,omdb=False):
                                  'rating': item.get('vote_average',''),
                                  'votes': item.get('vote_count',''),
                                  'premiered': premiered,
+                                 'mpaa': tmdb_get_cert(item,True),
                                  'tagline': item.get('tagline',''),
                                  'plot': item.get('overview',''),
                                  'director': tmdb_join_items_by(item.get('crew',''),key_is='job',value_is='Director'),
@@ -366,7 +368,7 @@ def tmdb_handle_movie(item,local_items,omdb=False):
     list_item.setProperty('budget', format_currency(item.get('budget')))
     list_item.setProperty('revenue', format_currency(item.get('revenue')))
 
-    if omdb and OMDB_API_KEY and imdbnumber:
+    if full_info and OMDB_API_KEY and imdbnumber:
         omdb = omdb_call(imdbnumber)
         if omdb:
             list_item.setProperty('rating.metacritic', omdb.get('metacritic'))
@@ -375,12 +377,10 @@ def tmdb_handle_movie(item,local_items,omdb=False):
             list_item.setProperty('votes.imdb', omdb.get('imdbVotes'))
             list_item.setProperty('awards', omdb.get('awards'))
             list_item.setProperty('release', omdb.get('DVD'))
-            list_item.setInfo('video', {'mpaa': omdb.get('mpaa')})
 
     return list_item
 
-
-def tmdb_handle_tvshow(item,local_items,omdb=False):
+def tmdb_handle_tvshow(item,local_items,full_info=False):
     icon = IMAGEPATH + item['poster_path'] if item['poster_path'] is not None else ''
     backdrop = IMAGEPATH + item['backdrop_path'] if item['backdrop_path'] is not None else ''
 
@@ -397,6 +397,7 @@ def tmdb_handle_tvshow(item,local_items,omdb=False):
                                  'rating': item.get('vote_average',''),
                                  'votes': item.get('vote_count',''),
                                  'premiered': premiered,
+                                 'mpaa': tmdb_get_cert(item),
                                  'season': str(item.get('number_of_seasons','')),
                                  'episode': str(item.get('number_of_episodes','')),
                                  'plot': item.get('overview',''),
@@ -408,7 +409,7 @@ def tmdb_handle_tvshow(item,local_items,omdb=False):
     list_item.setProperty('id', str(item.get('id','')))
     list_item.setProperty('call', 'tv')
 
-    if omdb and OMDB_API_KEY and premiered:
+    if full_info and OMDB_API_KEY and premiered:
         omdb_title = originaltitle if originaltitle else label
         omdb = omdb_call(title=omdb_title,year=tmdb_get_year(premiered),content_type='series')
         if omdb:
@@ -416,7 +417,6 @@ def tmdb_handle_tvshow(item,local_items,omdb=False):
             list_item.setProperty('rating.rotten', omdb.get('rotten'))
             list_item.setProperty('rating.imdb', omdb.get('imdbRating'))
             list_item.setProperty('votes.imdb', omdb.get('imdbVotes'))
-            list_item.setInfo('video', {'mpaa': omdb.get('mpaa')})
 
     return list_item
 
@@ -478,5 +478,30 @@ def tmdb_get_year(item):
     try:
         year = str(item)[:-6]
         return year
+    except Exception:
+        return ''
+
+
+def tmdb_get_cert(item,cert_list=None):
+    try:
+        locale = DEFAULT_LANGUAGE.upper()
+
+        if not cert_list:
+            for cert in item['content_ratings']['results']:
+                if cert['iso_3166_1'] == locale:
+                    mpaa = locale + '-' + cert['rating']
+                    return mpaa
+
+        else:
+            for cert in item['release_dates']['results']:
+                if cert['iso_3166_1'] == locale:
+                    cert_type = cert['release_dates'][0]['type']
+                    break
+
+            for cert in movie_certs[locale]:
+                if cert['order'] == cert_type:
+                    mpaa = locale + '-' + cert['certification']
+                    return mpaa
+
     except Exception:
         return ''

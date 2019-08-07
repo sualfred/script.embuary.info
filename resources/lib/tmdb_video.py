@@ -38,14 +38,14 @@ class TMDBVideos(object):
             return
 
     def get_details(self):
-        details = tmdb_item_details(self.call,self.tmdb_id)
+        details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings')
         details['crew'] = self.crew_dict
 
         li = list()
         if self.movie:
-            list_item = tmdb_handle_movie(details,self.local_movies,omdb=True)
+            list_item = tmdb_handle_movie(details,self.local_movies,full_info=True)
         elif self.tvshow:
-            list_item = tmdb_handle_tvshow(details,self.local_shows,omdb=True)
+            list_item = tmdb_handle_tvshow(details,self.local_shows,full_info=True)
 
         li.append(list_item)
         return li
