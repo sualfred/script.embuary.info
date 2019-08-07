@@ -17,7 +17,7 @@ from resources.lib.tmdb_video import *
 class TheMovieDB(object):
     def __init__(self,call,params):
         self.window_stack = []
-        self.data_cache = {}
+        self.dialog_cache = {}
         self.call = call
         self.tmdb_id = params.get('tmdb_id')
         self.query = remove_quotes(params.get('query'))
@@ -85,23 +85,15 @@ class TheMovieDB(object):
     def entry_point(self):
         self.call_params['call'] = self.call
         self.call_params['tmdb_id'] = self.tmdb_id
-        request = '%s-%s' % (self.call,str(self.tmdb_id))
+        self.request = self.call + str(self.tmdb_id)
 
-        ''' Check if the data was already requested and reuse it if available
-        '''
-        if self.data_cache.get(request):
-            dialog_data = self.data_cache[request]
-            self.dialog_manager(dialog_data)
-
-        ''' No data has been cached. Call TMDb and save data to cache.
-        '''
         busydialog()
-        dialog_data = self.fetch_person() if self.call == 'person' else self.fetch_video()
+        dialog = self.fetch_person() if self.call == 'person' else self.fetch_video()
         busydialog(close=True)
 
-        if dialog_data:
-            self.data_cache[request] = dialog_data
-            self.dialog_manager(dialog_data)
+        if dialog:
+            self.dialog_cache[self.request] = dialog
+            self.dialog_manager(dialog)
 
     def fetch_person(self):
         data = TMDBPersons(self.call_params)
@@ -119,7 +111,7 @@ class TheMovieDB(object):
 
 
     ''' Dialog handler. Creates the window history, reopens dialogs from a stack
-        and is responsible for keeping the script alive.
+        or cache and is responsible for keeping the script alive.
     '''
     def dialog_manager(self,dialog):
         dialog.doModal()
@@ -140,25 +132,28 @@ class TheMovieDB(object):
             self.window_stack.append(dialog)
             self.tmdb_id = next_id
             self.call = next_call
-            self.entry_point()
+            self.request = next_call + str(next_id)
+
+            if self.dialog_cache.get(self.request):
+                dialog = self.dialog_cache[self.request]
+                self.dialog_manager(dialog)
+            else:
+                self.entry_point()
 
         except Exception:
             self.quit()
 
     def dialog_history(self):
-        log(self.window_stack)
         if self.window_stack:
-            log('use from stack')
             dialog = self.window_stack.pop()
             self.dialog_manager(dialog)
         else:
-            log('quit')
             self.quit()
 
     def quit(self):
         del self.call_params
         del self.window_stack
-        del self.data_cache
+        del self.dialog_cache
         quit()
 
 
