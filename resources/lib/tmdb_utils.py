@@ -387,8 +387,8 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
 
     label = item['name'] or item['original_name']
     originaltitle = item.get('original_name','')
-    premiered = item.get('first_air_date','')
-    if premiered == '0': premiered = ''
+    premiered = item.get('first_air_date') if item.get('first_air_date') != '0' else ''
+    imdbnumber = item['external_ids']['imdb_id'] if item.get('external_ids') else ''
 
     list_item = xbmcgui.ListItem(label=label)
     list_item.setInfo('video', {'title': label,
@@ -397,6 +397,7 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
                                  'status': item.get('status',''),
                                  'rating': item.get('vote_average',''),
                                  'votes': item.get('vote_count',''),
+                                 'imdbnumber': imdbnumber,
                                  'premiered': premiered,
                                  'mpaa': tmdb_get_cert(item),
                                  'season': str(item.get('number_of_seasons','')),
@@ -410,9 +411,8 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
     list_item.setProperty('id', str(item.get('id','')))
     list_item.setProperty('call', 'tv')
 
-    if full_info and OMDB_API_KEY and premiered:
-        omdb_title = originaltitle if originaltitle else label
-        omdb = omdb_call(title=omdb_title,year=tmdb_get_year(premiered),content_type='series')
+    if full_info and OMDB_API_KEY and imdbnumber:
+        omdb = omdb_call(imdbnumber)
         if omdb:
             list_item.setProperty('rating.metacritic', omdb.get('metacritic'))
             list_item.setProperty('rating.rotten', omdb.get('rotten'))

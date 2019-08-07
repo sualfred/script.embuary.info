@@ -38,7 +38,7 @@ class TMDBVideos(object):
             return
 
     def get_details(self):
-        details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings')
+        details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings,external_ids')
         details['crew'] = self.crew_dict
 
         li = list()
