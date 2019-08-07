@@ -22,9 +22,9 @@ from resources.lib.tmdb_cert_map import *
 
 ########################
 
+API_KEY = ADDON.getSettingString('tmdb_api_key')
 API_URL = 'https://api.themoviedb.org/3/'
 IMAGEPATH = 'https://image.tmdb.org/t/p/original'
-API_KEY = ADDON.getSettingString('tmdb_api_key')
 COUNTRY_CODE = ADDON.getSettingString('country_code')
 DEFAULT_LANGUAGE = ADDON.getSettingString('language_code')
 FALLBACK_LANGUAGE = 'en'
