@@ -38,6 +38,11 @@ msgid "(Get free API key on www.omdbapi.com)"
 msgstr ""
 
 #: /resources/settings.xml
+msgctxt "#32003"
+msgid "Certification country"
+msgstr ""
+
+#: /resources/settings.xml
 msgctxt "#32023"
 msgid "API key"
 msgstr ""

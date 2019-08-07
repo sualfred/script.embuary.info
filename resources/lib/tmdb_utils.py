@@ -25,6 +25,7 @@ from resources.lib.tmdb_cert_map import *
 API_URL = 'https://api.themoviedb.org/3/'
 IMAGEPATH = 'https://image.tmdb.org/t/p/original'
 API_KEY = ADDON.getSettingString('tmdb_api_key')
+COUNTRY_CODE = ADDON.getSettingString('country_code')
 DEFAULT_LANGUAGE = ADDON.getSettingString('language_code')
 FALLBACK_LANGUAGE = 'en'
 
@@ -485,23 +486,26 @@ def tmdb_get_year(item):
 
 def tmdb_get_cert(item,cert_list=None):
     try:
-        locale = DEFAULT_LANGUAGE.upper()
+        if COUNTRY_CODE == 'DE':
+            prefix = 'FSK '
+        else:
+            prefix = ''
 
         if not cert_list:
             for cert in item['content_ratings']['results']:
-                if cert['iso_3166_1'] == locale:
-                    mpaa = locale + '-' + cert['rating']
+                if cert['iso_3166_1'] == COUNTRY_CODE:
+                    mpaa = prefix + cert['rating']
                     return mpaa
 
         else:
             for cert in item['release_dates']['results']:
-                if cert['iso_3166_1'] == locale:
+                if cert['iso_3166_1'] == COUNTRY_CODE:
                     cert_type = cert['release_dates'][0]['type']
                     break
 
-            for cert in movie_certs[locale]:
+            for cert in movie_certs[COUNTRY_CODE]:
                 if cert['order'] == cert_type:
-                    mpaa = locale + '-' + cert['certification']
+                    mpaa = prefix + cert['certification']
                     return mpaa
 
     except Exception:
