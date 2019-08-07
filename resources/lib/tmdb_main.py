@@ -17,6 +17,7 @@ from resources.lib.tmdb_video import *
 class TheMovieDB(object):
     def __init__(self,call,params):
         self.window_stack = []
+        self.data_cache = {}
         self.call = call
         self.tmdb_id = params.get('tmdb_id')
         self.query = remove_quotes(params.get('query'))
@@ -84,13 +85,23 @@ class TheMovieDB(object):
     def entry_point(self):
         self.call_params['call'] = self.call
         self.call_params['tmdb_id'] = self.tmdb_id
+        request = '%s-%s' % (self.call,str(self.tmdb_id))
 
+        ''' Check if the data was already requested and reuse it if available
+        '''
+        if self.data_cache.get(request):
+            dialog_data = self.data_cache[request]
+            self.dialog_manager(dialog_data)
+
+        ''' No data has been cached. Call TMDb and save data to cache.
+        '''
         busydialog()
-        dialog = self.fetch_person() if self.call == 'person' else self.fetch_video()
+        dialog_data = self.fetch_person() if self.call == 'person' else self.fetch_video()
         busydialog(close=True)
 
-        if dialog:
-            self.dialog_manager(dialog)
+        if dialog_data:
+            self.data_cache[request] = dialog_data
+            self.dialog_manager(dialog_data)
 
     def fetch_person(self):
         data = TMDBPersons(self.call_params)
@@ -143,6 +154,7 @@ class TheMovieDB(object):
 
     def quit(self):
         self.window_stack = []
+        self.data_cache = {}
 
 
 ''' Person dialog
