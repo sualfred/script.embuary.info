@@ -146,15 +146,20 @@ class TheMovieDB(object):
             self.quit()
 
     def dialog_history(self):
+        log(self.window_stack)
         if self.window_stack:
+            log('use from stack')
             dialog = self.window_stack.pop()
             self.dialog_manager(dialog)
         else:
+            log('quit')
             self.quit()
 
     def quit(self):
-        self.window_stack = []
-        self.data_cache = {}
+        del self.call_params
+        del self.window_stack
+        del self.data_cache
+        quit()
 
 
 ''' Person dialog
