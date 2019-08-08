@@ -285,16 +285,13 @@ class FullScreenImage(object):
         for i in range(int(xbmc.getInfoLabel('Container(%s).NumItems' % controlId))):
             slideshow.append(xbmc.getInfoLabel('Container(%s).ListItemAbsolute(%s).Art(thumb)' % (controlId,i)))
 
-        current_img = xbmc.getInfoLabel('Container(%s).ListItem.Art(thumb)' % controlId)
-        slideshow.remove(current_img)
-        slideshow.insert(0,current_img)
-
-        dialog = self.ShowImage('script-embuary-image.xml', ADDON_PATH, 'default', '1080i', slideshow=slideshow)
+        dialog = self.ShowImage('script-embuary-image.xml', ADDON_PATH, 'default', '1080i', slideshow=slideshow, position=xbmc.getInfoLabel('Container(%s).CurrentItem' % controlId))
         dialog.doModal()
         del dialog
 
     class ShowImage(xbmcgui.WindowXMLDialog):
         def __init__(self,*args,**kwargs):
+            self.position = int(kwargs['position']) - 1
             self.slideshow = list()
             for item in kwargs['slideshow']:
                 list_item = xbmcgui.ListItem(label='')
@@ -304,4 +301,5 @@ class FullScreenImage(object):
         def onInit(self):
             self.cont = self.getControl(1)
             self.cont.addItems(self.slideshow)
+            self.cont.selectItem(self.position)
             self.setFocusId(2)
