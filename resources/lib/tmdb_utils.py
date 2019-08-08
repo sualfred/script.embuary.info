@@ -304,6 +304,13 @@ def tmdb_error(message=ADDON.getLocalizedString(32019)):
 
 
 def tmdb_handle_person(item):
+    if item.get('gender') == 2:
+        gender = 'male'
+    elif item.get('gender') == 1:
+        gender = 'female'
+    else:
+        gender = ''
+
     icon = IMAGEPATH + item['profile_path'] if item['profile_path'] is not None else ''
     list_item = xbmcgui.ListItem(label=item['name'])
     list_item.setProperty('birthday', item.get('birthday',''))
@@ -312,7 +319,7 @@ def tmdb_handle_person(item):
     list_item.setProperty('biography', item.get('biography',''))
     list_item.setProperty('place_of_birth', item.get('place_of_birth',''))
     list_item.setProperty('known_for_department', item.get('known_for_department',''))
-    list_item.setProperty('gender', str(item.get('gender','')))
+    list_item.setProperty('gender', gender)
     list_item.setProperty('id', str(item.get('id','')))
     list_item.setProperty('call', 'person')
     list_item.setArt({'icon': 'DefaultActor.png','thumb': icon})
