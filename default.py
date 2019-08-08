@@ -18,7 +18,19 @@ class Main:
         if self.call:
             TheMovieDB(self.call,self.params)
         else:
-            DIALOG.ok(ADDON.getLocalizedString(32000), ADDON.getLocalizedString(32001))
+            call = DIALOG.select(ADDON.getLocalizedString(32005), [ADDON.getLocalizedString(32004), xbmc.getLocalizedString(20338), xbmc.getLocalizedString(20364)])
+            log(call)
+            if call == 0:
+                call = 'person'
+            elif call == 1:
+                call = 'movie'
+            elif call == 2:
+                call = 'tv'
+            else:
+                quit()
+
+            query = DIALOG.input(xbmc.getLocalizedString(19133), type=xbmcgui.INPUT_ALPHANUM)
+            TheMovieDB(call,{'query': query})
 
 
     def _parse_argv(self):
