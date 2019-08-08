@@ -52,6 +52,61 @@ msgctxt "#32005"
 msgid "Search for"
 msgstr ""
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32006"
+msgid "Age"
+msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32007"
+msgid "Place of birth"
+msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32008"
+msgid "Facts"
+msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32009"
+msgid "Similar"
+msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32010"
+msgid "Images"
+msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32011"
+msgid "Premiered"
+msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32012"
+msgid "Retail"
+msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32013"
+msgid "Budget"
+msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32014"
+msgid "Revenue"
+msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32015"
+msgid "Awards"
+msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32016"
+msgid "Seasons"
+msgstr ""
+
 #: /resources/settings.xml
 msgctxt "#32023"
 msgid "API key"
