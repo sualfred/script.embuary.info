@@ -65,7 +65,7 @@ class TMDBPersons(object):
         duplicate_handler = list()
 
         for item in tvshows:
-            if item['id'] not in duplicate_handler:
+            if item['character'] and item['id'] not in duplicate_handler:
                 list_item = tmdb_handle_tvshow(item,self.local_shows)
                 li.append(list_item)
                 duplicate_handler.append(item['id'])
