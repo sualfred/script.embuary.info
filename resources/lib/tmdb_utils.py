@@ -398,11 +398,12 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
     originaltitle = item.get('original_name','')
     premiered = item.get('first_air_date') if item.get('first_air_date') != '0' else ''
     imdbnumber = item['external_ids']['imdb_id'] if item.get('external_ids') else ''
+    tvdb_id = item['external_ids']['tvdb_id'] if item.get('external_ids') else ''
 
     list_item = xbmcgui.ListItem(label=label)
     list_item.setInfo('video', {'title': label,
                                 'originaltitle': originaltitle,
-                                'dbid': tmdb_check_localdb(local_items,label,originaltitle,premiered),
+                                'dbid': tmdb_check_localdb(local_items,label,originaltitle,premiered,tvdb_id),
                                 'status': item.get('status',''),
                                 'rating': item.get('vote_average',''),
                                 'votes': item.get('vote_count',''),
@@ -417,6 +418,7 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
                                 'studio': tmdb_join_items(item.get('networks',''))}
                                 )
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon,'fanart': backdrop})
+    list_item.setProperty('tvdb_id', str(tvdb_id))
     list_item.setProperty('id', str(item.get('id','')))
     list_item.setProperty('call', 'tv')
 
