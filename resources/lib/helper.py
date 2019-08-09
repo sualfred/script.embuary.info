@@ -134,7 +134,11 @@ def winprop(key, value=None, clear=False, window_id=10000):
 
 def date_format(value,date='short'):
     try:
-        date_time = arrow.get(value, 'DD MMM YYYY')
+        try:
+            date_time = arrow.get(value, 'YYYY-MM-DD')
+        except Exception:
+            date_time = arrow.get(value, 'DD MMM YYYY')
+
         value = date_time.strftime(xbmc.getRegion('date%s' % date))
 
     except Exception:

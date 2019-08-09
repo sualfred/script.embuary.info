@@ -313,8 +313,8 @@ def tmdb_handle_person(item):
 
     icon = IMAGEPATH + item['profile_path'] if item['profile_path'] is not None else ''
     list_item = xbmcgui.ListItem(label=item['name'])
-    list_item.setProperty('birthday', item.get('birthday',''))
-    list_item.setProperty('deathday', item.get('deathday',''))
+    list_item.setProperty('birthday', date_format(item.get('birthday')))
+    list_item.setProperty('deathday', date_format(item.get('deathday')))
     list_item.setProperty('age', str(tmdb_calc_age(item.get('birthday',''),item.get('deathday',None))))
     list_item.setProperty('biography', item.get('biography',''))
     list_item.setProperty('place_of_birth', item.get('place_of_birth',''))
