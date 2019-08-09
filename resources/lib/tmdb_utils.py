@@ -356,20 +356,21 @@ def tmdb_handle_movie(item,local_items,full_info=False):
 
     list_item = xbmcgui.ListItem(label=label)
     list_item.setInfo('video', {'title': label,
-                                 'originaltitle': originaltitle,
-                                 'dbid': tmdb_check_localdb(local_items,label,originaltitle,premiered,imdbnumber),
-                                 'imdbnumber': imdbnumber,
-                                 'rating': item.get('vote_average',''),
-                                 'votes': item.get('vote_count',''),
-                                 'premiered': premiered,
-                                 'mpaa': tmdb_get_cert(item,True),
-                                 'tagline': item.get('tagline',''),
-                                 'duration': duration,
-                                 'plot': item.get('overview',''),
-                                 'director': tmdb_join_items_by(item.get('crew',''),key_is='job',value_is='Director'),
-                                 'country': tmdb_join_items(item.get('production_countries','')),
-                                 'genre': tmdb_join_items(item.get('genres','')),
-                                 'studio': tmdb_join_items(item.get('production_companies',''))}
+                                'originaltitle': originaltitle,
+                                'dbid': tmdb_check_localdb(local_items,label,originaltitle,premiered,imdbnumber),
+                                'imdbnumber': imdbnumber,
+                                'rating': item.get('vote_average',''),
+                                'votes': item.get('vote_count',''),
+                                'premiered': premiered,
+                                'mpaa': tmdb_get_cert(item,True),
+                                'tagline': item.get('tagline',''),
+                                'duration': duration,
+                                'plot': item.get('overview',''),
+                                'director': tmdb_join_items_by(item.get('crew',''),key_is='job',value_is='Director'),
+                                'writer': tmdb_join_items_by(item.get('crew',''),key_is='department',value_is='Writing'),
+                                'country': tmdb_join_items(item.get('production_countries','')),
+                                'genre': tmdb_join_items(item.get('genres','')),
+                                'studio': tmdb_join_items(item.get('production_companies',''))}
                                  )
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon,'fanart': backdrop})
     list_item.setProperty('id', str(item.get('id','')))
@@ -400,21 +401,21 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
 
     list_item = xbmcgui.ListItem(label=label)
     list_item.setInfo('video', {'title': label,
-                                 'originaltitle': originaltitle,
-                                 'dbid': tmdb_check_localdb(local_items,label,originaltitle,premiered),
-                                 'status': item.get('status',''),
-                                 'rating': item.get('vote_average',''),
-                                 'votes': item.get('vote_count',''),
-                                 'imdbnumber': imdbnumber,
-                                 'premiered': premiered,
-                                 'mpaa': tmdb_get_cert(item),
-                                 'season': str(item.get('number_of_seasons','')),
-                                 'episode': str(item.get('number_of_episodes','')),
-                                 'plot': item.get('overview',''),
-                                 'director': tmdb_join_items(item.get('created_by','')),
-                                 'genre': tmdb_join_items(item.get('genres','')),
-                                 'studio': tmdb_join_items(item.get('networks',''))}
-                                 )
+                                'originaltitle': originaltitle,
+                                'dbid': tmdb_check_localdb(local_items,label,originaltitle,premiered),
+                                'status': item.get('status',''),
+                                'rating': item.get('vote_average',''),
+                                'votes': item.get('vote_count',''),
+                                'imdbnumber': imdbnumber,
+                                'premiered': premiered,
+                                'mpaa': tmdb_get_cert(item),
+                                'season': str(item.get('number_of_seasons','')),
+                                'episode': str(item.get('number_of_episodes','')),
+                                'plot': item.get('overview',''),
+                                'director': tmdb_join_items(item.get('created_by','')),
+                                'genre': tmdb_join_items(item.get('genres','')),
+                                'studio': tmdb_join_items(item.get('networks',''))}
+                                )
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon,'fanart': backdrop})
     list_item.setProperty('id', str(item.get('id','')))
     list_item.setProperty('call', 'tv')
