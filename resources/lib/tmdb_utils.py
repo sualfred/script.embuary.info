@@ -18,7 +18,6 @@ except ImportError:
     from urllib.parse import urlencode
 
 from resources.lib.helper import *
-from resources.lib.tmdb_cert_map import *
 
 ########################
 
