@@ -50,6 +50,7 @@ The script provides a selection dialog if multiple results were returned.
 * List control ID `10053` = Similar titles
 * List control ID `10054` = YouTube results
 * List control ID `10055` = Backdrop images
+* List control ID `10056` = Crew
 
 *script-embuary-image.xml*
 * List control ID `1` = Is used to display a portrait/backdrop images in fullscreen.
