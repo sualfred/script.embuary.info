@@ -479,6 +479,17 @@ def tmdb_handle_cast(item):
     return list_item
 
 
+def tmdb_handle_crew(item):
+    icon = IMAGEPATH + item['profile_path'] if item['profile_path'] is not None else ''
+    list_item = xbmcgui.ListItem(label=item['name'])
+    list_item.setLabel2(item['job'])
+    list_item.setArt({'icon': 'DefaultActor.png','thumb': icon})
+    list_item.setProperty('id', str(item.get('id','')))
+    list_item.setProperty('call', 'person')
+
+    return list_item
+
+
 def tmdb_handle_yt_videos(item):
     icon = 'https://img.youtube.com/vi/%s/0.jpg' % str(item['key'])
 

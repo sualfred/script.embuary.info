@@ -115,7 +115,7 @@ class TheMovieDB(object):
         if not data['details']:
             return
 
-        return DialogVideo('script-embuary-video.xml', ADDON_PATH, 'default', '1080i', details=data['details'], cast=data['cast'], similar=data['similar'], youtube=data['youtube'], backdrops=data['images'])
+        return DialogVideo('script-embuary-video.xml', ADDON_PATH, 'default', '1080i', details=data['details'], cast=data['cast'], crew=data['crew'], similar=data['similar'], youtube=data['youtube'], backdrops=data['images'])
 
 
     ''' Dialog handler. Creates the window history, reopens dialogs from a stack
@@ -230,6 +230,7 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
 
         self.details = kwargs['details']
         self.cast = kwargs['cast']
+        self.crew = kwargs['crew']
         self.similar = kwargs['similar']
         self.youtube = kwargs['youtube']
         self.backdrops = kwargs['backdrops']
@@ -246,7 +247,6 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
 
     def add_items(self):
         self.first_load = False
-
         self.cont0 = self.getControl(10051)
         self.cont0.addItems(self.details)
         self.cont1 = self.getControl(10052)
@@ -257,6 +257,8 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         self.cont3.addItems(self.youtube)
         self.cont4 = self.getControl(10055)
         self.cont4.addItems(self.backdrops)
+        self.cont5 = self.getControl(10056)
+        self.cont5.addItems(self.crew)
 
     def onAction(self, action):
         if action.getId() in [92,10]:

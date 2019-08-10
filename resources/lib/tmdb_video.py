@@ -23,9 +23,10 @@ class TMDBVideos(object):
         self.tvshow = get_bool(self.call,'tv')
 
         if self.tmdb_id:
-            self.cast, self.cast_dict, self.crew_dict = self.get_credits()
+            self.cast, self.crew = self.get_credits()
             self.result['details'] = self.get_details()
-            self.result['cast'] = self.cast
+            self.result['cast'] = self.get_cast()
+            self.result['crew'] = self.get_crew()
             self.result['similar'] = self.get_similar()
             self.result['youtube'] = self.get_yt_videos()
             self.result['images'] = self.get_images()
@@ -39,7 +40,9 @@ class TMDBVideos(object):
 
     def get_details(self):
         details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings,external_ids')
-        details['crew'] = self.crew_dict
+        details['crew'] = self.crew
+
+        self.created_by = details['created_by'] if details.get('created_by') else ''
 
         li = list()
         if self.movie:
@@ -54,13 +57,61 @@ class TMDBVideos(object):
         credits = tmdb_item_details(self.call,self.tmdb_id,'credits')
         cast = credits['cast']
         crew = credits['crew']
+
+        return cast, crew
+
+    def get_cast(self):
         li = list()
 
-        for item in cast:
+        for item in self.cast:
             list_item = tmdb_handle_cast(item)
             li.append(list_item)
 
-        return li, cast, crew
+        return li
+
+    def get_crew(self):
+        li_clean_crew = list()
+        li_crew_duplicate_handler_id = list()
+        li = list()
+
+        for item in self.crew:
+            if item['job'] in ['Director','Producer','Screenplay','Writer','Original Music Composer','Novel','Storyboard','Executive Producer','Comic Book']:
+                if item['id'] not in li_crew_duplicate_handler_id:
+                    li_clean_crew.append(item)
+                    li_crew_duplicate_handler_id.append(item['id'])
+                else:
+                    for duplicate in li_clean_crew:
+                        if duplicate['id'] == item['id']:
+                            duplicate['job'] = duplicate['job'] + ' / ' + item['job']
+
+
+        for item in self.created_by:
+            item['job'] = 'Creator'
+            list_item = tmdb_handle_crew(item)
+            li.append(list_item)
+
+        for item in li_clean_crew:
+            if item['department'] == 'Directing':
+                list_item = tmdb_handle_crew(item)
+                li.append(list_item)
+
+        for item in li_clean_crew:
+            if item['department'] == 'Writing':
+                list_item = tmdb_handle_crew(item)
+                li.append(list_item)
+
+        for item in li_clean_crew:
+            if item['department'] == 'Production':
+                list_item = tmdb_handle_crew(item)
+                li.append(list_item)
+
+        for item in li_clean_crew:
+            if item['department'] == 'Sound':
+                item['job'] = 'Music Composer' if item['job'] == 'Original Music Composer' else item['job']
+                list_item = tmdb_handle_crew(item)
+                li.append(list_item)
+
+        return li
 
     def get_similar(self):
         similar = tmdb_item_details(self.call,self.tmdb_id,'similar')

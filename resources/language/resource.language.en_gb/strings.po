@@ -107,6 +107,16 @@ msgctxt "#32016"
 msgid "Seasons"
 msgstr ""
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32017"
+msgid "Known for"
+msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32018"
+msgid "Crew"
+msgstr ""
+
 #: /resources/settings.xml
 msgctxt "#32023"
 msgid "API key"
