@@ -87,7 +87,7 @@ msgstr "Bilder"
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32011"
 msgid "Premiered"
-msgstr "Veröffentlichung"
+msgstr "Premiere"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32012"
@@ -113,6 +113,11 @@ msgstr "Awards"
 msgctxt "#32016"
 msgid "Seasons"
 msgstr "Staffeln"
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32017"
+msgid "Known for"
+msgstr "Bekannt für"
 
 #: /resources/settings.xml
 msgctxt "#32023"
