@@ -362,7 +362,7 @@ def tmdb_handle_movie(item,local_items,full_info=False):
                                 'rating': item.get('vote_average',''),
                                 'votes': item.get('vote_count',''),
                                 'premiered': premiered,
-                                'mpaa': tmdb_get_cert(item,True),
+                                'mpaa': tmdb_get_cert(item),
                                 'tagline': item.get('tagline',''),
                                 'duration': duration,
                                 'plot': item.get('overview',''),
@@ -377,6 +377,9 @@ def tmdb_handle_movie(item,local_items,full_info=False):
     list_item.setProperty('call', 'movie')
     list_item.setProperty('budget', format_currency(item.get('budget')))
     list_item.setProperty('revenue', format_currency(item.get('revenue')))
+
+    if full_info:
+        log(item)
 
     if full_info and OMDB_API_KEY and imdbnumber:
         omdb = omdb_call(imdbnumber)
@@ -494,29 +497,27 @@ def tmdb_get_year(item):
         return ''
 
 
-def tmdb_get_cert(item,cert_list=None):
+def tmdb_get_cert(item):
     try:
         if COUNTRY_CODE == 'DE':
             prefix = 'FSK '
         else:
             prefix = ''
 
-        if not cert_list:
+        if item.get('content_ratings'):
             for cert in item['content_ratings']['results']:
                 if cert['iso_3166_1'] == COUNTRY_CODE:
                     mpaa = prefix + cert['rating']
                     return mpaa
 
-        else:
+        elif item.get('release_dates'):
             for cert in item['release_dates']['results']:
                 if cert['iso_3166_1'] == COUNTRY_CODE:
-                    cert_type = cert['release_dates'][0]['type']
-                    break
-
-            for cert in movie_certs[COUNTRY_CODE]:
-                if cert['order'] == cert_type:
-                    mpaa = prefix + cert['certification']
+                    mpaa = cert['release_dates'][0]['certification']
                     return mpaa
+
+        else:
+            return ''
 
     except Exception:
         return ''
