@@ -276,6 +276,29 @@ def tmdb_select_dialog(list,call):
     return indexlist[selected]
 
 
+def tmdb_select_dialog_small(list):
+    indexlist = []
+    selectionlist = []
+
+    index = 0
+    for item in list:
+        list_item = xbmcgui.ListItem(item)
+        selectionlist.append(list_item)
+        indexlist.append(index)
+        index += 1
+
+    busydialog(close=True)
+
+    selected = DIALOG.select(xbmc.getLocalizedString(424), selectionlist, useDetails=False)
+
+    if selected == -1:
+        return -1
+
+    busydialog()
+
+    return indexlist[selected]
+
+
 def tmdb_calc_age(birthday,deathday=None):
     if deathday is not None:
         ref_day = deathday.split("-")

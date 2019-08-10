@@ -45,6 +45,14 @@ class TheMovieDB(object):
         if self.external_id:
             result = tmdb_find(self.call,self.external_id)
         else:
+            if ' / ' in self.query:
+                query_values = self.query.split(' / ')
+                position = tmdb_select_dialog_small(query_values)
+                if position < 0:
+                    return ''
+                else:
+                    self.query = query_values[position]
+
             result = tmdb_search(self.call,self.query,self.query_year)
 
         try:
