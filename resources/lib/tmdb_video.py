@@ -23,7 +23,6 @@ class TMDBVideos(object):
         self.tvshow = get_bool(self.call,'tv')
 
         if self.tmdb_id:
-            self.cast, self.crew = self.get_credits()
             self.result['details'] = self.get_details()
             self.result['cast'] = self.get_cast()
             self.result['crew'] = self.get_crew()
@@ -39,10 +38,12 @@ class TMDBVideos(object):
             return
 
     def get_details(self):
-        details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings,external_ids')
-        details['crew'] = self.crew
+        details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings,external_ids,credits')
 
         self.created_by = details['created_by'] if details.get('created_by') else ''
+        self.cast = details['credits']['cast']
+        self.crew = details['credits']['crew']
+        details['crew'] = self.crew
 
         li = list()
         if self.movie:
@@ -53,18 +54,12 @@ class TMDBVideos(object):
         li.append(list_item)
         return li
 
-    def get_credits(self):
-        credits = tmdb_item_details(self.call,self.tmdb_id,'credits')
-        cast = credits['cast']
-        crew = credits['crew']
-
-        return cast, crew
-
     def get_cast(self):
         li = list()
 
         for item in self.cast:
-            list_item = tmdb_handle_cast(item)
+            item['label2'] = item.get('character','')
+            list_item = tmdb_handle_credits(item)
             li.append(list_item)
 
         return li
@@ -86,29 +81,33 @@ class TMDBVideos(object):
 
 
         for item in self.created_by:
-            item['job'] = 'Creator'
-            list_item = tmdb_handle_crew(item)
+            item['label2'] = 'Creator'
+            list_item = tmdb_handle_credits(item)
             li.append(list_item)
 
         for item in li_clean_crew:
             if item['department'] == 'Directing':
-                list_item = tmdb_handle_crew(item)
+                item['label2'] = item.get('job','')
+                list_item = tmdb_handle_credits(item)
                 li.append(list_item)
 
         for item in li_clean_crew:
             if item['department'] == 'Writing':
-                list_item = tmdb_handle_crew(item)
+                item['label2'] = item.get('job','')
+                list_item = tmdb_handle_credits(item)
                 li.append(list_item)
 
         for item in li_clean_crew:
             if item['department'] == 'Production':
-                list_item = tmdb_handle_crew(item)
+                item['label2'] = item.get('job','')
+                list_item = tmdb_handle_credits(item)
                 li.append(list_item)
 
         for item in li_clean_crew:
             if item['department'] == 'Sound':
                 item['job'] = 'Music Composer' if item['job'] == 'Original Music Composer' else item['job']
-                list_item = tmdb_handle_crew(item)
+                item['label2'] = item.get('job','')
+                list_item = tmdb_handle_credits(item)
                 li.append(list_item)
 
         return li
@@ -135,7 +134,7 @@ class TMDBVideos(object):
         return li
 
     def get_images(self):
-        images = tmdb_item_details(self.call,self.tmdb_id,'images',use_language=False)
+        images = tmdb_item_details(self.call,self.tmdb_id,'images',use_language=False,include_image_language='%s,en,null' % DEFAULT_LANGUAGE)
         images = images['backdrops']
         li = list()
 

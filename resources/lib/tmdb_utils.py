@@ -173,14 +173,15 @@ def tmdb_find(call,external_id):
     return result
 
 
-def tmdb_item_details(action,tmdb_id,get=None,append_to_response=None,use_language=True):
+def tmdb_item_details(action,tmdb_id,get=None,append_to_response=None,use_language=True,include_image_language=None):
     #{action}/{id}?api_key=&language=
     #{action}/{id}/{get}?api_key=&language=
     result = tmdb_query(action=action,
                         call=str(tmdb_id),
                         get=get,
                         append_to_response=append_to_response,
-                        use_language=use_language
+                        use_language=use_language,
+                        include_image_language=include_image_language
                         )
 
     if use_language and DEFAULT_LANGUAGE != FALLBACK_LANGUAGE:
@@ -203,7 +204,7 @@ def tmdb_item_details(action,tmdb_id,get=None,append_to_response=None,use_langua
         ''' Query the TMDb again if important fields have no value or no result
             was returned at all.
         '''
-        if tmdb_fallback_details(result,action,get):
+        if get not in ['images','videos'] and tmdb_fallback_details(result,action,get):
             result = tmdb_query(action=action,
                                 call=str(tmdb_id),
                                 get=get,
@@ -467,21 +468,10 @@ def tmdb_handle_images(item):
     return list_item
 
 
-def tmdb_handle_cast(item):
+def tmdb_handle_credits(item):
     icon = IMAGEPATH + item['profile_path'] if item['profile_path'] is not None else ''
     list_item = xbmcgui.ListItem(label=item['name'])
-    list_item.setLabel2(item['character'])
-    list_item.setArt({'icon': 'DefaultActor.png','thumb': icon})
-    list_item.setProperty('id', str(item.get('id','')))
-    list_item.setProperty('call', 'person')
-
-    return list_item
-
-
-def tmdb_handle_crew(item):
-    icon = IMAGEPATH + item['profile_path'] if item['profile_path'] is not None else ''
-    list_item = xbmcgui.ListItem(label=item['name'])
-    list_item.setLabel2(item['job'])
+    list_item.setLabel2(item['label2'])
     list_item.setArt({'icon': 'DefaultActor.png','thumb': icon})
     list_item.setProperty('id', str(item.get('id','')))
     list_item.setProperty('call', 'person')
