@@ -69,16 +69,20 @@ def omdb_call(imdbnumber=None,title=None,year=None,content_type=None):
     return omdb
 
 
-def tmdb_call(request,error_check=False,error=ADDON.getLocalizedString(32019)):
+def tmdb_call(request_url,error_check=False,error=ADDON.getLocalizedString(32019)):
     try:
-        request = requests.get(request)
-
-        if request.status_code == 504:
-            DIALOG.notification('ADDON.getLocalizedString(32020)','ADDON.getLocalizedString(32021)')
-            request = requests.get(request)
+        for i in range(1,10):
+            request = requests.get(request_url)
+            if not str(request.status_code).startswith('5'):
+                break
+            log('TMDb server error: Code ' + str(request.status_code))
+            xbmc.sleep(500)
 
         if request.status_code == 401:
             error = ADDON.getLocalizedString(32022)
+            raise Exception
+
+        elif request.status_code == 404:
             raise Exception
 
         elif request.status_code != requests.codes.ok:
@@ -184,36 +188,7 @@ def tmdb_item_details(action,tmdb_id,get=None,append_to_response=None,use_langua
                         include_image_language=include_image_language
                         )
 
-    if use_language and DEFAULT_LANGUAGE != FALLBACK_LANGUAGE:
-
-        ''' Query the TMDb again if important fields have no value or no result
-            was returned at all.
-        '''
-        if get not in ['images','videos'] and tmdb_fallback_details(result,action,get):
-            result = tmdb_query(action=action,
-                                call=str(tmdb_id),
-                                get=get,
-                                language=FALLBACK_LANGUAGE
-                                )
-
     return result
-
-
-def tmdb_fallback_details(result,action,get):
-    if len(result) == 0:
-        log('0 result')
-        return True
-    if 'results' in result and len(result['results']) == 0:
-        log('no results in result')
-        return True
-    if action == 'person' and get is None and not result['biography']:
-        log('no biography')
-        return True
-    if action != 'person' and get is None and not result['overview']:
-        log('no overview')
-        return True
-
-    return False
 
 
 def tmdb_select_dialog(list,call):
@@ -319,30 +294,6 @@ def tmdb_error(message=ADDON.getLocalizedString(32019)):
     DIALOG.ok(ADDON.getLocalizedString(32000),message)
 
 
-def tmdb_handle_person(item):
-    if item.get('gender') == 2:
-        gender = 'male'
-    elif item.get('gender') == 1:
-        gender = 'female'
-    else:
-        gender = ''
-
-    icon = IMAGEPATH + item['profile_path'] if item['profile_path'] is not None else ''
-    list_item = xbmcgui.ListItem(label=item['name'])
-    list_item.setProperty('birthday', date_format(item.get('birthday')))
-    list_item.setProperty('deathday', date_format(item.get('deathday')))
-    list_item.setProperty('age', str(tmdb_calc_age(item.get('birthday',''),item.get('deathday',None))))
-    list_item.setProperty('biography', item.get('biography',''))
-    list_item.setProperty('place_of_birth', item.get('place_of_birth',''))
-    list_item.setProperty('known_for_department', item.get('known_for_department',''))
-    list_item.setProperty('gender', gender)
-    list_item.setProperty('id', str(item.get('id','')))
-    list_item.setProperty('call', 'person')
-    list_item.setArt({'icon': 'DefaultActor.png','thumb': icon})
-
-    return list_item
-
-
 def tmdb_check_localdb(local_items,title,originaltitle,year,imdbnumber=False):
     year = tmdb_get_year(year)
 
@@ -358,6 +309,30 @@ def tmdb_check_localdb(local_items,title,originaltitle,year,imdbnumber=False):
             pass
 
     return -1
+
+
+def tmdb_handle_person(item):
+    if item.get('gender') == 2:
+        gender = 'male'
+    elif item.get('gender') == 1:
+        gender = 'female'
+    else:
+        gender = ''
+
+    icon = IMAGEPATH + item['profile_path'] if item['profile_path'] is not None else ''
+    list_item = xbmcgui.ListItem(label=item['name'])
+    list_item.setProperty('birthday', date_format(item.get('birthday')))
+    list_item.setProperty('deathday', date_format(item.get('deathday')))
+    list_item.setProperty('age', str(tmdb_calc_age(item.get('birthday',''),item.get('deathday',None))))
+    list_item.setProperty('biography', tmdb_fallback_info(item,'biography'))
+    list_item.setProperty('place_of_birth', item.get('place_of_birth',''))
+    list_item.setProperty('known_for_department', item.get('known_for_department',''))
+    list_item.setProperty('gender', gender)
+    list_item.setProperty('id', str(item.get('id','')))
+    list_item.setProperty('call', 'person')
+    list_item.setArt({'icon': 'DefaultActor.png','thumb': icon})
+
+    return list_item
 
 
 def tmdb_handle_movie(item,local_items,full_info=False):
@@ -381,7 +356,7 @@ def tmdb_handle_movie(item,local_items,full_info=False):
                                 'mpaa': tmdb_get_cert(item),
                                 'tagline': item.get('tagline',''),
                                 'duration': duration,
-                                'plot': item.get('overview',''),
+                                'plot': tmdb_fallback_info(item,'overview'),
                                 'director': tmdb_join_items_by(item.get('crew',''),key_is='job',value_is='Director'),
                                 'writer': tmdb_join_items_by(item.get('crew',''),key_is='department',value_is='Writing'),
                                 'country': tmdb_join_items(item.get('production_countries','')),
@@ -406,6 +381,7 @@ def tmdb_handle_movie(item,local_items,full_info=False):
 
     return list_item
 
+
 def tmdb_handle_tvshow(item,local_items,full_info=False):
     icon = IMAGEPATH + item['poster_path'] if item['poster_path'] is not None else ''
     backdrop = IMAGEPATH + item['backdrop_path'] if item['backdrop_path'] is not None else ''
@@ -428,7 +404,7 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
                                 'mpaa': tmdb_get_cert(item),
                                 'season': str(item.get('number_of_seasons','')),
                                 'episode': str(item.get('number_of_episodes','')),
-                                'plot': item.get('overview',''),
+                                'plot': tmdb_fallback_info(item,'overview'),
                                 'director': tmdb_join_items(item.get('created_by','')),
                                 'genre': tmdb_join_items(item.get('genres','')),
                                 'studio': tmdb_join_items(item.get('networks',''))}
@@ -447,6 +423,22 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
             list_item.setProperty('votes.imdb', omdb.get('imdbVotes'))
 
     return list_item
+
+
+def tmdb_fallback_info(item,key):
+    if item.get(key):
+        return item.get(key)
+
+    try:
+        for translation in item['translations']['translations']:
+            if translation.get('iso_639_1') == FALLBACK_LANGUAGE:
+                if translation['data'][key]:
+                    return translation['data'][key]
+
+    except Exception:
+        pass
+
+    return ''
 
 
 def tmdb_handle_images(item):

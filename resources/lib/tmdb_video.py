@@ -39,14 +39,13 @@ class TMDBVideos(object):
 
     def get_details(self):
         details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings,external_ids,credits,videos,translations')
-
         self.created_by = details['created_by'] if details.get('created_by') else ''
         self.cast = details['credits']['cast']
         self.crew = details['credits']['crew']
         self.videos = details['videos']['results']
         details['crew'] = self.crew
-
         li = list()
+
         if self.movie:
             list_item = tmdb_handle_movie(details,self.local_movies,full_info=True)
         elif self.tvshow:
@@ -147,15 +146,14 @@ class TMDBVideos(object):
 
     def get_yt_videos(self):
         videos = self.videos
+        li = list()
 
-        ''' Add EN videos next to the custom set language
+        ''' Add EN videos next to the user configured language
         '''
         if DEFAULT_LANGUAGE != FALLBACK_LANGUAGE:
             videos_en = tmdb_item_details(self.call,self.tmdb_id,'videos',use_language=False)
             videos_en = videos_en.get('results')
             videos = videos + videos_en
-
-        li = list()
 
         for item in videos:
             if item['site'] == 'YouTube':

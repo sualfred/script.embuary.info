@@ -34,7 +34,10 @@ class TMDBPersons(object):
             return
 
     def get_person_details(self):
-        details = tmdb_item_details('person',self.tmdb_id)
+        details = tmdb_item_details('person',self.tmdb_id,append_to_response='translations,movie_credits,tv_credits,images')
+        self.movies = details['movie_credits']['cast']
+        self.tvshows = details['tv_credits']['cast']
+        self.images = details['images']['profiles']
         li = list()
 
         list_item = tmdb_handle_person(details)
@@ -43,9 +46,7 @@ class TMDBPersons(object):
         return li
 
     def get_movie_list(self):
-        movies = tmdb_item_details('person',self.tmdb_id,'movie_credits')
-        movies = movies['cast']
-        movies = sort_dict(movies,'release_date',True)
+        movies = sort_dict(self.movies,'release_date',True)
         li = list()
         duplicate_handler = list()
 
@@ -58,9 +59,7 @@ class TMDBPersons(object):
         return li
 
     def get_tvshow_list(self):
-        tvshows = tmdb_item_details('person',self.tmdb_id,'tv_credits')
-        tvshows = tvshows['cast']
-        tvshows = sort_dict(tvshows,'first_air_date',True)
+        tvshows = sort_dict(self.tvshows,'first_air_date',True)
         li = list()
         duplicate_handler = list()
 
@@ -73,11 +72,9 @@ class TMDBPersons(object):
         return li
 
     def get_person_images(self):
-        images = tmdb_item_details('person',self.tmdb_id,'images',use_language=False)
-        images = images['profiles']
         li = list()
 
-        for item in images:
+        for item in self.images:
             list_item = tmdb_handle_images(item)
             li.append(list_item)
 
