@@ -122,16 +122,6 @@ msgctxt "#32023"
 msgid "API key"
 msgstr ""
 
-#: /resources/lib/tmdb_utils.py
-msgctxt "#32020"
-msgid "TMDb timeout"
-msgstr ""
-
-#: /resources/lib/tmdb_utils.py
-msgctxt "#32021"
-msgid "Retrying"
-msgstr ""
-
 #: /resources/settings.xml
 msgctxt "#32024"
 msgid "Default language"
