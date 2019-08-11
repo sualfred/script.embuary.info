@@ -186,21 +186,6 @@ def tmdb_item_details(action,tmdb_id,get=None,append_to_response=None,use_langua
 
     if use_language and DEFAULT_LANGUAGE != FALLBACK_LANGUAGE:
 
-        ''' Add EN videos next to the custom set language
-        '''
-        if get == 'videos':
-            all_results = {}
-
-            result_EN = tmdb_query(action=action,
-                                call=str(tmdb_id),
-                                get=get,
-                                use_language=False
-                                )
-
-            all_results['results'] = result.get('results') + result_EN.get('results')
-
-            return all_results
-
         ''' Query the TMDb again if important fields have no value or no result
             was returned at all.
         '''

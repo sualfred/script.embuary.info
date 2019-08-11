@@ -38,11 +38,12 @@ class TMDBVideos(object):
             return
 
     def get_details(self):
-        details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings,external_ids,credits')
+        details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings,external_ids,credits,videos,translations')
 
         self.created_by = details['created_by'] if details.get('created_by') else ''
         self.cast = details['credits']['cast']
         self.crew = details['credits']['crew']
+        self.videos = details['videos']['results']
         details['crew'] = self.crew
 
         li = list()
@@ -145,8 +146,15 @@ class TMDBVideos(object):
         return li
 
     def get_yt_videos(self):
-        videos = tmdb_item_details(self.call,self.tmdb_id,'videos')
-        videos = videos['results']
+        videos = self.videos
+
+        ''' Add EN videos next to the custom set language
+        '''
+        if DEFAULT_LANGUAGE != FALLBACK_LANGUAGE:
+            videos_en = tmdb_item_details(self.call,self.tmdb_id,'videos',use_language=False)
+            videos_en = videos_en.get('results')
+            videos = videos + videos_en
+
         li = list()
 
         for item in videos:
