@@ -99,9 +99,17 @@ class TheMovieDB(object):
         dialog = self.fetch_person() if self.call == 'person' else self.fetch_video()
         busydialog(close=True)
 
+        ''' Open next dialog if information has been found. If not open the previous dialog again.
+        '''
         if dialog:
             self.dialog_cache[self.request] = dialog
             self.dialog_manager(dialog)
+
+        elif self.window_stack:
+            self.dialog_history()
+
+        else:
+            self.quit()
 
     def fetch_person(self):
         data = TMDBPersons(self.call_params)

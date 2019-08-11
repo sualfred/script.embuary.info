@@ -20,6 +20,15 @@ class TMDBPersons(object):
         self.result = {}
 
         if self.tmdb_id:
+            self.details = tmdb_item_details('person',self.tmdb_id,append_to_response='translations,movie_credits,tv_credits,images')
+
+            if not self.details:
+                return
+
+            self.movies = self.details['movie_credits']['cast']
+            self.tvshows = self.details['tv_credits']['cast']
+            self.images = self.details['images']['profiles']
+
             self.result['person'] = self.get_person_details()
             self.result['movies'] = self.get_movie_list()
             self.result['tvshows'] = self.get_tvshow_list()
@@ -34,13 +43,9 @@ class TMDBPersons(object):
             return
 
     def get_person_details(self):
-        details = tmdb_item_details('person',self.tmdb_id,append_to_response='translations,movie_credits,tv_credits,images')
-        self.movies = details['movie_credits']['cast']
-        self.tvshows = details['tv_credits']['cast']
-        self.images = details['images']['profiles']
         li = list()
 
-        list_item = tmdb_handle_person(details)
+        list_item = tmdb_handle_person(self.details)
         li.append(list_item)
 
         return li

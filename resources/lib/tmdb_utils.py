@@ -99,7 +99,6 @@ def tmdb_call(request_url,error_check=False,error=ADDON.getLocalizedString(32019
 
     except Exception:
         tmdb_error(error)
-        quit()
 
 
 def tmdb_query(action=None,call=None,get=None,use_language=True,language=DEFAULT_LANGUAGE,error_check=False,**kwargs):

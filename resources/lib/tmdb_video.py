@@ -23,6 +23,17 @@ class TMDBVideos(object):
         self.tvshow = get_bool(self.call,'tv')
 
         if self.tmdb_id:
+            self.details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings,external_ids,credits,videos,translations')
+
+            if not self.details:
+                return
+
+            self.created_by = self.details['created_by'] if self.details.get('created_by') else ''
+            self.cast = self.details['credits']['cast']
+            self.crew = self.details['credits']['crew']
+            self.videos = self.details['videos']['results']
+            self.details['crew'] = self.crew
+
             self.result['details'] = self.get_details()
             self.result['cast'] = self.get_cast()
             self.result['crew'] = self.get_crew()
@@ -38,18 +49,12 @@ class TMDBVideos(object):
             return
 
     def get_details(self):
-        details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings,external_ids,credits,videos,translations')
-        self.created_by = details['created_by'] if details.get('created_by') else ''
-        self.cast = details['credits']['cast']
-        self.crew = details['credits']['crew']
-        self.videos = details['videos']['results']
-        details['crew'] = self.crew
         li = list()
 
         if self.movie:
-            list_item = tmdb_handle_movie(details,self.local_movies,full_info=True)
+            list_item = tmdb_handle_movie(self.details,self.local_movies,full_info=True)
         elif self.tvshow:
-            list_item = tmdb_handle_tvshow(details,self.local_shows,full_info=True)
+            list_item = tmdb_handle_tvshow(self.details,self.local_shows,full_info=True)
 
         li.append(list_item)
         return li
