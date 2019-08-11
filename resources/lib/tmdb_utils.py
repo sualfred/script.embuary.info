@@ -72,19 +72,18 @@ def omdb_call(imdbnumber=None,title=None,year=None,content_type=None):
 def tmdb_call(request,error_check=False,error=ADDON.getLocalizedString(32019)):
     try:
         request = requests.get(request)
-        if request.status_code != requests.codes.ok:
 
-            if request.status_code == 401:
-                error = ADDON.getLocalizedString(32022)
-                raise Exception
+        if request.status_code == 504:
+            DIALOG.notification('ADDON.getLocalizedString(32020)','ADDON.getLocalizedString(32021)')
+            request = requests.get(request)
 
-            if request.status_code == 404:
-                error = ADDON.getLocalizedString(32019)
-                raise Exception
+        if request.status_code == 401:
+            error = ADDON.getLocalizedString(32022)
+            raise Exception
 
-            else:
-                error = 'Code ' + str(request.status_code)
-                raise Exception
+        elif request.status_code != requests.codes.ok:
+            error = 'Code ' + str(request.status_code)
+            raise Exception
 
         result = request.json()
 
@@ -96,6 +95,7 @@ def tmdb_call(request,error_check=False,error=ADDON.getLocalizedString(32019)):
 
     except Exception:
         tmdb_error(error)
+        quit()
 
 
 def tmdb_query(action=None,call=None,get=None,use_language=True,language=DEFAULT_LANGUAGE,error_check=False,**kwargs):
@@ -197,7 +197,7 @@ def tmdb_item_details(action,tmdb_id,get=None,append_to_response=None,use_langua
                                 use_language=False
                                 )
 
-            all_results['results'] = result['results'] + result_EN['results']
+            all_results['results'] = result.get('results') + result_EN.get('results')
 
             return all_results
 
@@ -215,10 +215,18 @@ def tmdb_item_details(action,tmdb_id,get=None,append_to_response=None,use_langua
 
 
 def tmdb_fallback_details(result,action,get):
-    if len(result) == 0: return True
-    if 'results' in result and len(result['results']) == 0: return True
-    if action == 'person' and get is None and not result['biography']: return True
-    if action != 'person' and get is None and not result['overview']: return True
+    if len(result) == 0:
+        log('0 result')
+        return True
+    if 'results' in result and len(result['results']) == 0:
+        log('no results in result')
+        return True
+    if action == 'person' and get is None and not result['biography']:
+        log('no biography')
+        return True
+    if action != 'person' and get is None and not result['overview']:
+        log('no overview')
+        return True
 
     return False
 
@@ -400,9 +408,6 @@ def tmdb_handle_movie(item,local_items,full_info=False):
     list_item.setProperty('call', 'movie')
     list_item.setProperty('budget', format_currency(item.get('budget')))
     list_item.setProperty('revenue', format_currency(item.get('revenue')))
-
-    if full_info:
-        log(item)
 
     if full_info and OMDB_API_KEY and imdbnumber:
         omdb = omdb_call(imdbnumber)

@@ -19,7 +19,6 @@ class Main:
             TheMovieDB(self.call,self.params)
         else:
             call = DIALOG.select(ADDON.getLocalizedString(32005), [ADDON.getLocalizedString(32004), xbmc.getLocalizedString(20338), xbmc.getLocalizedString(20364)])
-            log(call)
             if call == 0:
                 call = 'person'
             elif call == 1:
