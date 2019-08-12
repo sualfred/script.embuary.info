@@ -32,7 +32,7 @@ class TheMovieDB(object):
         if self.tmdb_id:
             self.call_params = {}
             self.call_params['local_shows'] = self.get_local_media('tvshow','VideoLibrary.GetTVShows',['title', 'originaltitle', 'year', 'playcount', 'episode', 'watchedepisodes'])
-            self.call_params['local_movies'] = self.get_local_media('movie','VideoLibrary.GetMovies',['title', 'originaltitle', 'year', 'imdbnumber', 'playcount'])
+            self.call_params['local_movies'] = self.get_local_media('movie','VideoLibrary.GetMovies',['title', 'originaltitle', 'year', 'imdbnumber', 'playcount', 'file'])
 
             self.entry_point()
 
@@ -83,8 +83,16 @@ class TheMovieDB(object):
 
         local_items = []
         for item in items:
-            local_items.append({'title': item.get('title',''), 'originaltitle': item.get('originaltitle',''), 'imdbnumber': item.get('imdbnumber',''), 'year': item.get('year',''), 'dbid': item.get('%sid' % dbtype,''), 'playcount': item.get('playcount',''), 'episodes': item.get('episode',''),
-                'watchedepisodes': item.get('watchedepisodes','')})
+            local_items.append({'title': item.get('title',''),
+                                'originaltitle': item.get('originaltitle',''),
+                                'imdbnumber': item.get('imdbnumber',''),
+                                'year': item.get('year',''),
+                                'dbid': item.get('%sid' % dbtype,''),
+                                'playcount': item.get('playcount',''),
+                                'episodes': item.get('episode',''),
+                                'watchedepisodes': item.get('watchedepisodes',''),
+                                'file': item.get('file','')}
+                                )
 
         return local_items
 

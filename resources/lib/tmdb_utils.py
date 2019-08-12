@@ -295,13 +295,14 @@ def tmdb_error(message=ADDON.getLocalizedString(32019)):
 
 def tmdb_check_localdb(local_items,title,originaltitle,year,imdbnumber=False):
     found_local = False
-    local = {'dbid': -1, 'playcount': -1, 'watchedepisodes': -1, 'episodes': -1, 'unwatchedepisodes': -1}
+    local = {'dbid': -1, 'playcount': -1, 'watchedepisodes': -1, 'episodes': -1, 'unwatchedepisodes': -1, 'file': -1}
 
     for item in local_items:
         dbid = item['dbid']
         playcount = item['playcount']
         episodes = item.get('episodes','')
         watchedepisodes = item.get('watchedepisodes','')
+        file = item.get('file','')
 
         if imdbnumber and item['imdbnumber'] == imdbnumber:
             found_local = True
@@ -318,6 +319,7 @@ def tmdb_check_localdb(local_items,title,originaltitle,year,imdbnumber=False):
 
     if found_local:
         local['dbid'] = dbid
+        local['file'] = file
         local['playcount'] = playcount
         local['episodes'] = episodes
         local['watchedepisodes'] = watchedepisodes
@@ -386,6 +388,7 @@ def tmdb_handle_movie(item,local_items,full_info=False):
     list_item.setProperty('call', 'movie')
     list_item.setProperty('budget', format_currency(item.get('budget')))
     list_item.setProperty('revenue', format_currency(item.get('revenue')))
+    list_item.setProperty('file', str(local_info['file']))
 
     if full_info and OMDB_API_KEY and imdbnumber:
         omdb = omdb_call(imdbnumber)
