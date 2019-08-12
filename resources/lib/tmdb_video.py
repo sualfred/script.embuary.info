@@ -74,8 +74,18 @@ class TMDBVideos(object):
         li_crew_duplicate_handler_id = list()
         li = list()
 
+        ''' Add creators to crew
+        '''
+        for item in self.created_by:
+            item['job'] = 'Creator'
+            item['department'] = 'Directing'
+            li_clean_crew.append(item)
+            li_crew_duplicate_handler_id.append(item['id'])
+
+        ''' Filter crew and merge duplicate crew members if they were responsible for different jobs
+        '''
         for item in self.crew:
-            if item['job'] in ['Director','Producer','Screenplay','Writer','Original Music Composer','Novel','Storyboard','Executive Producer','Comic Book']:
+            if item['job'] in ['Creator','Director','Producer','Screenplay','Writer','Original Music Composer','Novel','Storyboard','Executive Producer','Comic Book']:
                 if item['id'] not in li_crew_duplicate_handler_id:
                     li_clean_crew.append(item)
                     li_crew_duplicate_handler_id.append(item['id'])
@@ -84,12 +94,8 @@ class TMDBVideos(object):
                         if duplicate['id'] == item['id']:
                             duplicate['job'] = duplicate['job'] + ' / ' + item['job']
 
-
-        for item in self.created_by:
-            item['label2'] = 'Creator'
-            list_item = tmdb_handle_credits(item)
-            li.append(list_item)
-
+        ''' Sort crew output based on department
+        '''
         for item in li_clean_crew:
             if item['department'] == 'Directing':
                 item['label2'] = item.get('job','')
