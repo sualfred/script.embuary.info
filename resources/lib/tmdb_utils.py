@@ -294,20 +294,36 @@ def tmdb_error(message=ADDON.getLocalizedString(32019)):
 
 
 def tmdb_check_localdb(local_items,title,originaltitle,year,imdbnumber=False):
-    year = tmdb_get_year(year)
+    found_local = False
+    local = {'dbid': -1, 'playcount': -1, 'watchedepisodes': -1, 'episodes': -1, 'unwatchedepisodes': -1}
 
     for item in local_items:
         dbid = item['dbid']
-        if imdbnumber and item['imdbnumber'] == imdbnumber: return dbid
+        playcount = item['playcount']
+        episodes = item.get('episodes','')
+        watchedepisodes = item.get('watchedepisodes','')
+
+        if imdbnumber and item['imdbnumber'] == imdbnumber:
+            found_local = True
+            break
+
         try:
-            if int(item['year']) == int(year):
-                if item['originaltitle'] == originaltitle: return dbid
-                if item['title'] == originaltitle: return dbid
-                if item['title'] == title: return dbid
+            if int(item['year']) == int(tmdb_get_year(year)):
+                if item['originaltitle'] == originaltitle or item['title'] == originaltitle or item['title'] == title:
+                    found_local = True
+                    break
+
         except ValueError:
             pass
 
-    return -1
+    if found_local:
+        local['dbid'] = dbid
+        local['playcount'] = playcount
+        local['episodes'] = episodes
+        local['watchedepisodes'] = watchedepisodes
+        local['unwatchedepisodes'] = episodes - watchedepisodes if episodes else ''
+
+    return local
 
 
 def tmdb_handle_person(item):
@@ -343,11 +359,13 @@ def tmdb_handle_movie(item,local_items,full_info=False):
     imdbnumber = item.get('imdb_id','')
     premiered = item.get('release_date') if item.get('release_date') != '0' else ''
     duration = item.get('runtime') * 60 if item.get('runtime') > 0 else ''
+    local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,imdbnumber)
 
     list_item = xbmcgui.ListItem(label=label)
     list_item.setInfo('video', {'title': label,
                                 'originaltitle': originaltitle,
-                                'dbid': tmdb_check_localdb(local_items,label,originaltitle,premiered,imdbnumber),
+                                'dbid': local_info['dbid'],
+                                'playcount': local_info['playcount'],
                                 'imdbnumber': imdbnumber,
                                 'rating': item.get('vote_average',''),
                                 'votes': item.get('vote_count',''),
@@ -360,7 +378,8 @@ def tmdb_handle_movie(item,local_items,full_info=False):
                                 'writer': tmdb_join_items_by(item.get('crew',''),key_is='department',value_is='Writing'),
                                 'country': tmdb_join_items(item.get('production_countries','')),
                                 'genre': tmdb_join_items(item.get('genres','')),
-                                'studio': tmdb_join_items(item.get('production_companies',''))}
+                                'studio': tmdb_join_items(item.get('production_companies','')),
+                                'mediatype': 'movie'}
                                  )
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon,'fanart': backdrop})
     list_item.setProperty('id', str(item.get('id','')))
@@ -390,11 +409,13 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
     premiered = item.get('first_air_date') if item.get('first_air_date') != '0' else ''
     imdbnumber = item['external_ids']['imdb_id'] if item.get('external_ids') else ''
     tvdb_id = item['external_ids']['tvdb_id'] if item.get('external_ids') else ''
+    local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,tvdb_id)
 
     list_item = xbmcgui.ListItem(label=label)
     list_item.setInfo('video', {'title': label,
                                 'originaltitle': originaltitle,
-                                'dbid': tmdb_check_localdb(local_items,label,originaltitle,premiered,tvdb_id),
+                                'dbid': local_info['dbid'],
+                                'playcount': local_info['playcount'],
                                 'status': item.get('status',''),
                                 'rating': item.get('vote_average',''),
                                 'votes': item.get('vote_count',''),
@@ -406,9 +427,13 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
                                 'plot': tmdb_fallback_info(item,'overview'),
                                 'director': tmdb_join_items(item.get('created_by','')),
                                 'genre': tmdb_join_items(item.get('genres','')),
-                                'studio': tmdb_join_items(item.get('networks',''))}
+                                'studio': tmdb_join_items(item.get('networks','')),
+                                'mediatype': 'tvshow'}
                                 )
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon,'fanart': backdrop})
+    list_item.setProperty('TotalEpisodes', str(local_info['episodes']))
+    list_item.setProperty('WatchedEpisodes', str(local_info['watchedepisodes']))
+    list_item.setProperty('UnWatchedEpisodes', str(local_info['unwatchedepisodes']))
     list_item.setProperty('tvdb_id', str(tvdb_id))
     list_item.setProperty('id', str(item.get('id','')))
     list_item.setProperty('call', 'tv')
