@@ -425,14 +425,17 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
 
 
 def tmdb_fallback_info(item,key):
-    if item.get(key):
-        return item.get(key)
+    key_value = item.get(key)
+
+    if key_value:
+        return key_value.replace('&amp;', '&')
 
     try:
         for translation in item['translations']['translations']:
             if translation.get('iso_639_1') == FALLBACK_LANGUAGE:
                 if translation['data'][key]:
-                    return translation['data'][key]
+                    key_value = translation['data'][key]
+                    return key_value.replace('&amp;', '&')
 
     except Exception:
         pass
@@ -463,7 +466,7 @@ def tmdb_handle_credits(item):
 def tmdb_handle_yt_videos(item):
     icon = 'https://img.youtube.com/vi/%s/0.jpg' % str(item['key'])
 
-    request = requests.get(icon)
+    request = requests.head(icon)
     if request.status_code != requests.codes.ok:
         return 404
 
