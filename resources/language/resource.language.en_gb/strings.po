@@ -123,6 +123,16 @@ msgid "API key"
 msgstr ""
 
 #: /resources/settings.xml
+msgctxt "#32020"
+msgid "Caching"
+msgstr ""
+
+#: /resources/settings.xml
+msgctxt "#32021"
+msgid "Enable caching of fetched data"
+msgstr ""
+
+#: /resources/settings.xml
 msgctxt "#32024"
 msgid "Default language"
 msgstr ""

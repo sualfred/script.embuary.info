@@ -20,7 +20,13 @@ class TMDBPersons(object):
         self.result = {}
 
         if self.tmdb_id:
-            self.details = tmdb_item_details('person',self.tmdb_id,append_to_response='translations,movie_credits,tv_credits,images')
+            cache_key = str(call_request) + DEFAULT_LANGUAGE
+            self.details = get_cache(cache_key)
+
+            if not self.details:
+                self.details = tmdb_item_details('person',self.tmdb_id,append_to_response='translations,movie_credits,tv_credits,images')
+                if self.details:
+                    write_cache(cache_key,self.details)
 
             if not self.details:
                 return

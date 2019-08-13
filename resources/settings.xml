@@ -7,5 +7,7 @@
         <setting label="$ADDON[script.embuary.info 32023]" type="text" id="tmdb_api_key" default="fc168650632c6597038cf7072a7c20da"/>
         <setting label="OMDB $ADDON[script.embuary.info 32002]" type="lsep"/>
         <setting label="$ADDON[script.embuary.info 32023]" type="text" id="omdb_api_key"/>
+        <setting label="$ADDON[script.embuary.info 32020]" type="lsep"/>
+		<setting label="$ADDON[script.embuary.info 32021]" type="bool" id="cache_enabled" default="true"/>
 	</category>
 </settings>

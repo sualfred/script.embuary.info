@@ -43,30 +43,39 @@ def omdb_call(imdbnumber=None,title=None,year=None,content_type=None):
     else:
         return omdb
 
-    try:
-        request = requests.get(url)
-        result = request.json()
+    omdb_cache = get_cache(url)
 
-        omdb['awards'] = result.get('Awards')
-        omdb['imdbRating'] = result.get('imdbRating')
-        omdb['imdbVotes'] = result.get('imdbVotes')
-        omdb['DVD'] = date_format(result.get('DVD'))
+    if omdb_cache:
+        return omdb_cache
 
-        delete_keys = [key for key,value in omdb.iteritems() if value == 'N/A' or value == 'NA']
-        for key in delete_keys:
-            del omdb[key]
+    else:
+        try:
+            request = requests.get(url)
+            result = request.json()
 
-        for rating in result['Ratings']:
-            if rating['Source'] == 'Rotten Tomatoes':
-                omdb['rotten'] = rating['Value'][:-1]
-            elif rating['Source'] == 'Metacritic':
-                omdb['metacritic'] = rating['Value'][:-4]
+            omdb['awards'] = result.get('Awards')
+            omdb['imdbRating'] = result.get('imdbRating')
+            omdb['imdbVotes'] = result.get('imdbVotes')
+            omdb['DVD'] = date_format(result.get('DVD'))
 
-    except Exception as error:
-        log('OMDB Error: %s' % error)
-        pass
+            delete_keys = [key for key,value in omdb.iteritems() if value == 'N/A' or value == 'NA']
+            for key in delete_keys:
+                del omdb[key]
 
-    return omdb
+            for rating in result['Ratings']:
+                if rating['Source'] == 'Rotten Tomatoes':
+                    omdb['rotten'] = rating['Value'][:-1]
+                elif rating['Source'] == 'Metacritic':
+                    omdb['metacritic'] = rating['Value'][:-4]
+
+        except Exception as error:
+            log('OMDB Error: %s' % error)
+            pass
+
+        else:
+            write_cache(url,omdb)
+
+        return omdb
 
 
 def tmdb_call(request_url,error_check=False,error=ADDON.getLocalizedString(32019)):
@@ -493,11 +502,6 @@ def tmdb_handle_credits(item):
 
 def tmdb_handle_yt_videos(item):
     icon = 'https://img.youtube.com/vi/%s/0.jpg' % str(item['key'])
-
-    request = requests.head(icon)
-    if request.status_code != requests.codes.ok:
-        return 404
-
     list_item = xbmcgui.ListItem(label=item['name'])
     list_item.setLabel2(item.get('type',''))
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon})

@@ -12,6 +12,7 @@ import datetime
 import os
 import operator
 import arrow
+import simplecache
 
 ########################
 
@@ -24,6 +25,9 @@ WARNING = xbmc.LOGWARNING
 DEBUG = xbmc.LOGDEBUG
 
 DIALOG = xbmcgui.Dialog()
+
+CACHE = simplecache.SimpleCache()
+CACHE_ENABLED = ADDON.getSettingBool('cache_enabled')
 
 ########################
 
@@ -42,6 +46,16 @@ def log(txt,loglevel=NOTICE,force=False):
         xbmc.log(msg=message.encode('utf-8'), level=loglevel) # Python 2
     except TypeError:
         xbmc.log(msg=message, level=loglevel)
+
+
+def get_cache(key):
+    if CACHE_ENABLED:
+        return CACHE.get(key)
+
+
+def write_cache(value,data):
+    if CACHE_ENABLED:
+        CACHE.set(value,data,expiration=datetime.timedelta(days=14))
 
 
 def format_currency(integer):

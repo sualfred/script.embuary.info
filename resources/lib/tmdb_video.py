@@ -6,6 +6,7 @@
 import sys
 import xbmc
 import xbmcgui
+import requests
 
 from resources.lib.helper import *
 from resources.lib.tmdb_utils import *
@@ -23,7 +24,13 @@ class TMDBVideos(object):
         self.tvshow = get_bool(self.call,'tv')
 
         if self.tmdb_id:
-            self.details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings,external_ids,credits,videos,translations')
+            cache_key = str(call_request) + DEFAULT_LANGUAGE
+            self.details = get_cache(cache_key)
+
+            if not self.details:
+                self.details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings,external_ids,credits,videos,translations')
+                if self.details:
+                    write_cache(cache_key,self.details)
 
             if not self.details:
                 return
@@ -145,9 +152,16 @@ class TMDBVideos(object):
         return li
 
     def get_images(self):
-        images = tmdb_item_details(self.call,self.tmdb_id,'images',use_language=False,include_image_language='%s,en,null' % DEFAULT_LANGUAGE)
-        images = images['backdrops']
+        cache_key = str(self.tmdb_id) + self.call + 'images' + DEFAULT_LANGUAGE
+        images = get_cache(cache_key)
         li = list()
+
+        if not images:
+            images = tmdb_item_details(self.call,self.tmdb_id,'images',use_language=False,include_image_language='%s,en,null' % DEFAULT_LANGUAGE)
+            images = images['backdrops']
+
+            if images:
+                write_cache(cache_key,images)
 
         for item in images:
             list_item = tmdb_handle_images(item)
@@ -156,15 +170,32 @@ class TMDBVideos(object):
         return li
 
     def get_yt_videos(self):
-        videos = self.videos
+        cache_key = str(self.tmdb_id) + self.call + 'ytvideos' + DEFAULT_LANGUAGE
+        videos = get_cache(cache_key)
         li = list()
 
-        ''' Add EN videos next to the user configured language
-        '''
-        if DEFAULT_LANGUAGE != FALLBACK_LANGUAGE:
-            videos_en = tmdb_item_details(self.call,self.tmdb_id,'videos',use_language=False)
-            videos_en = videos_en.get('results')
-            videos = videos + videos_en
+        if not videos:
+            videos = self.videos
+
+            ''' Add EN videos next to the user configured language
+            '''
+            if DEFAULT_LANGUAGE != FALLBACK_LANGUAGE:
+                videos_en = tmdb_item_details(self.call,self.tmdb_id,'videos',use_language=False)
+                videos_en = videos_en.get('results')
+                videos = videos + videos_en
+
+            ''' Check online status of all videos to prevent dead links
+            '''
+            online_videos = []
+            for item in videos:
+                request = requests.head('https://img.youtube.com/vi/%s/0.jpg' % str(item['key']))
+                if request.status_code == requests.codes.ok:
+                    online_videos.append(item)
+
+            videos = online_videos
+
+            if videos:
+                write_cache(cache_key,videos)
 
         for item in videos:
             if item['site'] == 'YouTube':
