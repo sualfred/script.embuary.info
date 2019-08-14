@@ -87,7 +87,7 @@ msgstr "Bilder"
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32011"
 msgid "Premiered"
-msgstr "Premiere"
+msgstr "Veröffentlichung"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32012"
@@ -119,10 +119,25 @@ msgctxt "#32017"
 msgid "Known for"
 msgstr "Bekannt für"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32018"
+msgid "Crew"
+msgstr "Crew"
+
 #: /resources/settings.xml
 msgctxt "#32023"
 msgid "API key"
 msgstr "API Key"
+
+#: /resources/settings.xml
+msgctxt "#32020"
+msgid "Caching"
+msgstr "Caching"
+
+#: /resources/settings.xml
+msgctxt "#32021"
+msgid "Enable caching of fetched data"
+msgstr "Aktiviere Caching von abgerufenen Daten"
 
 #: /resources/settings.xml
 msgctxt "#32024"
