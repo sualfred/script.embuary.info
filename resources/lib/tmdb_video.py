@@ -24,7 +24,7 @@ class TMDBVideos(object):
         self.tvshow = get_bool(self.call,'tv')
 
         if self.tmdb_id:
-            cache_key = str(call_request) + DEFAULT_LANGUAGE
+            cache_key = str(call_request) + DEFAULT_LANGUAGE + COUNTRY_CODE
             self.details = get_cache(cache_key)
 
             if not self.details:
