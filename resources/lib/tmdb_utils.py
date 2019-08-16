@@ -306,25 +306,26 @@ def tmdb_check_localdb(local_items,title,originaltitle,year,imdbnumber=False):
     found_local = False
     local = {'dbid': -1, 'playcount': -1, 'watchedepisodes': -1, 'episodes': -1, 'unwatchedepisodes': -1, 'file': -1}
 
-    for item in local_items:
-        dbid = item['dbid']
-        playcount = item['playcount']
-        episodes = item.get('episodes','')
-        watchedepisodes = item.get('watchedepisodes','')
-        file = item.get('file','')
+    if local_items:
+        for item in local_items:
+            dbid = item['dbid']
+            playcount = item['playcount']
+            episodes = item.get('episodes','')
+            watchedepisodes = item.get('watchedepisodes','')
+            file = item.get('file','')
 
-        if imdbnumber and item['imdbnumber'] == imdbnumber:
-            found_local = True
-            break
+            if imdbnumber and item['imdbnumber'] == imdbnumber:
+                found_local = True
+                break
 
-        try:
-            if int(item['year']) == int(tmdb_get_year(year)):
-                if item['originaltitle'] == originaltitle or item['title'] == originaltitle or item['title'] == title:
-                    found_local = True
-                    break
+            try:
+                if int(item['year']) == int(tmdb_get_year(year)):
+                    if item['originaltitle'] == originaltitle or item['title'] == originaltitle or item['title'] == title:
+                        found_local = True
+                        break
 
-        except ValueError:
-            pass
+            except ValueError:
+                pass
 
     if found_local:
         local['dbid'] = dbid
@@ -368,8 +369,8 @@ def tmdb_handle_movie(item,local_items,full_info=False):
     label = item['title'] or item['original_title']
     originaltitle = item.get('original_title','')
     imdbnumber = item.get('imdb_id','')
-    premiered = item.get('release_date') if item.get('release_date') != '0' else ''
-    duration = item.get('runtime') * 60 if item.get('runtime') > 0 else ''
+    premiered = item.get('release_date') if item.get('release_date',0) != '0' else ''
+    duration = item.get('runtime') * 60 if item.get('runtime',0) > 0 else ''
     local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,imdbnumber)
 
     list_item = xbmcgui.ListItem(label=label)
@@ -418,7 +419,7 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
 
     label = item['name'] or item['original_name']
     originaltitle = item.get('original_name','')
-    premiered = item.get('first_air_date') if item.get('first_air_date') != '0' else ''
+    premiered = item.get('first_air_date') if item.get('first_air_date',0) != '0' else ''
     imdbnumber = item['external_ids']['imdb_id'] if item.get('external_ids') else ''
     tvdb_id = item['external_ids']['tvdb_id'] if item.get('external_ids') else ''
     local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,tvdb_id)
@@ -552,7 +553,7 @@ def tmdb_get_cert(item):
         elif item.get('release_dates'):
             for cert in item['release_dates']['results']:
                 if cert['iso_3166_1'] == COUNTRY_CODE:
-                    mpaa = prefix + cert['release_dates'][0]['certification']
+                    mpaa = cert['release_dates'][0]['certification']
                     return mpaa
 
         else:
