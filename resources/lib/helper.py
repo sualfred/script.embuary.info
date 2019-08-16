@@ -18,7 +18,13 @@ import simplecache
 
 ADDON = xbmcaddon.Addon()
 ADDON_ID = ADDON.getAddonInfo('id')
-ADDON_PATH = ADDON.getAddonInfo('path').decode('utf-8')
+
+''' Python 2<->3 compatibility
+'''
+try:
+    ADDON_PATH = ADDON.getAddonInfo('path').decode('utf-8')
+except:
+    ADDON_PATH = ADDON.getAddonInfo('path')
 
 NOTICE = xbmc.LOGNOTICE
 WARNING = xbmc.LOGWARNING
