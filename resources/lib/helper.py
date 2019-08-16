@@ -12,18 +12,21 @@ import datetime
 import os
 import operator
 import arrow
+import sys
 import simplecache
 
 ########################
+
+PYTHON3 = True if sys.version_info.major == 3 else False
 
 ADDON = xbmcaddon.Addon()
 ADDON_ID = ADDON.getAddonInfo('id')
 
 ''' Python 2<->3 compatibility
 '''
-try:
+if not PYTHON3:
     ADDON_PATH = ADDON.getAddonInfo('path').decode('utf-8')
-except:
+else:
     ADDON_PATH = ADDON.getAddonInfo('path')
 
 NOTICE = xbmc.LOGNOTICE
@@ -37,20 +40,16 @@ CACHE_ENABLED = ADDON.getSettingBool('cache_enabled')
 
 ########################
 
-def log(txt,loglevel=NOTICE,force=False):
-    ''' Python 2 requires to decode stuff at first
-    '''
-    try:
+def log(txt,loglevel=DEBUG,force=False):
+    if not PYTHON3:
         if isinstance(txt, str):
             txt = txt.decode('utf-8')
-    except AttributeError:
-        pass
 
     message = u'[ %s ] %s' % (ADDON_ID,txt)
 
-    try:
-        xbmc.log(msg=message.encode('utf-8'), level=loglevel) # Python 2
-    except TypeError:
+    if not PYTHON3:
+        xbmc.log(msg=message.encode('utf-8'), level=loglevel)
+    else:
         xbmc.log(msg=message, level=loglevel)
 
 

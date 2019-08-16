@@ -49,11 +49,7 @@ class TMDBVideos(object):
             self.result['images'] = self.get_images()
 
     def __getitem__(self, key):
-        try:
-            value = self.result[key]
-            return value
-        except KeyError:
-            return
+        return self.result.get(key,'')
 
     def get_details(self):
         li = list()

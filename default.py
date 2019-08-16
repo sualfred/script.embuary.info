@@ -45,7 +45,6 @@ class Main:
                     self.params[arg.split("=")[0].lower()] = "=".join(arg.split("=")[1:]).strip()
                 except:
                     self.params = {}
-                    pass
 
 
 if __name__ == "__main__":

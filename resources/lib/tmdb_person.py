@@ -41,12 +41,7 @@ class TMDBPersons(object):
             self.result['images'] = self.get_person_images()
 
     def __getitem__(self, key):
-        try:
-            value = self.result[key]
-            return value
-
-        except KeyError:
-            return
+        return self.result.get(key,'')
 
     def get_person_details(self):
         li = list()

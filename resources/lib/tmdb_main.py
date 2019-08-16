@@ -298,7 +298,7 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         elif next_call == 'youtube':
             self.action['call'] = 'close'
             execute('Dialog.Close(all)')
-            execute('PlayMedia(plugin://plugin.video.youtube/play/?video_id=%s)' % xbmc.getInfoLabel('Container(%s).ListItem.Property(ytid)' % controlId))
+            xbmc.Player().play('plugin://plugin.video.youtube/play/?video_id=%s' % xbmc.getInfoLabel('Container(%s).ListItem.Property(ytid)' % controlId))
             self.quit()
 
     def quit(self):
