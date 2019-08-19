@@ -58,7 +58,7 @@ def omdb_call(imdbnumber=None,title=None,year=None,content_type=None):
             omdb['imdbVotes'] = result.get('imdbVotes')
             omdb['DVD'] = date_format(result.get('DVD'))
 
-            delete_keys = [key for key,value in omdb.iteritems() if value == 'N/A' or value == 'NA']
+            delete_keys = [key for key,value in omdb.items() if value == 'N/A' or value == 'NA']
             for key in delete_keys:
                 del omdb[key]
 
