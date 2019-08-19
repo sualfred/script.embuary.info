@@ -304,7 +304,7 @@ def tmdb_error(message=ADDON.getLocalizedString(32019)):
 
 def tmdb_check_localdb(local_items,title,originaltitle,year,imdbnumber=False):
     found_local = False
-    local = {'dbid': -1, 'playcount': 0, 'watchedepisodes': 0, 'episodes': 0, 'unwatchedepisodes': 0, 'file': ''}
+    local = {'dbid': -1, 'playcount': 0, 'watchedepisodes': '', 'episodes': '', 'unwatchedepisodes': '', 'file': ''}
 
     if local_items:
         for item in local_items:
