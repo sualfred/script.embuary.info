@@ -57,7 +57,7 @@ msgstr "Miesto narodenia"
 #: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32008"
 msgid "Facts"
-msgstr "Fakty"
+msgstr "Informácie"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32009"
