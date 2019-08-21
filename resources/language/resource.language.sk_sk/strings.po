@@ -77,7 +77,7 @@ msgstr "Premiéra"
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32012"
 msgid "Retail"
-msgstr "Retail"
+msgstr "Maloobchod"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32013"
@@ -107,7 +107,7 @@ msgstr "Známa(y) pre"
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32018"
 msgid "Crew"
-msgstr "Obsadenie"
+msgstr "Štáb"
 
 #: /resources/lib/tmdb.py
 msgctxt "#32019"
