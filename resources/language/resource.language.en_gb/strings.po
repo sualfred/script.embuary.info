@@ -136,3 +136,8 @@ msgstr ""
 msgctxt "#32024"
 msgid "Default language"
 msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-person.xml
+msgctxt "#32025"
+msgid "items in your library"
+msgstr ""
