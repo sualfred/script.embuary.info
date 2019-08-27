@@ -29,8 +29,6 @@ class TMDBVideos(object):
 
             if not self.details:
                 self.details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings,external_ids,credits,videos,translations')
-                if self.details:
-                    write_cache(cache_key,self.details)
 
             if not self.details:
                 return
@@ -47,6 +45,8 @@ class TMDBVideos(object):
             self.result['similar'] = self.get_similar()
             self.result['youtube'] = self.get_yt_videos()
             self.result['images'] = self.get_images()
+
+            write_cache(cache_key,self.details)
 
     def __getitem__(self, key):
         return self.result.get(key,'')
