@@ -396,11 +396,12 @@ def tmdb_handle_movie(item,local_items,full_info=False):
                                 'mediatype': 'movie'}
                                  )
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon,'fanart': backdrop})
-    list_item.setProperty('id', str(item.get('id','')))
-    list_item.setProperty('call', 'movie')
+    list_item.setProperty('role', item.get('character',''))
     list_item.setProperty('budget', format_currency(item.get('budget')))
     list_item.setProperty('revenue', format_currency(item.get('revenue')))
     list_item.setProperty('file', local_info.get('file',''))
+    list_item.setProperty('id', str(item.get('id','')))
+    list_item.setProperty('call', 'movie')
 
     if full_info and OMDB_API_KEY and imdbnumber:
         omdb = omdb_call(imdbnumber)
@@ -451,6 +452,7 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
     list_item.setProperty('TotalEpisodes', str(local_info['episodes']))
     list_item.setProperty('WatchedEpisodes', str(local_info['watchedepisodes']))
     list_item.setProperty('UnWatchedEpisodes', str(local_info['unwatchedepisodes']))
+    list_item.setProperty('role', item.get('character',''))
     list_item.setProperty('tvdb_id', str(tvdb_id))
     list_item.setProperty('id', str(item.get('id','')))
     list_item.setProperty('call', 'tv')

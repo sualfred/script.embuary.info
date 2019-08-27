@@ -55,6 +55,8 @@ Special properties:
 * `Container(10051).ListItem.Property(Known_For_Department)` = Known for department (acting, directing, etc.)
 * `Container(10051).ListItem.Property(Gender)` = Gender (male/female)
 * `Container(10051).ListItem.Property(Biography)` = Biography
+* `Container(10052).ListItem.Property(Role)` = Character role
+* `Container(10053).ListItem.Property(Role)` = Character role
 
 *script-embuary-video.xml*
 * List control ID `10051` = All available information of the called item.
