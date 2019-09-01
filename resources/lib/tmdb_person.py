@@ -66,7 +66,7 @@ class TMDBPersons(object):
 
             ''' Filter to only show real movies and to skip documentaries / behind the scenes / etc
             '''
-            if FILTER_MOVIES and item['character']:
+            if FILTER_MOVIES and item.get('character'):
                 for genre in item['genre_ids']:
                     if genre == 99 and ('himself' in item.get('character').lower() or 'herself' in item['character'].lower()):
                         skip_movie = True
