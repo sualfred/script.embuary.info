@@ -62,7 +62,17 @@ class TMDBPersons(object):
         duplicate_handler = list()
 
         for item in movies:
-            if item['id'] not in duplicate_handler:
+            skip_movie = False
+
+            ''' Filter to only show real movies and to skip documentaries / behind the scenes / etc
+            '''
+            if FILTER_MOVIES:
+                if item['character']:
+                    for genre in item['genre_ids']:
+                        if genre == 99 and ('himself' in item.get('character').lower() or 'herself' in item['character'].lower()):
+                            skip_movie = True
+
+            if not skip_movie and item['id'] not in duplicate_handler:
                 list_item, is_local = tmdb_handle_movie(item,self.local_movies)
                 li.append(list_item)
                 duplicate_handler.append(item['id'])

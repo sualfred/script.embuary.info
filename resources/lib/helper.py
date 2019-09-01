@@ -39,6 +39,7 @@ DIALOG = xbmcgui.Dialog()
 CACHE = simplecache.SimpleCache()
 CACHE_ENABLED = ADDON.getSettingBool('cache_enabled')
 
+FILTER_MOVIES = ADDON.getSettingBool('filter_movies')
 FILTER_SHOWS = ADDON.getSettingBool('filter_shows')
 FILTER_SHOWS_BLACKLIST = [10763,10764,10767]
 
