@@ -39,9 +39,15 @@ DIALOG = xbmcgui.Dialog()
 CACHE = simplecache.SimpleCache()
 CACHE_ENABLED = ADDON.getSettingBool('cache_enabled')
 
+FILTER_SHOWS = ADDON.getSettingBool('filter_shows')
+FILTER_SHOWS_BLACKLIST = [10763,10764,10767]
+
 ########################
 
 def log(txt,loglevel=DEBUG,force=False):
+    if force:
+        loglevel = NOTICE
+
     if not PYTHON3:
         if isinstance(txt, str):
             txt = txt.decode('utf-8')

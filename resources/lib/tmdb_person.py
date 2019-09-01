@@ -78,7 +78,20 @@ class TMDBPersons(object):
         duplicate_handler = list()
 
         for item in tvshows:
-            if item['character'] and item['id'] not in duplicate_handler:
+            skip_show = False
+
+            ''' Filter to only show real TV series and to skip talk, reality or news shows
+            '''
+            if FILTER_SHOWS:
+                if not item['genre_ids']:
+                    skip_show = True
+                else:
+                    for genre in item['genre_ids']:
+                        if genre in FILTER_SHOWS_BLACKLIST:
+                            skip_show = True
+                            break
+
+            if not skip_show and item['id'] not in duplicate_handler:
                 list_item, is_local = tmdb_handle_tvshow(item,self.local_shows)
                 li.append(list_item)
                 duplicate_handler.append(item['id'])
