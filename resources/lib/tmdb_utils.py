@@ -82,12 +82,12 @@ def omdb_properties(list_item,imdbnumber):
     if OMDB_API_KEY and imdbnumber:
         omdb = omdb_call(imdbnumber)
         if omdb:
-            list_item.setProperty('rating.metacritic', omdb.get('metacritic'))
-            list_item.setProperty('rating.rotten', omdb.get('rotten'))
-            list_item.setProperty('rating.imdb', omdb.get('imdbRating'))
-            list_item.setProperty('votes.imdb', omdb.get('imdbVotes'))
-            list_item.setProperty('awards', omdb.get('awards'))
-            list_item.setProperty('release', omdb.get('DVD'))
+            list_item.setProperty('rating.metacritic', omdb.get('metacritic',''))
+            list_item.setProperty('rating.rotten', omdb.get('rotten',''))
+            list_item.setProperty('rating.imdb', omdb.get('imdbRating',''))
+            list_item.setProperty('votes.imdb', omdb.get('imdbVotes',''))
+            list_item.setProperty('awards', omdb.get('awards',''))
+            list_item.setProperty('release', omdb.get('DVD',''))
 
 
 def tmdb_call(request_url,error_check=False,error=ADDON.getLocalizedString(32019)):
