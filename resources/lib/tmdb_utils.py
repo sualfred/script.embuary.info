@@ -559,7 +559,7 @@ def tmdb_get_cert(item):
         elif item.get('release_dates'):
             for cert in item['release_dates']['results']:
                 if cert['iso_3166_1'] == COUNTRY_CODE:
-                    mpaa = cert['release_dates'][0]['certification']
+                    mpaa = prefix + cert['release_dates'][0]['certification']
                     return mpaa
 
         else:
