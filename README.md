@@ -96,6 +96,12 @@ Special properties:
 * `Container(10051).ListItem.Property(NextEpisode_plot)` = Next aired episode plot
 * `Container(10051).ListItem.Property(NextEpisode_date)` = Next aired episode date
 * `Container(10051).ListItem.Property(NextEpisode_thumb)` = Next aired episode thumb
+* `Container(10051).ListItem.Property(LastEpisode)` = Last aired episode name
+* `Container(10051).ListItem.Property(LastEpisode_number)` = Last aired episode number
+* `Container(10051).ListItem.Property(LastEpisode_season)` = Last aired episode season number
+* `Container(10051).ListItem.Property(LastEpisode_plot)` = Last aired episode plot
+* `Container(10051).ListItem.Property(LastEpisode_date)` = Last aired episode date
+* `Container(10051).ListItem.Property(LastEpisode_thumb)` = Last aired episode thumb
 
 *script-embuary-image.xml*
 * List control ID `1` = Is used to display a portrait/backdrop images in fullscreen.
