@@ -90,6 +90,12 @@ Special properties:
 * `Container(10051).ListItem.Property(Collection_id)` = Collection ID
 * `Container(10051).ListItem.Property(Collection_poster)` = Collection poster art
 * `Container(10051).ListItem.Property(Collection_fanart)` = Collection fanart
+* `Container(10051).ListItem.Property(NextEpisode)` = Next aired episode name
+* `Container(10051).ListItem.Property(NextEpisode_number)` = Next aired episode number
+* `Container(10051).ListItem.Property(NextEpisode_season)` = Next aired episode season number
+* `Container(10051).ListItem.Property(NextEpisode_plot)` = Next aired episode plot
+* `Container(10051).ListItem.Property(NextEpisode_date)` = Next aired episode date
+* `Container(10051).ListItem.Property(NextEpisode_thumb)` = Next aired episode thumb
 
 *script-embuary-image.xml*
 * List control ID `1` = Is used to display a portrait/backdrop images in fullscreen.

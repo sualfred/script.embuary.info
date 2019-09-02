@@ -458,6 +458,7 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
     originaltitle = item.get('original_name','')
     premiered = item.get('first_air_date') if item.get('first_air_date',0) != '0' else ''
     imdbnumber = item['external_ids']['imdb_id'] if item.get('external_ids') else ''
+    next_episode = item.get('next_episode_to_air','')
     tvdb_id = item['external_ids']['tvdb_id'] if item.get('external_ids') else ''
     local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,tvdb_id)
     dbid = local_info['dbid']
@@ -496,6 +497,14 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
         tmdb_studios(list_item,item,'production')
         tmdb_studios(list_item,item,'network')
         omdb_properties(list_item,imdbnumber)
+
+        if next_episode:
+            list_item.setProperty('nextepisode', next_episode.get('name'))
+            list_item.setProperty('nextepisode_plot', next_episode.get('overview'))
+            list_item.setProperty('nextepisode_number', str(next_episode.get('episode_number')))
+            list_item.setProperty('nextepisode_season', str(next_episode.get('season_number')))
+            list_item.setProperty('nextepisode_date', date_format(next_episode.get('air_date')))
+            list_item.setProperty('nextepisode_thumb', IMAGEPATH + next_episode['still_path'] if next_episode['still_path'] is not None else '')
 
     return list_item, is_local
 
