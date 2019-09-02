@@ -387,6 +387,7 @@ def tmdb_handle_movie(item,local_items,full_info=False):
                                 'mpaa': tmdb_get_cert(item),
                                 'tagline': item.get('tagline',''),
                                 'duration': duration,
+                                'status': item.get('status',''),
                                 'plot': tmdb_fallback_info(item,'overview'),
                                 'director': tmdb_join_items_by(item.get('crew',''),key_is='job',value_is='Director'),
                                 'writer': tmdb_join_items_by(item.get('crew',''),key_is='department',value_is='Writing'),
