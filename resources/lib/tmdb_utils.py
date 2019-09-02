@@ -78,6 +78,18 @@ def omdb_call(imdbnumber=None,title=None,year=None,content_type=None):
         return omdb
 
 
+def omdb_properties(list_item,imdbnumber):
+    if OMDB_API_KEY and imdbnumber:
+        omdb = omdb_call(imdbnumber)
+        if omdb:
+            list_item.setProperty('rating.metacritic', omdb.get('metacritic'))
+            list_item.setProperty('rating.rotten', omdb.get('rotten'))
+            list_item.setProperty('rating.imdb', omdb.get('imdbRating'))
+            list_item.setProperty('votes.imdb', omdb.get('imdbVotes'))
+            list_item.setProperty('awards', omdb.get('awards'))
+            list_item.setProperty('release', omdb.get('DVD'))
+
+
 def tmdb_call(request_url,error_check=False,error=ADDON.getLocalizedString(32019)):
     try:
         for i in range(1,10):
@@ -302,6 +314,25 @@ def tmdb_error(message=ADDON.getLocalizedString(32019)):
     DIALOG.ok(ADDON.getLocalizedString(32000),message)
 
 
+def tmdb_studios(list_item,item,key):
+    if key == 'production':
+        key_name = 'production_companies'
+        prop_name = 'studio'
+    elif key == 'network':
+        key_name = 'networks'
+        prop_name = 'network'
+    else:
+        return
+
+    i = 0
+    for studio in item[key_name]:
+        icon = IMAGEPATH + studio['logo_path'] if studio['logo_path'] is not None else ''
+        if icon:
+            list_item.setProperty(prop_name + '.' + str(i), studio['name'])
+            list_item.setProperty(prop_name + '.icon.' + str(i), icon)
+            i += 1
+
+
 def tmdb_check_localdb(local_items,title,originaltitle,year,imdbnumber=False):
     found_local = False
     local = {'dbid': -1, 'playcount': 0, 'watchedepisodes': '', 'episodes': '', 'unwatchedepisodes': '', 'file': ''}
@@ -369,6 +400,7 @@ def tmdb_handle_movie(item,local_items,full_info=False):
     label = item['title'] or item['original_title']
     originaltitle = item.get('original_title','')
     imdbnumber = item.get('imdb_id','')
+    collection = item.get('belongs_to_collection','')
     premiered = item.get('release_date') if item.get('release_date',0) != '0' else ''
     duration = item.get('runtime') * 60 if item.get('runtime',0) > 0 else ''
     local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,imdbnumber)
@@ -400,19 +432,20 @@ def tmdb_handle_movie(item,local_items,full_info=False):
     list_item.setProperty('role', item.get('character',''))
     list_item.setProperty('budget', format_currency(item.get('budget')))
     list_item.setProperty('revenue', format_currency(item.get('revenue')))
+    list_item.setProperty('homepage', item.get('homepage',''))
     list_item.setProperty('file', local_info.get('file',''))
     list_item.setProperty('id', str(item.get('id','')))
     list_item.setProperty('call', 'movie')
 
-    if full_info and OMDB_API_KEY and imdbnumber:
-        omdb = omdb_call(imdbnumber)
-        if omdb:
-            list_item.setProperty('rating.metacritic', omdb.get('metacritic'))
-            list_item.setProperty('rating.rotten', omdb.get('rotten'))
-            list_item.setProperty('rating.imdb', omdb.get('imdbRating'))
-            list_item.setProperty('votes.imdb', omdb.get('imdbVotes'))
-            list_item.setProperty('awards', omdb.get('awards'))
-            list_item.setProperty('release', omdb.get('DVD'))
+    if full_info:
+        tmdb_studios(list_item,item,'production')
+        omdb_properties(list_item,imdbnumber)
+
+        if collection:
+            list_item.setProperty('collection', collection['name'])
+            list_item.setProperty('collection_id', str(collection['id']))
+            list_item.setProperty('collection_poster', IMAGEPATH + collection['poster_path'] if collection['poster_path'] is not None else '')
+            list_item.setProperty('collection_fanart', IMAGEPATH + collection['backdrop_path'] if collection['backdrop_path'] is not None else '')
 
     return list_item, is_local
 
@@ -453,18 +486,16 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
     list_item.setProperty('TotalEpisodes', str(local_info['episodes']))
     list_item.setProperty('WatchedEpisodes', str(local_info['watchedepisodes']))
     list_item.setProperty('UnWatchedEpisodes', str(local_info['unwatchedepisodes']))
+    list_item.setProperty('homepage', item.get('homepage',''))
     list_item.setProperty('role', item.get('character',''))
     list_item.setProperty('tvdb_id', str(tvdb_id))
     list_item.setProperty('id', str(item.get('id','')))
     list_item.setProperty('call', 'tv')
 
-    if full_info and OMDB_API_KEY and imdbnumber:
-        omdb = omdb_call(imdbnumber)
-        if omdb:
-            list_item.setProperty('rating.metacritic', omdb.get('metacritic'))
-            list_item.setProperty('rating.rotten', omdb.get('rotten'))
-            list_item.setProperty('rating.imdb', omdb.get('imdbRating'))
-            list_item.setProperty('votes.imdb', omdb.get('imdbVotes'))
+    if full_info:
+        tmdb_studios(list_item,item,'production')
+        tmdb_studios(list_item,item,'network')
+        omdb_properties(list_item,imdbnumber)
 
     return list_item, is_local
 

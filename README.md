@@ -81,6 +81,15 @@ Special properties:
 * `Container(10051).ListItem.Property(Budget)` = Budget
 * `Container(10051).ListItem.Property(Revenue)` = Revenue
 * `Container(10051).ListItem.Property(Awards)` = Awards
+* `Container(10051).ListItem.Property(Homepage)` = Homepage
+* `Container(10051).ListItem.Property(Network.%i)` = Network name (%i = 0,1,2,3,...)
+* `Container(10051).ListItem.Property(Network.icon.%i)` = Network icon (%i = 0,1,2,3,...)
+* `Container(10051).ListItem.Property(Studio.%i)` = Studio name (%i = 0,1,2,3,...)
+* `Container(10051).ListItem.Property(Studio.icon.%i)` = Studio icon (%i = 0,1,2,3,...)
+* `Container(10051).ListItem.Property(Collection)` = Belongs to collection
+* `Container(10051).ListItem.Property(Collection_id)` = Collection ID
+* `Container(10051).ListItem.Property(Collection_poster)` = Collection poster art
+* `Container(10051).ListItem.Property(Collection_fanart)` = Collection fanart
 
 *script-embuary-image.xml*
 * List control ID `1` = Is used to display a portrait/backdrop images in fullscreen.
