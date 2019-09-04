@@ -3,13 +3,14 @@
 # Addon id: script.embuary.info
 # Addon Provider: sualfred
 # Translators:
+# sualfred <su4lfred@gmail.com>, 2019
 # Art Querido <aquerido@live.com.pt>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2019-08-08 13:02+0000\n"
+"PO-Revision-Date: 2019-09-04 11:35+0000\n"
 "Last-Translator: Art Querido <aquerido@live.com.pt>, 2019\n"
 "Language-Team: Portuguese (Portugal) (https://www.transifex.com/sualfred/teams/80018/pt_PT/)\n"
 "MIME-Version: 1.0\n"
@@ -148,3 +149,22 @@ msgstr "Idioma padrão"
 msgctxt "#32025"
 msgid "items in your library"
 msgstr "Itens na sua coleção"
+
+#: /resources/settings.xml
+msgctxt "#32026"
+msgid "Misc."
+msgstr "Misc."
+
+#: /resources/settings.xml
+msgctxt "#32027"
+msgid "Hide person appearances in reality/talk/news shows"
+msgstr ""
+"Ocultar presença desta pessoa em reality shows, talk shows ou notícias"
+
+#: /resources/settings.xml
+msgctxt "#32028"
+msgid ""
+"Hide person appearances in specials/documentaries/behind the scenes movies"
+msgstr ""
+"Ocultar presença desta pessoa em filmes especiais/documentários/atrás das "
+"cenas"
