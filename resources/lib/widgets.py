@@ -6,6 +6,13 @@
 from resources.lib.helper import *
 from resources.lib.utils import *
 
+''' Python 2<->3 compatibility
+'''
+try:
+    from urllib import urlencode
+except ImportError:
+    from urllib.parse import urlencode
+
 ########################
 
 INDEX = [
