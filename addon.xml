@@ -7,6 +7,9 @@
 		<import addon="script.module.simplecache" version="1.0.17" />
 	</requires>
 	<extension point="xbmc.python.script" library="default.py" />
+	<extension point="xbmc.python.pluginsource" library="plugin.py">
+	  <provides>video</provides>
+	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en_GB">Embuary Info Script</summary>
 		<summary lang="sk_SK">Embuary Info Skript</summary>

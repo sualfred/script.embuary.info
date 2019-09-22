@@ -33,6 +33,49 @@ OMDB_URL = 'http://www.omdbapi.com/'
 
 ########################
 
+def get_local_media():
+    local_media = get_cache('local_items')
+
+    if not local_media:
+        local_media = {}
+        local_media['shows'] = query_local_media('tvshow',
+                                                get='VideoLibrary.GetTVShows',
+                                                properties=['title', 'originaltitle', 'year', 'playcount', 'episode', 'watchedepisodes']
+                                                )
+        local_media['movies'] = query_local_media('movie',
+                                                get='VideoLibrary.GetMovies',
+                                                properties=['title', 'originaltitle', 'year', 'imdbnumber', 'playcount', 'file']
+                                                )
+
+    write_cache('local_items',local_media,1)
+
+    return local_media
+
+
+def query_local_media(dbtype,get,properties):
+    items = json_call(get,properties,sort={'order': 'descending', 'method': 'year'})
+
+    try:
+        items = items['result']['%ss' % dbtype]
+    except Exception:
+        return
+
+    local_items = []
+    for item in items:
+        local_items.append({'title': item.get('title',''),
+                            'originaltitle': item.get('originaltitle',''),
+                            'imdbnumber': item.get('imdbnumber',''),
+                            'year': item.get('year',''),
+                            'dbid': item.get('%sid' % dbtype,''),
+                            'playcount': item.get('playcount',''),
+                            'episodes': item.get('episode',''),
+                            'watchedepisodes': item.get('watchedepisodes',''),
+                            'file': item.get('file','')}
+                            )
+
+    return local_items
+
+
 def omdb_call(imdbnumber=None,title=None,year=None,content_type=None):
     omdb = {}
 
@@ -350,8 +393,15 @@ def tmdb_check_localdb(local_items,title,originaltitle,year,imdbnumber=False):
                 break
 
             try:
-                if int(item['year']) == int(tmdb_get_year(year)):
+                tmdb_year = int(tmdb_get_year(year))
+                item_year = int(item['year'])
+
+                if item_year == tmdb_year:
                     if item['originaltitle'] == originaltitle or item['title'] == originaltitle or item['title'] == title:
+                        found_local = True
+                        break
+                elif tmdb_year in [item_year-2,item_year-1,item_year+1,item_year+2]:
+                    if item['title'] == title and item['originaltitle'] == originaltitle:
                         found_local = True
                         break
 
@@ -393,7 +443,7 @@ def tmdb_handle_person(item):
     return list_item
 
 
-def tmdb_handle_movie(item,local_items,full_info=False):
+def tmdb_handle_movie(item,local_items=None,full_info=False):
     icon = IMAGEPATH + item['poster_path'] if item['poster_path'] is not None else ''
     backdrop = IMAGEPATH + item['backdrop_path'] if item['backdrop_path'] is not None else ''
 
@@ -426,7 +476,7 @@ def tmdb_handle_movie(item,local_items,full_info=False):
                                 'country': tmdb_join_items(item.get('production_countries','')),
                                 'genre': tmdb_join_items(item.get('genres','')),
                                 'studio': tmdb_join_items(item.get('production_companies','')),
-                                'mediatype': 'movie'}
+                                'mediatype': 'video'}
                                  )
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon,'fanart': backdrop})
     list_item.setProperty('role', item.get('character',''))
@@ -450,7 +500,7 @@ def tmdb_handle_movie(item,local_items,full_info=False):
     return list_item, is_local
 
 
-def tmdb_handle_tvshow(item,local_items,full_info=False):
+def tmdb_handle_tvshow(item,local_items=None,full_info=False):
     icon = IMAGEPATH + item['poster_path'] if item['poster_path'] is not None else ''
     backdrop = IMAGEPATH + item['backdrop_path'] if item['backdrop_path'] is not None else ''
 
@@ -482,7 +532,7 @@ def tmdb_handle_tvshow(item,local_items,full_info=False):
                                 'director': tmdb_join_items(item.get('created_by','')),
                                 'genre': tmdb_join_items(item.get('genres','')),
                                 'studio': tmdb_join_items(item.get('networks','')),
-                                'mediatype': 'tvshow'}
+                                'mediatype': 'video'}
                                 )
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon,'fanart': backdrop})
     list_item.setProperty('TotalEpisodes', str(local_info['episodes']))

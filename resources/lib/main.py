@@ -8,9 +8,9 @@ import xbmc
 import xbmcgui
 
 from resources.lib.helper import *
-from resources.lib.tmdb_utils import *
-from resources.lib.tmdb_person import *
-from resources.lib.tmdb_video import *
+from resources.lib.utils import *
+from resources.lib.person import *
+from resources.lib.video import *
 
 ########################
 
@@ -31,8 +31,10 @@ class TheMovieDB(object):
 
         if self.tmdb_id:
             self.call_params = {}
-            self.call_params['local_shows'] = self.get_local_media('tvshow','VideoLibrary.GetTVShows',['title', 'originaltitle', 'year', 'playcount', 'episode', 'watchedepisodes'])
-            self.call_params['local_movies'] = self.get_local_media('movie','VideoLibrary.GetMovies',['title', 'originaltitle', 'year', 'imdbnumber', 'playcount', 'file'])
+
+            local_media = get_local_media()
+            self.call_params['local_shows'] = local_media['shows']
+            self.call_params['local_movies'] = local_media['movies']
 
             self.entry_point()
 
@@ -69,32 +71,6 @@ class TheMovieDB(object):
             return ''
 
         return tmdb_id
-
-
-    ''' Get local media for listitem.dbid recognization.
-    '''
-    def get_local_media(self,dbtype,get,properties):
-        items = json_call(get,properties,sort={'order': 'descending', 'method': 'year'})
-
-        try:
-            items = items['result']['%ss' % dbtype]
-        except Exception:
-            return
-
-        local_items = []
-        for item in items:
-            local_items.append({'title': item.get('title',''),
-                                'originaltitle': item.get('originaltitle',''),
-                                'imdbnumber': item.get('imdbnumber',''),
-                                'year': item.get('year',''),
-                                'dbid': item.get('%sid' % dbtype,''),
-                                'playcount': item.get('playcount',''),
-                                'episodes': item.get('episode',''),
-                                'watchedepisodes': item.get('watchedepisodes',''),
-                                'file': item.get('file','')}
-                                )
-
-        return local_items
 
 
     ''' Collect all data by the tmdb_id and build the dialogs.

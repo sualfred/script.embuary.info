@@ -38,6 +38,7 @@ DIALOG = xbmcgui.Dialog()
 
 CACHE = simplecache.SimpleCache()
 CACHE_ENABLED = ADDON.getSettingBool('cache_enabled')
+CACHE_PREFIX = ADDON_ID + '_' + ADDON_VERSION + '_'
 
 FILTER_MOVIES = ADDON.getSettingBool('filter_movies')
 FILTER_SHOWS = ADDON.getSettingBool('filter_shows')
@@ -63,11 +64,11 @@ def log(txt,loglevel=DEBUG,force=False):
 
 def get_cache(key):
     if CACHE_ENABLED:
-        return CACHE.get(ADDON_VERSION + key)
+        return CACHE.get(CACHE_PREFIX + key)
 
 
-def write_cache(key,data):
-    CACHE.set(ADDON_VERSION + key,data,expiration=datetime.timedelta(days=14))
+def write_cache(key,data,cache_time=336):
+    CACHE.set(CACHE_PREFIX + key,data,expiration=datetime.timedelta(hours=cache_time))
 
 
 def format_currency(integer):

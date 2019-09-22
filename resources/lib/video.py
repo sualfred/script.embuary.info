@@ -9,7 +9,7 @@ import xbmcgui
 import requests
 
 from resources.lib.helper import *
-from resources.lib.tmdb_utils import *
+from resources.lib.utils import *
 
 ########################
 

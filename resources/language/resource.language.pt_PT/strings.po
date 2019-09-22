@@ -5,7 +5,7 @@
 # Translators:
 # sualfred <su4lfred@gmail.com>, 2019
 # Art Querido <aquerido@live.com.pt>, 2019
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
@@ -45,7 +45,7 @@ msgctxt "#32019"
 msgid "No information found"
 msgstr "Não foi encontrada informação"
 
-#: /resources/lib/tmdb_utils.py
+#: /resources/lib/utils.py
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
 msgstr "Chave API TheMovieDB inválida"
