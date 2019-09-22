@@ -167,3 +167,43 @@ msgid ""
 msgstr ""
 "Personenauftritte in Specials / Dokumentationen / Behind the Scenes-Filmen "
 "ausblenden"
+
+#: /resources/lib/listing.py
+msgctxt "#32029"
+msgid "Top rated movies"
+msgstr "Bestbewertete Filme"
+
+#: /resources/lib/listing.py
+msgctxt "#32030"
+msgid "Now playing movies"
+msgstr "Aktuell laufende Filme"
+
+#: /resources/lib/listing.py
+msgctxt "#32031"
+msgid "Upcoming movies"
+msgstr "Kommende Filme"
+
+#: /resources/lib/listing.py
+msgctxt "#32032"
+msgid "Popular movies"
+msgstr "Beliebte Filme"
+
+#: /resources/lib/listing.py
+msgctxt "#32033"
+msgid "Top rated TV shows"
+msgstr "Bestbewertete Serien"
+
+#: /resources/lib/listing.py
+msgctxt "#32034"
+msgid "Popular TV shows"
+msgstr "Beliebte Serien"
+
+#: /resources/lib/listing.py
+msgctxt "#32035"
+msgid "TV shows airing today"
+msgstr "Heute laufende Serien"
+
+#: /resources/lib/listing.py
+msgctxt "#32036"
+msgid "TV shows airing in the next 7 days"
+msgstr "Serien-Ausstrahlungen der nächsten 7 Tage"
