@@ -60,7 +60,7 @@ class PluginContent(object):
                                 region=COUNTRY_CODE
                                 )
 
-        write_cache(content_type + call,tmdb,3)
+            write_cache(content_type + call,tmdb,3)
 
         return tmdb['results']
 

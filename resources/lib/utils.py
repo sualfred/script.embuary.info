@@ -47,7 +47,7 @@ def get_local_media():
                                                 properties=['title', 'originaltitle', 'year', 'imdbnumber', 'playcount', 'file']
                                                 )
 
-    write_cache('local_items',local_media,1)
+        write_cache('local_items',local_media,1)
 
     return local_media
 
@@ -165,19 +165,17 @@ def tmdb_call(request_url,error_check=False,error=ADDON.getLocalizedString(32019
         tmdb_error(error)
 
 
-def tmdb_query(action=None,call=None,get=None,use_language=True,language=DEFAULT_LANGUAGE,error_check=False,**kwargs):
+def tmdb_query(action=None,call=None,get=None,season=None,use_language=True,language=DEFAULT_LANGUAGE,error_check=False,**kwargs):
     kwargs['api_key'] = API_KEY
 
     if use_language:
         kwargs['language'] = language
 
-    if get is not None:
-        call = call + '/' + get
+    season = '/' + str(season) if season else ''
+    get = '/' + get if get else ''
+    call = '/' + call if call else ''
 
-    if call is not None:
-        action = action + '/' + call
-
-    url = API_URL + action
+    url = API_URL + action + call + get + season
     url = '{0}?{1}'.format(url, urlencode(kwargs))
 
     return tmdb_call(url,error_check)
@@ -240,12 +238,13 @@ def tmdb_find(call,external_id):
     return result
 
 
-def tmdb_item_details(action,tmdb_id,get=None,append_to_response=None,use_language=True,include_image_language=None):
+def tmdb_item_details(action,tmdb_id,get=None,season=None,append_to_response=None,use_language=True,include_image_language=None):
     #{action}/{id}?api_key=&language=
     #{action}/{id}/{get}?api_key=&language=
     result = tmdb_query(action=action,
                         call=str(tmdb_id),
                         get=get,
+                        season=season,
                         append_to_response=append_to_response,
                         use_language=use_language,
                         include_image_language=include_image_language
@@ -456,6 +455,7 @@ def tmdb_handle_movie(item,local_items=None,full_info=False):
     local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,imdbnumber)
     dbid = local_info['dbid']
     is_local = True if dbid > 0 else False
+    mediatype = 'video' if not full_info else 'movie'
 
     list_item = xbmcgui.ListItem(label=label)
     list_item.setInfo('video', {'title': label,
@@ -476,7 +476,7 @@ def tmdb_handle_movie(item,local_items=None,full_info=False):
                                 'country': tmdb_join_items(item.get('production_countries','')),
                                 'genre': tmdb_join_items(item.get('genres','')),
                                 'studio': tmdb_join_items(item.get('production_companies','')),
-                                'mediatype': 'video'}
+                                'mediatype': mediatype}
                                  )
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon,'fanart': backdrop})
     list_item.setProperty('role', item.get('character',''))
@@ -514,6 +514,7 @@ def tmdb_handle_tvshow(item,local_items=None,full_info=False):
     local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,tvdb_id)
     dbid = local_info['dbid']
     is_local = True if dbid > 0 else False
+    mediatype = 'video' if not full_info else 'tvshow'
 
     list_item = xbmcgui.ListItem(label=label)
     list_item.setInfo('video', {'title': label,
@@ -532,7 +533,7 @@ def tmdb_handle_tvshow(item,local_items=None,full_info=False):
                                 'director': tmdb_join_items(item.get('created_by','')),
                                 'genre': tmdb_join_items(item.get('genres','')),
                                 'studio': tmdb_join_items(item.get('networks','')),
-                                'mediatype': 'video'}
+                                'mediatype': mediatype}
                                 )
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon,'fanart': backdrop})
     list_item.setProperty('TotalEpisodes', str(local_info['episodes']))
@@ -566,6 +567,27 @@ def tmdb_handle_tvshow(item,local_items=None,full_info=False):
             list_item.setProperty('nextepisode_thumb', IMAGEPATH + next_episode['still_path'] if next_episode['still_path'] is not None else '')
 
     return list_item, is_local
+
+
+def tmdb_handle_seasons(item):
+    icon = IMAGEPATH + item['poster_path'] if item['poster_path'] is not None else ''
+    premiered = item.get('air_date') if item.get('air_date',0) != '0' else ''
+    episodes_count = str(item.get('episode_count',''))
+    season_nr = str(item.get('season_number',''))
+    label = xbmc.getLocalizedString(20373) + ' ' + season_nr
+    list_item = xbmcgui.ListItem(label=label)
+    list_item.setInfo('video', {'title': label,
+                                'premiered': premiered,
+                                'episode': episodes_count,
+                                'season': season_nr,
+                                'plot': item.get('overview',''),
+                                'mediatype': 'video'}
+                                )
+    list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon})
+    list_item.setProperty('TotalEpisodes', episodes_count)
+    list_item.setProperty('call', 'textviewer')
+
+    return list_item
 
 
 def tmdb_fallback_info(item,key):

@@ -29,6 +29,7 @@ class TMDBVideos(object):
 
             if not self.details:
                 self.details = tmdb_item_details(self.call,self.tmdb_id,append_to_response='release_dates,content_ratings,external_ids,credits,videos,translations')
+                write_cache(cache_key,self.details)
 
             if not self.details:
                 return
@@ -45,8 +46,9 @@ class TMDBVideos(object):
             self.result['similar'] = self.get_similar()
             self.result['youtube'] = self.get_yt_videos()
             self.result['images'] = self.get_images()
+            self.result['seasons'] = self.get_seasons()
+            self.result['collection'] = self.get_collection()
 
-            write_cache(cache_key,self.details)
 
     def __getitem__(self, key):
         return self.result.get(key,'')
@@ -126,6 +128,51 @@ class TMDBVideos(object):
 
         return li
 
+    def get_seasons(self):
+        seasons = self.details.get('seasons')
+        li = list()
+
+        if seasons:
+            for item in seasons:
+                if item['season_number'] == 0:
+                    continue
+
+                if DEFAULT_LANGUAGE != FALLBACK_LANGUAGE and not item['overview']:
+                    cache_key = str(self.tmdb_id) + 'season' + str(item['season_number'])
+                    fallback_data = get_cache(cache_key)
+
+                    if not fallback_data:
+                        fallback_data = tmdb_item_details('tv',self.tmdb_id,'season',item['season_number'],use_language=False)
+                        write_cache(cache_key,fallback_data)
+
+                    item['overview'] = fallback_data.get('overview')
+
+                list_item = tmdb_handle_seasons(item)
+                li.append(list_item)
+
+        return li
+
+    def get_collection(self):
+        collection = self.details.get('belongs_to_collection')
+        li = list()
+
+        if collection:
+            collection_id = collection['id']
+
+            cache_key = 'collection' + str(collection_id) + DEFAULT_LANGUAGE
+            collection_data = get_cache(cache_key)
+
+            if not collection_data:
+                collection_data = tmdb_item_details('collection',collection_id)
+                write_cache(cache_key,collection_data)
+
+            if collection_data:
+                for item in collection_data['parts']:
+                    list_item, is_local = tmdb_handle_movie(item)
+                    li.append(list_item)
+
+        return li
+
     def get_similar(self):
         similar = tmdb_item_details(self.call,self.tmdb_id,'similar')
         similar = similar['results']
@@ -155,9 +202,7 @@ class TMDBVideos(object):
         if not images:
             images = tmdb_item_details(self.call,self.tmdb_id,'images',use_language=False,include_image_language='%s,en,null' % DEFAULT_LANGUAGE)
             images = images['backdrops']
-
-            if images:
-                write_cache(cache_key,images)
+            write_cache(cache_key,images)
 
         for item in images:
             list_item = tmdb_handle_images(item)
@@ -189,9 +234,7 @@ class TMDBVideos(object):
                     online_videos.append(item)
 
             videos = online_videos
-
-            if videos:
-                write_cache(cache_key,videos)
+            write_cache(cache_key,videos)
 
         for item in videos:
             if item['site'] == 'YouTube':

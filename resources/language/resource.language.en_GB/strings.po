@@ -196,3 +196,13 @@ msgstr ""
 msgctxt "#32036"
 msgid "TV shows airing in the next 7 days"
 msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32037"
+msgid "Collection"
+msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32038"
+msgid "Seasons"
+msgstr ""

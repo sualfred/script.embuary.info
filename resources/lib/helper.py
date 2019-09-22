@@ -68,7 +68,8 @@ def get_cache(key):
 
 
 def write_cache(key,data,cache_time=336):
-    CACHE.set(CACHE_PREFIX + key,data,expiration=datetime.timedelta(hours=cache_time))
+    if data:
+        CACHE.set(CACHE_PREFIX + key,data,expiration=datetime.timedelta(hours=cache_time))
 
 
 def format_currency(integer):

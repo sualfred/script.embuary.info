@@ -101,14 +101,30 @@ class TheMovieDB(object):
         if not data['person']:
             return
 
-        return DialogPerson('script-embuary-person.xml', ADDON_PATH, 'default', '1080i', person=data['person'], movies=data['movies'], tvshows=data['tvshows'], images=data['images'])
+        dialog = DialogPerson('script-embuary-person.xml', ADDON_PATH, 'default', '1080i',
+                            person=data['person'],
+                            movies=data['movies'],
+                            tvshows=data['tvshows'],
+                            images=data['images']
+                            )
+        return dialog
 
     def fetch_video(self):
         data = TMDBVideos(self.call_params)
         if not data['details']:
             return
 
-        return DialogVideo('script-embuary-video.xml', ADDON_PATH, 'default', '1080i', details=data['details'], cast=data['cast'], crew=data['crew'], similar=data['similar'], youtube=data['youtube'], backdrops=data['images'])
+        dialog = DialogVideo('script-embuary-video.xml', ADDON_PATH, 'default', '1080i',
+                            details=data['details'],
+                            cast=data['cast'],
+                            crew=data['crew'],
+                            similar=data['similar'],
+                            youtube=data['youtube'],
+                            backdrops=data['images'],
+                            collection=data['collection'],
+                            seasons=data['seasons']
+                            )
+        return dialog
 
 
     ''' Dialog handler. Creates the window history, reopens dialogs from a stack
@@ -235,6 +251,8 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         self.similar = kwargs['similar']
         self.youtube = kwargs['youtube']
         self.backdrops = kwargs['backdrops']
+        self.seasons = kwargs['seasons']
+        self.collection = kwargs['collection']
 
     def __getitem__(self,key):
         return self.action[key]
@@ -260,6 +278,10 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         self.cont4.addItems(self.backdrops)
         self.cont5 = self.getControl(10056)
         self.cont5.addItems(self.crew)
+        self.cont6 = self.getControl(10057)
+        self.cont6.addItems(self.collection)
+        self.cont7 = self.getControl(10058)
+        self.cont7.addItems(self.seasons)
 
     def onAction(self,action):
         if action.getId() in [92,10]:
@@ -284,6 +306,15 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
             execute('Dialog.Close(all)')
             xbmc.Player().play('plugin://plugin.video.youtube/play/?video_id=%s' % xbmc.getInfoLabel('Container(%s).ListItem.Property(ytid)' % controlId))
             self.quit()
+
+        elif next_call == 'textviewer':
+            plot = xbmc.getInfoLabel('Container(%s).ListItem.Plot' % controlId)
+            if not plot:
+                plot = xbmc.getLocalizedString(19055)
+            premiered = xbmc.getInfoLabel('Container(%s).ListItem.Premiered' % controlId)
+            bodytxt = premiered + '[CR][CR]' + plot if premiered else plot
+            headertxt = xbmc.getInfoLabel('Container(%s).ListItem.Label' % controlId)
+            DIALOG.textviewer(headertxt, bodytxt)
 
     def quit(self):
         close_action = self.getProperty('onclose')

@@ -25,6 +25,7 @@ class TMDBPersons(object):
 
             if not self.details:
                 self.details = tmdb_item_details('person',self.tmdb_id,append_to_response='translations,movie_credits,tv_credits,images')
+                write_cache(cache_key,self.details)
 
             if not self.details:
                 return
@@ -39,8 +40,6 @@ class TMDBPersons(object):
             self.result['tvshows'] = self.get_tvshow_list()
             self.result['person'] = self.get_person_details()
             self.result['images'] = self.get_person_images()
-
-            write_cache(cache_key,self.details)
 
     def __getitem__(self, key):
         return self.result.get(key,'')
