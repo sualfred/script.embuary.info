@@ -4,7 +4,7 @@
 # Addon Provider: sualfred
 # Translators:
 # sualfred <su4lfred@gmail.com>, 2019
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
@@ -207,3 +207,18 @@ msgstr "Heute laufende Serien"
 msgctxt "#32036"
 msgid "TV shows airing in the next 7 days"
 msgstr "Serien-Ausstrahlungen der nächsten 7 Tage"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32037"
+msgid "Collection"
+msgstr "Sammlung"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32039"
+msgid "Guest stars"
+msgstr "Gaststars"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32040"
+msgid "Season"
+msgstr "Staffel"
