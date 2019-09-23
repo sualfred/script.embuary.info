@@ -211,3 +211,8 @@ msgstr ""
 msgctxt "#32040"
 msgid "Season"
 msgstr ""
+
+#: /plugin.py
+msgctxt "#32038"
+msgid "Widgets"
+msgstr ""

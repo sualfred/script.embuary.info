@@ -346,8 +346,6 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         close_action = self.getProperty('onclose')
         onback_action = self.getProperty('onback_%s' % self.getFocusId())
 
-        log(self.action)
-
         if self.action.get('call') == 'back' and onback_action:
             execute(onback_action)
         else:

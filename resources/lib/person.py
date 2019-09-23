@@ -12,6 +12,12 @@ from resources.lib.utils import *
 
 ########################
 
+FILTER_MOVIES = ADDON.getSettingBool('filter_movies')
+FILTER_SHOWS = ADDON.getSettingBool('filter_shows')
+FILTER_SHOWS_BLACKLIST = [10763,10764,10767]
+
+########################
+
 class TMDBPersons(object):
     def __init__(self,call_request):
         self.tmdb_id = call_request['tmdb_id']
