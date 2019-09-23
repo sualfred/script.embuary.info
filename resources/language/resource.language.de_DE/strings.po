@@ -216,9 +216,14 @@ msgstr "Sammlung"
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32039"
 msgid "Guest stars"
-msgstr "Gaststars"
+msgstr "Nebendarsteller"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32040"
 msgid "Season"
 msgstr "Staffel"
+
+#: /plugin.py
+msgctxt "#32038"
+msgid "Widgets"
+msgstr "Widgets"
