@@ -11,6 +11,7 @@ from resources.lib.helper import *
 from resources.lib.utils import *
 from resources.lib.person import *
 from resources.lib.video import *
+from resources.lib.season import *
 
 ########################
 
@@ -20,6 +21,7 @@ class TheMovieDB(object):
         self.dialog_cache = {}
         self.call = call
         self.tmdb_id = params.get('tmdb_id')
+        self.season = params.get('season')
         self.query = remove_quotes(params.get('query'))
         self.query_year = params.get('year')
         self.external_id = params.get('external_id')
@@ -78,10 +80,18 @@ class TheMovieDB(object):
     def entry_point(self):
         self.call_params['call'] = self.call
         self.call_params['tmdb_id'] = self.tmdb_id
+        self.call_params['season'] = self.season
         self.request = self.call + str(self.tmdb_id)
 
         busydialog()
-        dialog = self.fetch_person() if self.call == 'person' else self.fetch_video()
+
+        if self.call == 'person':
+            dialog = self.fetch_person()
+        elif self.call == 'tv' and self.season:
+            dialog = self.fetch_season()
+        elif self.call == 'movie' or self.call == 'tv':
+            dialog = self.fetch_video()
+
         busydialog(close=True)
 
         ''' Open next dialog if information has been found. If not open the previous dialog again.
@@ -105,7 +115,8 @@ class TheMovieDB(object):
                             person=data['person'],
                             movies=data['movies'],
                             tvshows=data['tvshows'],
-                            images=data['images']
+                            images=data['images'],
+                            tmdb_id=self.tmdb_id
                             )
         return dialog
 
@@ -122,7 +133,21 @@ class TheMovieDB(object):
                             youtube=data['youtube'],
                             backdrops=data['images'],
                             collection=data['collection'],
-                            seasons=data['seasons']
+                            seasons=data['seasons'],
+                            tmdb_id=self.tmdb_id
+                            )
+        return dialog
+
+    def fetch_season(self):
+        data = TMDBSeasons(self.call_params)
+        if not data['details']:
+            return
+
+        dialog = DialogSeason('script-embuary-video.xml', ADDON_PATH, 'default', '1080i',
+                            details=data['details'],
+                            cast=data['cast'],
+                            gueststars=data['gueststars'],
+                            tmdb_id=self.tmdb_id
                             )
         return dialog
 
@@ -136,6 +161,7 @@ class TheMovieDB(object):
         try:
             next_id = dialog['id']
             next_call = dialog['call']
+            next_season = dialog['season']
 
             if next_call == 'back':
                 self.dialog_history()
@@ -149,7 +175,8 @@ class TheMovieDB(object):
             self.window_stack.append(dialog)
             self.tmdb_id = next_id
             self.call = next_call
-            self.request = next_call + str(next_id)
+            self.season = next_season
+            self.request = next_call + str(next_id) + str(next_season)
 
             if self.dialog_cache.get(self.request):
                 dialog = self.dialog_cache[self.request]
@@ -181,6 +208,7 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
         self.first_load = True
         self.action = {}
 
+        self.tmdb_id = kwargs['tmdb_id']
         self.person = kwargs['person']
         self.movies = kwargs['movies']
         self.tvshows = kwargs['tvshows']
@@ -211,6 +239,7 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
     def onAction(self,action):
         if action.getId() in [92,10]:
             self.action['id'] = ''
+            self.action['season'] = ''
             self.action['call'] = 'back' if action.getId() == 92 else 'close'
             self.quit()
 
@@ -221,6 +250,7 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
         if next_call in ['person','movie','tv'] and next_id:
             self.action['id'] = next_id
             self.action['call'] = next_call
+            self.action['season'] = ''
             self.quit()
 
         elif next_call == 'image':
@@ -245,6 +275,7 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         self.first_load = True
         self.action = {}
 
+        self.tmdb_id = kwargs['tmdb_id']
         self.details = kwargs['details']
         self.cast = kwargs['cast']
         self.crew = kwargs['crew']
@@ -286,17 +317,21 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
     def onAction(self,action):
         if action.getId() in [92,10]:
             self.action['id'] = ''
+            self.action['season'] = ''
             self.action['call'] = 'back' if action.getId() == 92 else 'close'
             self.quit()
 
     def onClick(self,controlId):
         next_id = xbmc.getInfoLabel('Container(%s).ListItem.Property(id)' % controlId)
         next_call = xbmc.getInfoLabel('Container(%s).ListItem.Property(call)' % controlId)
+        next_season = xbmc.getInfoLabel('Container(%s).ListItem.Property(call_season)' % controlId)
 
         if next_call in ['person','movie','tv'] and next_id:
-            self.action['id'] = next_id
-            self.action['call'] = next_call
-            self.quit()
+            if next_id != str(self.tmdb_id) or next_season:
+                self.action['id'] = next_id
+                self.action['call'] = next_call
+                self.action['season'] = next_season
+                self.quit()
 
         elif next_call == 'image':
             FullScreenImage(controlId)
@@ -307,14 +342,67 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
             xbmc.Player().play('plugin://plugin.video.youtube/play/?video_id=%s' % xbmc.getInfoLabel('Container(%s).ListItem.Property(ytid)' % controlId))
             self.quit()
 
-        elif next_call == 'textviewer':
-            plot = xbmc.getInfoLabel('Container(%s).ListItem.Plot' % controlId)
-            if not plot:
-                plot = xbmc.getLocalizedString(19055)
-            premiered = xbmc.getInfoLabel('Container(%s).ListItem.Premiered' % controlId)
-            bodytxt = premiered + '[CR][CR]' + plot if premiered else plot
-            headertxt = xbmc.getInfoLabel('Container(%s).ListItem.Label' % controlId)
-            DIALOG.textviewer(headertxt, bodytxt)
+    def quit(self):
+        close_action = self.getProperty('onclose')
+        onback_action = self.getProperty('onback_%s' % self.getFocusId())
+
+        log(self.action)
+
+        if self.action.get('call') == 'back' and onback_action:
+            execute(onback_action)
+        else:
+            if close_action:
+                execute(close_action)
+            self.close()
+
+
+''' Season dialog
+'''
+class DialogSeason(xbmcgui.WindowXMLDialog):
+    def __init__(self,*args,**kwargs):
+        self.first_load = True
+        self.action = {}
+
+        self.tmdb_id = kwargs['tmdb_id']
+        self.details = kwargs['details']
+        self.cast = kwargs['cast']
+        self.gueststars = kwargs['gueststars']
+
+    def __getitem__(self,key):
+        return self.action[key]
+
+    def __setitem__(self,key,value):
+        self.action[key] = value
+
+    def onInit(self):
+        if self.first_load:
+            self.add_items()
+
+    def add_items(self):
+        self.first_load = False
+        self.cont0 = self.getControl(10051)
+        self.cont0.addItems(self.details)
+        self.cont1 = self.getControl(10052)
+        self.cont1.addItems(self.cast)
+        self.cont2 = self.getControl(10056)
+        self.cont2.addItems(self.gueststars)
+
+    def onAction(self,action):
+        if action.getId() in [92,10]:
+            self.action['id'] = ''
+            self.action['season'] = ''
+            self.action['call'] = 'back' if action.getId() == 92 else 'close'
+            self.quit()
+
+    def onClick(self,controlId):
+        next_id = xbmc.getInfoLabel('Container(%s).ListItem.Property(id)' % controlId)
+        next_call = xbmc.getInfoLabel('Container(%s).ListItem.Property(call)' % controlId)
+
+        if next_call in ['person'] and next_id:
+            self.action['id'] = next_id
+            self.action['call'] = next_call
+            self.action['season'] = ''
+            self.quit()
 
     def quit(self):
         close_action = self.getProperty('onclose')

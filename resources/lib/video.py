@@ -24,7 +24,7 @@ class TMDBVideos(object):
         self.tvshow = get_bool(self.call,'tv')
 
         if self.tmdb_id:
-            cache_key = str(call_request) + DEFAULT_LANGUAGE + COUNTRY_CODE
+            cache_key = self.call + str(self.tmdb_id)
             self.details = get_cache(cache_key)
 
             if not self.details:
@@ -136,18 +136,7 @@ class TMDBVideos(object):
             for item in seasons:
                 if item['season_number'] == 0:
                     continue
-
-                if DEFAULT_LANGUAGE != FALLBACK_LANGUAGE and not item['overview']:
-                    cache_key = str(self.tmdb_id) + 'season' + str(item['season_number'])
-                    fallback_data = get_cache(cache_key)
-
-                    if not fallback_data:
-                        fallback_data = tmdb_item_details('tv',self.tmdb_id,'season',item['season_number'],use_language=False)
-                        write_cache(cache_key,fallback_data)
-
-                    item['overview'] = fallback_data.get('overview')
-
-                list_item = tmdb_handle_seasons(item)
+                list_item = tmdb_handle_season(item,self.details)
                 li.append(list_item)
 
         return li
@@ -159,15 +148,16 @@ class TMDBVideos(object):
         if collection:
             collection_id = collection['id']
 
-            cache_key = 'collection' + str(collection_id) + DEFAULT_LANGUAGE
+            cache_key = 'collection' + str(collection_id)
             collection_data = get_cache(cache_key)
 
             if not collection_data:
                 collection_data = tmdb_item_details('collection',collection_id)
                 write_cache(cache_key,collection_data)
 
-            if collection_data:
-                for item in collection_data['parts']:
+            if collection_data['parts']:
+                set_items = sort_dict(collection_data['parts'],'release_date')
+                for item in set_items:
                     list_item, is_local = tmdb_handle_movie(item)
                     li.append(list_item)
 
@@ -195,7 +185,7 @@ class TMDBVideos(object):
         return li
 
     def get_images(self):
-        cache_key = str(self.tmdb_id) + self.call + 'images' + DEFAULT_LANGUAGE
+        cache_key = 'images' + str(self.tmdb_id)
         images = get_cache(cache_key)
         li = list()
 
@@ -211,7 +201,7 @@ class TMDBVideos(object):
         return li
 
     def get_yt_videos(self):
-        cache_key = str(self.tmdb_id) + self.call + 'ytvideos' + DEFAULT_LANGUAGE
+        cache_key = 'ytvideos' + str(self.tmdb_id)
         videos = get_cache(cache_key)
         li = list()
 

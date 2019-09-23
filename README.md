@@ -20,6 +20,7 @@ The script provides a selection dialog if multiple results were returned.
 
 *  ```RunScript(script.embuary.info,call=person,tmbd_id=65)```
 *  ```RunScript(script.embuary.info,call=tv,tmbd_id=65)```
+*  ```RunScript(script.embuary.info,call=tv,tmbd_id=65,season=1)```
 *  ```RunScript(script.embuary.info,call=tv,external_id=70559)```
 *  ```RunScript(script.embuary.info,call=movie,tmbd_id=65)```
 *  ```RunScript(script.embuary.info,call=movie,external_id=tt0371746)```
@@ -64,7 +65,7 @@ Special properties:
 * List control ID `10053` = Similar titles
 * List control ID `10054` = YouTube results
 * List control ID `10055` = Backdrop images
-* List control ID `10056` = Crew
+* List control ID `10056` = Crew (for seasons it is used to display guest stars)
 * List control ID `10057` = Collection items
 * List control ID `10058` = Seasons
 

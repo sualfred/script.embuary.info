@@ -24,9 +24,6 @@ from resources.lib.helper import *
 API_KEY = ADDON.getSettingString('tmdb_api_key')
 API_URL = 'https://api.themoviedb.org/3/'
 IMAGEPATH = 'https://image.tmdb.org/t/p/original'
-COUNTRY_CODE = ADDON.getSettingString('country_code')
-DEFAULT_LANGUAGE = ADDON.getSettingString('language_code')
-FALLBACK_LANGUAGE = 'en'
 
 OMDB_API_KEY = ADDON.getSettingString('omdb_api_key')
 OMDB_URL = 'http://www.omdbapi.com/'
@@ -569,23 +566,43 @@ def tmdb_handle_tvshow(item,local_items=None,full_info=False):
     return list_item, is_local
 
 
-def tmdb_handle_seasons(item):
+def tmdb_handle_season(item,tvshow_details,full_info=False):
     icon = IMAGEPATH + item['poster_path'] if item['poster_path'] is not None else ''
+    if not icon and tvshow_details['poster_path']:
+        icon = IMAGEPATH + tvshow_details['poster_path']
+
+    imdbnumber = tvshow_details['external_ids']['imdb_id'] if tvshow_details.get('external_ids') else ''
     premiered = item.get('air_date') if item.get('air_date',0) != '0' else ''
-    episodes_count = str(item.get('episode_count',''))
     season_nr = str(item.get('season_number',''))
-    label = xbmc.getLocalizedString(20373) + ' ' + season_nr
-    list_item = xbmcgui.ListItem(label=label)
-    list_item.setInfo('video', {'title': label,
+    tvshow_label = tvshow_details['name'] or tvshow_details['original_name']
+
+    episodes_count = 0
+    for episode in item.get('episodes',''):
+        episodes_count += 1
+
+    list_item = xbmcgui.ListItem(label=tvshow_label)
+    list_item.setInfo('video', {'title': item['name'],
+                                'tvshowtitle': tvshow_label,
                                 'premiered': premiered,
                                 'episode': episodes_count,
                                 'season': season_nr,
                                 'plot': item.get('overview',''),
-                                'mediatype': 'video'}
+                                'genre': tmdb_join_items(tvshow_details.get('genres','')),
+                                'rating': tvshow_details.get('vote_average',''),
+                                'votes': tvshow_details.get('vote_count',''),
+                                'mpaa': tmdb_get_cert(tvshow_details),
+                                'mediatype': 'season'}
                                 )
     list_item.setArt({'icon': 'DefaultVideo.png','thumb': icon})
-    list_item.setProperty('TotalEpisodes', episodes_count)
-    list_item.setProperty('call', 'textviewer')
+    list_item.setProperty('TotalEpisodes', str(episodes_count))
+    list_item.setProperty('id', str(tvshow_details['id']))
+    list_item.setProperty('call', 'tv')
+    list_item.setProperty('call_season', season_nr)
+
+    if full_info:
+        tmdb_studios(list_item,tvshow_details,'production')
+        tmdb_studios(list_item,tvshow_details,'network')
+        omdb_properties(list_item,imdbnumber)
 
     return list_item
 

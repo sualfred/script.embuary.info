@@ -141,7 +141,15 @@
 								<font>font12</font>
 								<textcolor>ffffffff</textcolor>
 								<shadowcolor>50000000</shadowcolor>
-								<visible>!String.IsEmpty(Container(10051).ListItem.Season)</visible>
+								<visible>!String.IsEmpty(Container(10051).ListItem.Season) + !String.IsEqual(Container(10051).ListItem.DBType,season)</visible>
+							</control>
+							<control type="label">
+								<label>$INFO[Container(10051).ListItem.Season,$ADDON[script.embuary.info 32040] ]</label>
+								<width>auto</width>
+								<font>font12</font>
+								<textcolor>ffffffff</textcolor>
+								<shadowcolor>50000000</shadowcolor>
+								<visible>!String.IsEmpty(Container(10051).ListItem.Season) + String.IsEqual(Container(10051).ListItem.DBType,season)</visible>
 							</control>
 							<control type="label">
 								<label>$INFO[Container(10051).ListItem.Episode,$LOCALIZE[20360]: ]</label>
@@ -581,7 +589,7 @@
 				</control>
 			</control>
 
-			<!-- crew -->
+			<!-- crew / guest stars -->
 			<control type="group">
 				<visible>true</visible>
 				<visible>Integer.IsGreater(Container(10056).NumItems,0) | Container(10056).IsUpdating</visible>
@@ -599,6 +607,20 @@
 						<label>$ADDON[script.embuary.info 32018]</label>
 						<textcolor>ffffffff</textcolor>
 						<shadowcolor>50000000</shadowcolor>
+						<visible>!String.IsEqual(Container(10051).ListItem.DBType,season)</visible>
+					</control>
+					<control type="label">
+						<left>65</left>
+						<top>23</top>
+						<height>87</height>
+						<width>auto</width>
+						<font>font13</font>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$ADDON[script.embuary.info 32039]</label>
+						<textcolor>ffffffff</textcolor>
+						<shadowcolor>50000000</shadowcolor>
+						<visible>String.IsEqual(Container(10051).ListItem.DBType,season)</visible>
 					</control>
 					<control type="fixedlist" id="10056">
 						<movement>6</movement>
@@ -752,7 +774,7 @@
 			<!-- collection -->
 			<control type="group">
 				<visible>true</visible>
-				<visible>Integer.IsGreater(Container(10057).NumItems,0) | Container(10057).IsUpdating</visible>
+				<visible>Integer.IsGreater(Container(10057).NumItems,1) | Container(10057).IsUpdating</visible>
 				<width>100%</width>
 				<height>581</height>
 				<control type="group">
@@ -920,7 +942,7 @@
 			<!-- seasons -->
 			<control type="group">
 				<visible>true</visible>
-				<visible>Integer.IsGreater(Container(10058).NumItems,0) | Container(10058).IsUpdating</visible>
+				<visible>Integer.IsGreater(Container(10058).NumItems,1) | Container(10058).IsUpdating</visible>
 				<width>100%</width>
 				<height>581</height>
 				<control type="group">
@@ -932,7 +954,7 @@
 						<font>font13</font>
 						<align>left</align>
 						<aligny>center</aligny>
-						<label>$ADDON[script.embuary.info 32038]</label>
+						<label>$ADDON[script.embuary.info 32016]</label>
 						<textcolor>ffffffff</textcolor>
 						<shadowcolor>50000000</shadowcolor>
 					</control>
@@ -965,7 +987,7 @@
 									<shadowcolor>50000000</shadowcolor>
 									<align>center</align>
 									<aligny>center</aligny>
-									<label>$INFO[ListItem.Label]</label>
+									<label>$INFO[ListItem.Title]</label>
 									<visible>String.IsEmpty(ListItem.Art(thumb))</visible>
 								</control>
 								<control type="image">
@@ -982,7 +1004,7 @@
 									<textcolor>ffffffff</textcolor>
 									<shadowcolor>50000000</shadowcolor>
 									<scroll>false</scroll>
-									<label>$INFO[ListItem.Label]</label>
+									<label>$INFO[ListItem.Title]</label>
 								</control>
 								<control type="label">
 									<top>397</top>
@@ -1026,7 +1048,7 @@
 									<shadowcolor>50000000</shadowcolor>
 									<align>center</align>
 									<aligny>center</aligny>
-									<label>$INFO[ListItem.Label]</label>
+									<label>$INFO[ListItem.Title]</label>
 									<visible>String.IsEmpty(ListItem.Art(thumb))</visible>
 								</control>
 								<control type="image">
@@ -1042,7 +1064,7 @@
 									<font>font12</font>
 									<textcolor>ffffffff</textcolor>
 									<shadowcolor>50000000</shadowcolor>
-									<label>$INFO[ListItem.Label]</label>
+									<label>$INFO[ListItem.Title]</label>
 									<scroll>false</scroll>
 									<visible>!Control.HasFocus(10058)</visible>
 								</control>
@@ -1053,7 +1075,7 @@
 									<font>font12</font>
 									<textcolor>ff45d374</textcolor>
 									<shadowcolor>50000000</shadowcolor>
-									<label>$INFO[ListItem.Label]</label>
+									<label>$INFO[ListItem.Title]</label>
 									<scroll>true</scroll>
 									<visible>Control.HasFocus(10058)</visible>
 								</control>

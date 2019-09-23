@@ -203,6 +203,11 @@ msgid "Collection"
 msgstr ""
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
-msgctxt "#32038"
-msgid "Seasons"
+msgctxt "#32039"
+msgid "Guest stars"
+msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32040"
+msgid "Season"
 msgstr ""
