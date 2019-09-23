@@ -47,7 +47,7 @@ msgstr "Nenhuma informação encontrada"
 #: /resources/lib/utils.py
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
-msgstr "TheMovieDB API key invalida"
+msgstr "TheMovieDB API key inválida"
 
 #: /default.py
 msgctxt "#32004"
@@ -214,6 +214,16 @@ msgid "Collection"
 msgstr "Coleção"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
-msgctxt "#32038"
-msgid "Seasons"
+msgctxt "#32039"
+msgid "Guest stars"
+msgstr "Participação especiais"
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32040"
+msgid "Season"
 msgstr "Temporadas"
+
+#: /plugin.py
+msgctxt "#32038"
+msgid "Widgets"
+msgstr "Widgets"
