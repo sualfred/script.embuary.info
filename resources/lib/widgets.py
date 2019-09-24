@@ -64,7 +64,7 @@ class PluginContent(object):
         if not tmdb:
             tmdb = tmdb_query(action=content_type,
                                 call=call,
-                                region=COUNTRY_CODE
+                                params={'region': COUNTRY_CODE}
                                 )
 
             write_cache(content_type + call,tmdb,3)

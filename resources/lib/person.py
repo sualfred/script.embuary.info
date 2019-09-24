@@ -30,15 +30,16 @@ class TMDBPersons(object):
             self.details = get_cache(cache_key)
 
             if not self.details:
-                self.details = tmdb_item_details('person',self.tmdb_id,append_to_response='translations,movie_credits,tv_credits,images')
+                self.details = tmdb_query(action='person',
+                                            call=self.tmdb_id,
+                                            params={'append_to_response': 'translations,movie_credits,tv_credits,images'}
+                                            )
+
                 write_cache(cache_key,self.details)
 
             if not self.details:
                 return
 
-            self.movies = self.details['movie_credits']['cast']
-            self.tvshows = self.details['tv_credits']['cast']
-            self.images = self.details['images']['profiles']
             self.local_movie_count = 0
             self.local_tv_count = 0
 
@@ -62,7 +63,8 @@ class TMDBPersons(object):
         return li
 
     def get_movie_list(self):
-        movies = sort_dict(self.movies,'release_date',True)
+        movies = self.details['movie_credits']['cast']
+        movies = sort_dict(movies,'release_date',True)
         li = list()
         duplicate_handler = list()
 
@@ -88,7 +90,8 @@ class TMDBPersons(object):
         return li
 
     def get_tvshow_list(self):
-        tvshows = sort_dict(self.tvshows,'first_air_date',True)
+        tvshows = self.details['tv_credits']['cast']
+        tvshows = sort_dict(tvshows,'first_air_date',True)
         li = list()
         duplicate_handler = list()
 
@@ -119,7 +122,7 @@ class TMDBPersons(object):
     def get_person_images(self):
         li = list()
 
-        for item in self.images:
+        for item in self.details['images']['profiles']:
             list_item = tmdb_handle_images(item)
             li.append(list_item)
 

@@ -162,48 +162,45 @@ def tmdb_call(request_url,error_check=False,error=ADDON.getLocalizedString(32019
         tmdb_error(error)
 
 
-def tmdb_query(action=None,call=None,get=None,season=None,use_language=True,language=DEFAULT_LANGUAGE,error_check=False,**kwargs):
-    kwargs['api_key'] = API_KEY
+def tmdb_query(action,call=None,get=None,season=None,season_get=None,params=None,use_language=True,language=DEFAULT_LANGUAGE,error_check=False):
+    args = {}
+    args['api_key'] = API_KEY
 
     if use_language:
-        kwargs['language'] = language
+        args['language'] = language
 
-    season = '/' + str(season) if season else ''
+    if params:
+        args.update(params)
+
+    call = '/' + str(call) if call else ''
     get = '/' + get if get else ''
-    call = '/' + call if call else ''
+    season = '/' + str(season) if season else ''
+    season_get = '/' + season_get if season_get else ''
 
-    url = API_URL + action + call + get + season
-    url = '{0}?{1}'.format(url, urlencode(kwargs))
+    url = API_URL + action + call + get + season + season_get
+    url = '{0}?{1}'.format(url, urlencode(args))
 
     return tmdb_call(url,error_check)
 
 
 def tmdb_search(call,query,year=None,include_adult='false'):
-    #/search/{call}?api_key=&language=&query={query}&page=1&include_adult=false
     if call == 'person':
-        result = tmdb_query(action='search',
-                            call=call,
-                            query=query,
-                            include_adult=include_adult,
-                            error_check=True
-                            )
+        params = {'query': query, 'include_adult': include_adult}
 
     elif call == 'movie':
-        result = tmdb_query(action='search',
-                            call=call,
-                            query=query,
-                            year=year,
-                            include_adult=include_adult,
-                            error_check=True
-                            )
+        params = {'query': query, 'year': year, 'include_adult': include_adult}
 
     elif call == 'tv':
-        result = tmdb_query(action='search',
-                            call=call,
-                            query=query,
-                            first_air_date_year=year,
-                            error_check=True
-                            )
+        params = {'query': query, 'year': year}
+
+    else:
+        return ''
+
+    result = tmdb_query(action='search',
+                        call=call,
+                        params=params,
+                        error_check=True
+                        )
 
     try:
         return result['results']
@@ -212,7 +209,6 @@ def tmdb_search(call,query,year=None,include_adult='false'):
 
 
 def tmdb_find(call,external_id):
-    #/find/{id}?api_key=&language=en-US&external_source=tvdb_id
     if external_id.startswith('tt'):
         external_source = 'imdb_id'
     else:
@@ -220,7 +216,7 @@ def tmdb_find(call,external_id):
 
     result = tmdb_query(action='find',
                         call=str(external_id),
-                        external_source=external_source,
+                        params={'external_source': external_source},
                         use_language=False
                         )
 
@@ -233,22 +229,6 @@ def tmdb_find(call,external_id):
         tmdb_error(ADDON.getLocalizedString(32019))
 
     return result
-
-
-def tmdb_item_details(action,tmdb_id,get=None,season=None,append_to_response=None,use_language=True,include_image_language=None):
-    #{action}/{id}?api_key=&language=
-    #{action}/{id}/{get}?api_key=&language=
-    result = tmdb_query(action=action,
-                        call=str(tmdb_id),
-                        get=get,
-                        season=season,
-                        append_to_response=append_to_response,
-                        use_language=use_language,
-                        include_image_language=include_image_language
-                        )
-
-    return result
-
 
 def tmdb_select_dialog(list,call):
     indexlist = []

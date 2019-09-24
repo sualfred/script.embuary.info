@@ -16,7 +16,6 @@ from resources.lib.utils import *
 class TMDBSeasons(object):
     def __init__(self,call_request):
         self.result = {}
-        self.call = call_request['call']
         self.tmdb_id = call_request['tmdb_id']
         self.season = call_request['season']
 
@@ -25,13 +24,24 @@ class TMDBSeasons(object):
             self.details = get_cache(cache_key)
 
             if not self.details:
-                self.details = tmdb_item_details('tv',self.tmdb_id,'season',self.season,append_to_response='credits')
+                self.details = tmdb_query(action='tv',
+                                            call=self.tmdb_id,
+                                            get='season',
+                                            season=self.season,
+                                            params={'append_to_response': 'credits'}
+                                            )
 
             if not self.details:
                 return
 
             if DEFAULT_LANGUAGE != FALLBACK_LANGUAGE and not self.details['overview']:
-                fallback_details = tmdb_item_details('tv',self.tmdb_id,'season',self.season,use_language=False)
+                fallback_details = tmdb_query(action='tv',
+                                                call=self.tmdb_id,
+                                                get='season',
+                                                season=self.season,
+                                                use_language=False
+                                                )
+
                 self.details['overview'] = fallback_details.get('overview')
 
             write_cache(cache_key,self.details)
@@ -42,16 +52,21 @@ class TMDBSeasons(object):
             self.result['details'] = self.get_details()
             self.result['cast'] = self.get_cast()
             self.result['gueststars'] = self.get_gueststars()
+            self.result['posters'] = self.get_images()
 
     def __getitem__(self, key):
         return self.result.get(key,'')
 
     def get_tvshow_details(self):
-        tvshow_cache_key = self.call + str(self.tmdb_id)
+        tvshow_cache_key = 'tv' + str(self.tmdb_id)
         tvshow_details = get_cache(tvshow_cache_key)
 
         if not tvshow_details:
-            tvshow_details = tmdb_item_details('tv',self.tmdb_id,append_to_response='release_dates,content_ratings,external_ids,credits,videos,translations')
+            tvshow_details = tmdb_query(action='tv',
+                                        call=self.tmdb_id,
+                                        params={'append_to_response': 'release_dates,content_ratings,external_ids,credits,videos,translations'}
+                                        )
+
             write_cache(tvshow_cache_key,tvshow_details)
 
         return tvshow_details
@@ -86,5 +101,27 @@ class TMDBSeasons(object):
                     list_item = tmdb_handle_credits(item)
                     li.append(list_item)
                     self.person_duplicate_handler.append(item['id'])
+
+        return li
+
+    def get_images(self):
+        cache_key = 'images' + str(self.tmdb_id) + 'season' + str(self.season)
+        images = get_cache(cache_key)
+        li = list()
+
+        if not images:
+            images = tmdb_query(action='tv',
+                                call=self.tmdb_id,
+                                get='season',
+                                season=self.season,
+                                season_get='images',
+                                params={'include_image_language': '%s,en,null' % DEFAULT_LANGUAGE}
+                                )
+
+            write_cache(cache_key,images)
+
+        for item in images['posters']:
+            list_item = tmdb_handle_images(item)
+            li.append(list_item)
 
         return li

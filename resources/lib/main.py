@@ -134,7 +134,8 @@ class TheMovieDB(object):
                             crew=data['crew'],
                             similar=data['similar'],
                             youtube=data['youtube'],
-                            backdrops=data['images'],
+                            backdrops=data['backdrops'],
+                            posters=data['posters'],
                             collection=data['collection'],
                             seasons=data['seasons'],
                             tmdb_id=self.tmdb_id
@@ -150,6 +151,7 @@ class TheMovieDB(object):
                             details=data['details'],
                             cast=data['cast'],
                             gueststars=data['gueststars'],
+                            posters=data['posters'],
                             tmdb_id=self.tmdb_id
                             )
         return dialog
@@ -201,8 +203,6 @@ class TheMovieDB(object):
         del self.call_params
         del self.window_stack
         del self.dialog_cache
-        winprop('script.embuary.info-language_code', clear=True)
-        winprop('script.embuary.info-country_code', clear=True)
         quit()
 
 
@@ -287,6 +287,7 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         self.similar = kwargs['similar']
         self.youtube = kwargs['youtube']
         self.backdrops = kwargs['backdrops']
+        self.posters = kwargs['posters']
         self.seasons = kwargs['seasons']
         self.collection = kwargs['collection']
 
@@ -318,6 +319,8 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         self.cont6.addItems(self.collection)
         self.cont7 = self.getControl(10058)
         self.cont7.addItems(self.seasons)
+        self.cont8 = self.getControl(10059)
+        self.cont8.addItems(self.posters)
 
     def onAction(self,action):
         if action.getId() in [92,10]:
@@ -370,6 +373,7 @@ class DialogSeason(xbmcgui.WindowXMLDialog):
         self.details = kwargs['details']
         self.cast = kwargs['cast']
         self.gueststars = kwargs['gueststars']
+        self.posters = kwargs['posters']
 
     def __getitem__(self,key):
         return self.action[key]
@@ -389,6 +393,8 @@ class DialogSeason(xbmcgui.WindowXMLDialog):
         self.cont1.addItems(self.cast)
         self.cont2 = self.getControl(10056)
         self.cont2.addItems(self.gueststars)
+        self.cont3 = self.getControl(10059)
+        self.cont3.addItems(self.posters)
 
     def onAction(self,action):
         if action.getId() in [92,10]:
@@ -406,6 +412,9 @@ class DialogSeason(xbmcgui.WindowXMLDialog):
             self.action['call'] = next_call
             self.action['season'] = ''
             self.quit()
+
+        elif next_call == 'image':
+            FullScreenImage(controlId)
 
     def quit(self):
         close_action = self.getProperty('onclose')
