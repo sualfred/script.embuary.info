@@ -110,6 +110,10 @@ Special properties:
 * List control ID `1` = Is used to display a portrait/backdrop images in fullscreen.
 * Scrollbar control ID `2` = Will be the focused on window init.
 
+*additional properties*
+* Configured language code `Window(home).Property(script.embuary.info-language_code)`
+* Configured country code `Window(home).Property(script.embuary.info-country_code)`
+
 ## Overwriting onback or provide an additional onclose action
 You can add a custom onback or a general onclose action in script-embuary-video.xml and script-embuary-person.xml
 

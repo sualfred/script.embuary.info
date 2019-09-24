@@ -26,6 +26,9 @@ class TheMovieDB(object):
         self.query_year = params.get('year')
         self.external_id = params.get('external_id')
 
+        winprop('script.embuary.info-language_code', DEFAULT_LANGUAGE)
+        winprop('script.embuary.info-country_code', COUNTRY_CODE)
+
         busydialog()
 
         if self.external_id or self.query:
@@ -198,6 +201,8 @@ class TheMovieDB(object):
         del self.call_params
         del self.window_stack
         del self.dialog_cache
+        winprop('script.embuary.info-language_code', clear=True)
+        winprop('script.embuary.info-country_code', clear=True)
         quit()
 
 
