@@ -85,15 +85,11 @@ def format_currency(integer):
 
 
 def sort_dict(items,key,reverse=False):
-    try:
-        return sorted(items,key=operator.itemgetter(key),reverse=reverse)
+    for item in items:
+        if not item.get(key):
+            item[key] = 'n/a'
 
-    except KeyError:
-        for item in items:
-            if not item.get(key):
-                item[key] = '0'
-
-        return sorted(items,key=operator.itemgetter(key),reverse=reverse)
+    return sorted(items,key=operator.itemgetter(key),reverse=reverse)
 
 
 def remove_quotes(label):

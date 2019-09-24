@@ -447,7 +447,7 @@ def tmdb_handle_movie(item,local_items=None,full_info=False):
     originaltitle = item.get('original_title','')
     imdbnumber = item.get('imdb_id','')
     collection = item.get('belongs_to_collection','')
-    premiered = item.get('release_date') if item.get('release_date',0) != '0' else ''
+    premiered = item.get('release_date')
     duration = item.get('runtime') * 60 if item.get('runtime',0) > 0 else ''
     local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,imdbnumber)
     dbid = local_info['dbid']
@@ -502,7 +502,7 @@ def tmdb_handle_tvshow(item,local_items=None,full_info=False):
 
     label = item['name'] or item['original_name']
     originaltitle = item.get('original_name','')
-    premiered = item.get('first_air_date') if item.get('first_air_date',0) != '0' else ''
+    premiered = item.get('first_air_date')
     imdbnumber = item['external_ids']['imdb_id'] if item.get('external_ids') else ''
     next_episode = item.get('next_episode_to_air','')
     last_episode = item.get('last_episode_to_air','')
@@ -571,7 +571,6 @@ def tmdb_handle_season(item,tvshow_details,full_info=False):
         icon = IMAGEPATH + tvshow_details['poster_path']
 
     imdbnumber = tvshow_details['external_ids']['imdb_id'] if tvshow_details.get('external_ids') else ''
-    premiered = item.get('air_date') if item.get('air_date',0) != '0' else ''
     season_nr = str(item.get('season_number',''))
     tvshow_label = tvshow_details['name'] or tvshow_details['original_name']
 
@@ -582,7 +581,7 @@ def tmdb_handle_season(item,tvshow_details,full_info=False):
     list_item = xbmcgui.ListItem(label=tvshow_label)
     list_item.setInfo('video', {'title': item['name'],
                                 'tvshowtitle': tvshow_label,
-                                'premiered': premiered,
+                                'premiered': item.get('air_date',''),
                                 'episode': episodes_count,
                                 'season': season_nr,
                                 'plot': item.get('overview',''),
