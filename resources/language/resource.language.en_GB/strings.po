@@ -216,3 +216,8 @@ msgstr ""
 msgctxt "#32038"
 msgid "Widgets"
 msgstr ""
+
+#: /resources/settings.xml
+msgctxt "#32041"
+msgid "Hide items from similar movies if they are part of the collection"
+msgstr ""

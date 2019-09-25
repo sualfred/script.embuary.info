@@ -13,6 +13,10 @@ from resources.lib.utils import *
 
 ########################
 
+SIMILAR_FILTER = ADDON.getSettingBool('similar_movies_filter')
+
+########################
+
 class TMDBVideos(object):
     def __init__(self,call_request):
         self.result = {}
@@ -41,15 +45,16 @@ class TMDBVideos(object):
             self.created_by = self.details['created_by'] if self.details.get('created_by') else ''
             self.crew = self.details['credits']['crew']
             self.details['crew'] = self.crew
+            self.similar_duplicate_handler = list()
 
             self.result['details'] = self.get_details()
             self.result['cast'] = self.get_cast()
             self.result['crew'] = self.get_crew()
+            self.result['collection'] = self.get_collection()
             self.result['similar'] = self.get_similar()
             self.result['youtube'] = self.get_yt_videos()
             self.result['backdrops'], self.result['posters'] = self.get_images()
             self.result['seasons'] = self.get_seasons()
-            self.result['collection'] = self.get_collection()
 
 
     def __getitem__(self, key):
@@ -166,6 +171,9 @@ class TMDBVideos(object):
                     list_item, is_local = tmdb_handle_movie(item,self.local_movies)
                     li.append(list_item)
 
+                    if SIMILAR_FILTER:
+                        self.similar_duplicate_handler.append(item['id'])
+
         return li
 
     def get_similar(self):
@@ -176,6 +184,8 @@ class TMDBVideos(object):
             similar = sort_dict(similar,'release_date',True)
 
             for item in similar:
+                if SIMILAR_FILTER and item['id'] in self.similar_duplicate_handler:
+                   continue
                 list_item, is_local = tmdb_handle_movie(item,self.local_movies)
                 li.append(list_item)
 
