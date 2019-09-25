@@ -163,7 +163,7 @@ class TMDBVideos(object):
             if collection_data['parts']:
                 set_items = sort_dict(collection_data['parts'],'release_date')
                 for item in set_items:
-                    list_item, is_local = tmdb_handle_movie(item)
+                    list_item, is_local = tmdb_handle_movie(item,self.local_movies)
                     li.append(list_item)
 
         return li
