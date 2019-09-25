@@ -427,8 +427,12 @@ def tmdb_handle_movie(item,local_items=None,full_info=False):
     originaltitle = item.get('original_title','')
     imdbnumber = item.get('imdb_id','')
     collection = item.get('belongs_to_collection','')
-    premiered = item.get('release_date')
     duration = item.get('runtime') * 60 if item.get('runtime',0) > 0 else ''
+
+    premiered = item.get('release_date')
+    if premiered in ['2999-01-01', '1900-01-01']:
+        premiered = ''
+
     local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,imdbnumber)
     dbid = local_info['dbid']
     is_local = True if dbid > 0 else False
@@ -482,11 +486,15 @@ def tmdb_handle_tvshow(item,local_items=None,full_info=False):
 
     label = item['name'] or item['original_name']
     originaltitle = item.get('original_name','')
-    premiered = item.get('first_air_date')
     imdbnumber = item['external_ids']['imdb_id'] if item.get('external_ids') else ''
     next_episode = item.get('next_episode_to_air','')
     last_episode = item.get('last_episode_to_air','')
     tvdb_id = item['external_ids']['tvdb_id'] if item.get('external_ids') else ''
+
+    premiered = item.get('release_date')
+    if premiered in ['2999-01-01', '1900-01-01']:
+        premiered = ''
+
     local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,tvdb_id)
     dbid = local_info['dbid']
     is_local = True if dbid > 0 else False

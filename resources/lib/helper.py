@@ -85,9 +85,15 @@ def format_currency(integer):
 
 
 def sort_dict(items,key,reverse=False):
+    ''' Dummy date to always add planned or rumored items at the end of the list
+        if no release date is available yet.
+    '''
     for item in items:
         if not item.get(key):
-            item[key] = 'n/a'
+            if not reverse:
+                item[key] = '2999-01-01'
+            else:
+                item[key] = '1900-01-01'
 
     return sorted(items,key=operator.itemgetter(key),reverse=reverse)
 
