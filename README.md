@@ -68,6 +68,7 @@ Special properties:
 * List control ID `10056` = Crew (for seasons it is used to display guest stars)
 * List control ID `10057` = Collection items
 * List control ID `10058` = Seasons
+* List control ID `10059` = Poster images
 
 Special properties for all items:
 * `Container(id).ListItem.Property(UnwatchedEpisodes)` = Local unwatched episodes
