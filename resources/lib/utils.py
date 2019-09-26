@@ -685,17 +685,26 @@ def tmdb_get_region_release(item):
 
 def tmdb_get_cert(item):
     prefix = 'FSK ' if COUNTRY_CODE == 'DE' else ''
+    mpaa = ''
+    mpaa_fallback = ''
 
     if item.get('content_ratings'):
         for cert in item['content_ratings']['results']:
             if cert['iso_3166_1'] == COUNTRY_CODE:
-                mpaa = prefix + cert['rating']
-                return mpaa
+                mpaa = cert['rating']
+                break
+            elif cert['iso_3166_1'] == 'US':
+                mpaa_fallback = cert['rating']
 
     elif item.get('release_dates'):
         for cert in item['release_dates']['results']:
             if cert['iso_3166_1'] == COUNTRY_CODE:
-                mpaa = prefix + cert['release_dates'][0]['certification']
-                return mpaa
+                mpaa = cert['release_dates'][0]['certification']
+                break
+            elif cert['iso_3166_1'] == 'US':
+                mpaa_fallback = cert['release_dates'][0]['certification']
 
-    return ''
+    if mpaa:
+        return prefix + mpaa
+
+    return mpaa_fallback
