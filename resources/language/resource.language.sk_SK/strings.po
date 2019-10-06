@@ -231,3 +231,13 @@ msgctxt "#32041"
 msgid "Hide items from similar movies if they are part of the collection"
 msgstr ""
 "Nezobrazovať položky z podobných filmov, ak sú súčasťou jednej kolekcie"
+
+#: /resources/lib/widgets.py
+msgctxt "#32042"
+msgid "Trending movies"
+msgstr "Filmy v trende"
+
+#: /resources/lib/widgets.py
+msgctxt "#32043"
+msgid "Trending shows"
+msgstr "Seriály v trende"
