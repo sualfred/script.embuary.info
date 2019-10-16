@@ -85,12 +85,12 @@ class PluginContent(object):
 
     def _process_movies(self,result):
         for item in result:
-            list_item, is_local = tmdb_handle_movie(item,local_items=self.local_media['movies'])
+            list_item, is_local = tmdb_handle_movie(item,local_items=self.local_media['movies'],mediatype='video')
             self._add(list_item,item,'movie')
 
     def _process_tvshows(self,result):
         for item in result:
-            list_item, is_local = tmdb_handle_tvshow(item,local_items=self.local_media['shows'])
+            list_item, is_local = tmdb_handle_tvshow(item,local_items=self.local_media['shows'],mediatype='video')
             self._add(list_item,item,'tv')
 
     def _add(self,list_item,item,content):
