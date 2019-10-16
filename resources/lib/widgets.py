@@ -16,7 +16,7 @@ except ImportError:
 ########################
 
 INDEX = [
-        {'name': ADDON.getLocalizedString(32042), 'info': 'trending', 'call': 'movies', 'get': 'week'},
+        {'name': ADDON.getLocalizedString(32042), 'info': 'trending', 'call': 'movie', 'get': 'week'},
         {'name': ADDON.getLocalizedString(32029), 'info': 'movies', 'call': 'top_rated'},
         {'name': ADDON.getLocalizedString(32030), 'info': 'movies', 'call': 'now_playing'},
         {'name': ADDON.getLocalizedString(32031), 'info': 'movies', 'call': 'upcoming'},
@@ -55,7 +55,7 @@ class PluginContent(object):
 
     def trending(self):
         result = self._query('trending',self.call,self.get)
-        if self.call == 'movies':
+        if self.call == 'movie':
             self._process_movies(result)
         elif self.call == 'tv':
             self._process_tvshows(result)
