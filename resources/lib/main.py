@@ -92,10 +92,13 @@ class TheMovieDB(object):
                     self.query = dbinfo.get('title')
                 self.query_year = dbinfo.get('year', '')
 
-                self.find_id(method=query)
+                self.find_id(method='query')
 
         elif method == 'external_id':
             result = tmdb_find(self.call, self.external_id)
+
+            if not result and self.query:
+                self.find_id(method='query')
 
         elif method == 'query':
             if ' / ' in self.query:
