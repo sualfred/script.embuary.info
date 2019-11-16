@@ -65,7 +65,7 @@ class TheMovieDB(object):
             key_details = '%sdetails' % self.dbtype
 
             dbinfo = json_call(method_details,
-                               properties=['uniqueid', 'year', 'originaltitle', 'title'],
+                               properties=['uniqueid', 'year', 'title'],
                                params={param: int(self.dbid)}
                                )
             try:
@@ -86,13 +86,11 @@ class TheMovieDB(object):
                     break
 
             if not result:
-                if dbinfo.get('originaltitle'):
-                    self.query = dbinfo.get('originaltitle')
-                else:
-                    self.query = dbinfo.get('title')
+                self.query = dbinfo.get('title')
                 self.query_year = dbinfo.get('year', '')
 
-                self.find_id(method='query')
+                tmdb_id = self.find_id(method='query')
+                return tmdb_id
 
         elif method == 'external_id':
             result = tmdb_find(self.call, self.external_id)
