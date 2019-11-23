@@ -24,6 +24,7 @@ class TheMovieDB(object):
         self.season = params.get('season')
         self.query = remove_quotes(params.get('query'))
         self.query_year = params.get('year')
+        self.exact_search = True if params.get('exact') == 'true' else False
         self.external_id = params.get('external_id')
         self.dbid = params.get('dbid')
 
@@ -108,6 +109,17 @@ class TheMovieDB(object):
                     self.query = query_values[position]
 
             result = tmdb_search(self.call, self.query, self.query_year)
+
+            if self.exact_search:
+                exact_results = []
+                for item in result:
+                    if item.get('title') == self.query or item.get('name') == self.query:
+                        exact_results.append(item)
+
+                if exact_results:
+                    result = exact_results
+                else:
+                    return ''
 
         try:
             if len(result) > 1:
