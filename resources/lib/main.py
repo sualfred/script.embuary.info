@@ -112,9 +112,17 @@ class TheMovieDB(object):
 
             if self.exact_search:
                 exact_results = []
+
                 for item in result:
-                    if item.get('title') == self.query or item.get('name') == self.query:
-                        exact_results.append(item)
+                    title = item.get('title') or item.get('name') or ''
+                    original_title = item.get('original_title') or item.get('original_name') or ''
+
+                    if title.lower() == self.query.lower() or original_title.lower() == self.query.lower():
+                        if self.query_year:
+                            if self.query_year == item.get('release_date', '')[:-6]:
+                                exact_results.append(item)
+                        else:
+                            exact_results.append(item)
 
                 if exact_results:
                     result = exact_results

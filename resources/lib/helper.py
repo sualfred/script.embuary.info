@@ -48,9 +48,12 @@ CACHE_PREFIX = ADDON_ID + '_' + ADDON_VERSION + '_' + DEFAULT_LANGUAGE + COUNTRY
 
 ########################
 
-def log(txt,loglevel=DEBUG,force=False):
+def log(txt,loglevel=DEBUG,json=False,force=False):
     if force:
         loglevel = NOTICE
+
+    if json:
+        txt = json_prettyprint(txt)
 
     if not PYTHON3:
         if isinstance(txt, str):
@@ -247,3 +250,7 @@ def set_plugincontent(content=None,category=None):
         xbmcplugin.setPluginCategory(int(sys.argv[1]), category)
     if content:
         xbmcplugin.setContent(int(sys.argv[1]), content)
+
+
+def json_prettyprint(string):
+    return json.dumps(string, sort_keys=True, indent=4, separators=(',', ': '))
