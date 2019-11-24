@@ -239,5 +239,5 @@ msgstr ""
 
 #: /resources/settings.xml
 msgctxt "#32045"
-msgid "Allow items of the next %n days"
+msgid "Allow items of the next [n] days"
 msgstr ""
