@@ -184,6 +184,12 @@ class TMDBVideos(object):
                     if SIMILAR_FILTER:
                         self.similar_duplicate_handler.append(item['id'])
 
+            ''' Don't show sets with only 1 item
+            '''
+            if len(li) == 1:
+                self.similar_duplicate_handler = list()
+                li = list()
+
         return li
 
     def get_similar(self):
