@@ -245,8 +245,8 @@ msgstr "Serien im Trend"
 
 #: /resources/settings.xml
 msgctxt "#32044"
-msgid "Hide upcoming items in the person dialog"
-msgstr "Verberge kommende Filme/Serien im Personen-Dialog"
+msgid "Hide upcoming items"
+msgstr "Verberge kommende Filme/Serien"
 
 #: /resources/settings.xml
 msgctxt "#32045"
