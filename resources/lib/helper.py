@@ -177,6 +177,10 @@ def date_format(value,date='short',scheme='YYYY-MM-DD'):
     return value
 
 
+def date_delta(date):
+    return datetime.datetime.strptime(date, '%Y-%m-%d') - datetime.datetime.now()
+
+
 def get_bool(value,string='true'):
     try:
         if value.lower() == string:
