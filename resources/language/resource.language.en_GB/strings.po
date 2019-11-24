@@ -234,7 +234,7 @@ msgstr ""
 
 #: /resources/settings.xml
 msgctxt "#32044"
-msgid "Hide upcoming items in the person dialog"
+msgid "Hide upcoming items"
 msgstr ""
 
 #: /resources/settings.xml
