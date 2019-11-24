@@ -70,7 +70,7 @@ msgstr "出生地"
 #: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32008"
 msgid "Facts"
-msgstr "事实"
+msgstr "实情"
 
 #: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32009"
@@ -171,12 +171,12 @@ msgstr "最高评分电影"
 #: /resources/lib/listing.py
 msgctxt "#32030"
 msgid "Now playing movies"
-msgstr "正在播放的电影"
+msgstr "正在上映的新电影"
 
 #: /resources/lib/listing.py
 msgctxt "#32031"
 msgid "Upcoming movies"
-msgstr "即将上映的电影"
+msgstr "即将上映的新电影"
 
 #: /resources/lib/listing.py
 msgctxt "#32032"
