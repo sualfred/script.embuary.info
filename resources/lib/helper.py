@@ -178,7 +178,8 @@ def date_format(value,date='short',scheme='YYYY-MM-DD'):
 
 
 def date_delta(date):
-    return datetime.datetime.strptime(date, '%Y-%m-%d') - datetime.datetime.now()
+    date = arrow.get(date, 'YYYY-MM-DD').date()
+    return date - datetime.date.today()
 
 
 def get_bool(value,string='true'):
