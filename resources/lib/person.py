@@ -44,11 +44,11 @@ class TMDBPersons(object):
 
             self.local_movie_count = 0
             self.local_tv_count = 0
-            self.local_combined_count = 0
+            self.all_credits = list()
 
-            self.result['movies'], self.movies_to_combine = self.get_movie_list()
-            self.result['tvshows'], self.tvshows_to_combine = self.get_tvshow_list()
-            self.result['combined'] = self.get_combined_list(self.movies_to_combine, self.tvshows_to_combine)
+            self.result['movies'] = self.get_movie_list()
+            self.result['tvshows'] = self.get_tvshow_list()
+            self.result['combined'] = self.get_combined_list()
             self.result['person'] = self.get_person_details()
             self.result['images'] = self.get_person_images()
 
@@ -66,26 +66,26 @@ class TMDBPersons(object):
 
         return li
 
-    def get_combined_list(self, movies, tvshows):
-        combined = movies + tvshows
-        combined = sort_dict(combined,'release_date',True)
+    def get_combined_list(self):
+        combined = sort_dict(self.all_credits, 'release_date', True)
         li = list()
 
         for item in combined:
             if item['type'] == 'movie':
                 list_item, is_local = tmdb_handle_movie(item,self.local_movies)
+
             elif item['type'] =='tvshow':
                 list_item, is_local = tmdb_handle_tvshow(item,self.local_shows)
+
             li.append(list_item)
 
         return li
 
     def get_movie_list(self):
         movies = self.details['movie_credits']['cast']
-        movies = sort_dict(movies,'release_date',True)
+        movies = sort_dict(movies, 'release_date', True)
         li = list()
         duplicate_handler = list()
-        movies_to_combine = list()
 
         for item in movies:
             skip_movie = False
@@ -112,19 +112,19 @@ class TMDBPersons(object):
                 li.append(list_item)
                 duplicate_handler.append(item['id'])
                 item['type'] = 'movie'
-                movies_to_combine.append(item)
 
                 if is_local:
                     self.local_movie_count += 1
 
-        return li, movies_to_combine
+                self.all_credits.append(item)
+
+        return li
 
     def get_tvshow_list(self):
         tvshows = self.details['tv_credits']['cast']
-        tvshows = sort_dict(tvshows,'first_air_date',True)
+        tvshows = sort_dict(tvshows, 'first_air_date', True)
         li = list()
         duplicate_handler = list()
-        tvshows_to_combine = list()
 
         for item in tvshows:
             skip_show = False
@@ -153,12 +153,13 @@ class TMDBPersons(object):
                 duplicate_handler.append(item['id'])
                 item['type'] = 'tvshow'
                 item['release_date'] = item['first_air_date']
-                tvshows_to_combine.append(item)
 
                 if is_local:
                     self.local_tv_count += 1
 
-        return li, tvshows_to_combine
+                self.all_credits.append(item)
+
+        return li
 
     def get_person_images(self):
         li = list()
