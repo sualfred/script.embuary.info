@@ -185,6 +185,7 @@ class TheMovieDB(object):
                             person=data['person'],
                             movies=data['movies'],
                             tvshows=data['tvshows'],
+                            combined=data['combined'],
                             images=data['images'],
                             tmdb_id=self.tmdb_id
                             )
@@ -284,6 +285,7 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
         self.person = kwargs['person']
         self.movies = kwargs['movies']
         self.tvshows = kwargs['tvshows']
+        self.combined = kwargs['combined']
         self.images = kwargs['images']
 
     def __getitem__(self,key):
@@ -307,6 +309,8 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
         self.cont2.addItems(self.tvshows)
         self.cont3 = self.getControl(10054)
         self.cont3.addItems(self.images)
+        self.cont4 = self.getControl(10055)
+        self.cont4.addItems(self.combined)
 
     def onAction(self,action):
         if action.getId() in [92,10]:
