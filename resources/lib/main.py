@@ -301,16 +301,17 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
     def add_items(self):
         self.first_load = False
 
-        self.cont0 = self.getControl(10051)
-        self.cont0.addItems(self.person)
-        self.cont1 = self.getControl(10052)
-        self.cont1.addItems(self.movies)
-        self.cont2 = self.getControl(10053)
-        self.cont2.addItems(self.tvshows)
-        self.cont3 = self.getControl(10054)
-        self.cont3.addItems(self.images)
-        self.cont4 = self.getControl(10055)
-        self.cont4.addItems(self.combined)
+        index = 10051
+        li = [self.person, self.movies, self.tvshows, self.images, self.combined]
+
+        for items in li:
+            try:
+                clist = self.getControl(index)
+                clist.addItems(items)
+            except RuntimeError as error:
+                log('Control with id %s cannot be filled. Error --> %s' % (str(index), error), DEBUG)
+
+            index += 1
 
     def onAction(self,action):
         if action.getId() in [92,10]:
@@ -374,24 +375,18 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
 
     def add_items(self):
         self.first_load = False
-        self.cont0 = self.getControl(10051)
-        self.cont0.addItems(self.details)
-        self.cont1 = self.getControl(10052)
-        self.cont1.addItems(self.cast)
-        self.cont2 = self.getControl(10053)
-        self.cont2.addItems(self.similar)
-        self.cont3 = self.getControl(10054)
-        self.cont3.addItems(self.youtube)
-        self.cont4 = self.getControl(10055)
-        self.cont4.addItems(self.backdrops)
-        self.cont5 = self.getControl(10056)
-        self.cont5.addItems(self.crew)
-        self.cont6 = self.getControl(10057)
-        self.cont6.addItems(self.collection)
-        self.cont7 = self.getControl(10058)
-        self.cont7.addItems(self.seasons)
-        self.cont8 = self.getControl(10059)
-        self.cont8.addItems(self.posters)
+
+        index = 10051
+        li = [self.details, self.cast, self.similar, self.youtube, self.backdrops, self.crew, self.collection, self.seasons, self.posters]
+
+        for items in li:
+            try:
+                clist = self.getControl(index)
+                clist.addItems(items)
+            except RuntimeError as error:
+                log('Control with id %s cannot be filled. Error --> %s' % (str(index), error), DEBUG)
+
+            index += 1
 
     def onAction(self,action):
         if action.getId() in [92,10]:
@@ -458,14 +453,18 @@ class DialogSeason(xbmcgui.WindowXMLDialog):
 
     def add_items(self):
         self.first_load = False
-        self.cont0 = self.getControl(10051)
-        self.cont0.addItems(self.details)
-        self.cont1 = self.getControl(10052)
-        self.cont1.addItems(self.cast)
-        self.cont2 = self.getControl(10056)
-        self.cont2.addItems(self.gueststars)
-        self.cont3 = self.getControl(10059)
-        self.cont3.addItems(self.posters)
+
+        index = 10051
+        li = [self.details, self.cast, self.gueststars, self.posters]
+
+        for items in li:
+            try:
+                clist = self.getControl(index)
+                clist.addItems(items)
+            except RuntimeError as error:
+                log('Control with id %s cannot be filled. Error --> %s' % (str(index), error), DEBUG)
+
+            index += 1
 
     def onAction(self,action):
         if action.getId() in [92,10]:
