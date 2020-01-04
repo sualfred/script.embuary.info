@@ -25,7 +25,8 @@ INDEX = [
         {'name': ADDON.getLocalizedString(32033), 'info': 'tvshows', 'call': 'top_rated'},
         {'name': ADDON.getLocalizedString(32034), 'info': 'tvshows', 'call': 'popular'},
         {'name': ADDON.getLocalizedString(32035), 'info': 'tvshows', 'call': 'airing_today'},
-        {'name': ADDON.getLocalizedString(32036), 'info': 'tvshows', 'call': 'on_the_air'}
+        {'name': ADDON.getLocalizedString(32036), 'info': 'tvshows', 'call': 'on_the_air'},
+        {'name': xbmc.getLocalizedString(137), 'action': 'search'}
         ]
 
 ########################
@@ -38,12 +39,15 @@ class PluginListing(object):
     def widgets(self):
         for widget in INDEX:
             label = widget['name']
-            url = '{0}?{1}'.format(sys.argv[0], urlencode({'info': widget['info'], 'call': widget['call'], 'get': widget.get('get')}))
+            params = {'info': widget.get('info'), 'call': widget.get('call'), 'get': widget.get('get'), 'action': widget.get('action')}
+            params = {k: v for k, v in params.items() if v is not None}
+            url = '{0}?{1}'.format(sys.argv[0], urlencode(params))
+            folder = True if not widget.get('action') else False
 
             list_item = xbmcgui.ListItem(label=label)
             list_item.setInfo('video', {'title': label, 'mediatype': 'video'})
             list_item.setArt({'icon': 'DefaultFolder.png', 'thumb': 'special://home/addons/script.embuary.info/resources/icon.png'})
-            self.li.append((url, list_item, True))
+            self.li.append((url, list_item, folder))
 
         set_plugincontent(category=ADDON.getLocalizedString(32038))
 
@@ -122,3 +126,6 @@ class PluginActions(object):
 
     def runscript(self):
         execute('RunScript(script.embuary.info,call=%s,tmdb_id=%s)' % (self.call,self.id))
+
+    def search(self):
+        execute('RunScript(script.embuary.info)')
