@@ -36,18 +36,19 @@ OMDB_URL = 'http://www.omdbapi.com/'
 ########################
 
 def get_local_media():
-    local_media = get_cache('local_items')
+    #local_media = get_cache('local_items')
+    local_media = None
 
     if not local_media:
         local_media = {}
         local_media['shows'] = query_local_media('tvshow',
-                                                 get='VideoLibrary.GetTVShows',
-                                                 properties=['title', 'originaltitle', 'year', 'playcount', 'episode', 'watchedepisodes', 'uniqueid']
-                                                 )
+                                                get='VideoLibrary.GetTVShows',
+                                                properties=['title', 'originaltitle', 'year', 'playcount', 'episode', 'watchedepisodes']
+                                                )
         local_media['movies'] = query_local_media('movie',
-                                                  get='VideoLibrary.GetMovies',
-                                                  properties=['title', 'originaltitle', 'year', 'playcount', 'file', 'uniqueid']
-                                                  )
+                                                get='VideoLibrary.GetMovies',
+                                                properties=['title', 'originaltitle', 'year', 'imdbnumber', 'playcount', 'file']
+                                                )
 
         write_cache('local_items',local_media,1)
 
@@ -55,7 +56,8 @@ def get_local_media():
 
 
 def query_local_media(dbtype,get,properties):
-    items = json_call(get, properties, sort={'order': 'descending', 'method': 'year'})
+    log('blaaaaa', force=True)
+    items = json_call(get,properties,sort={'order': 'descending', 'method': 'year'})
 
     try:
         items = items['result']['%ss' % dbtype]
@@ -66,7 +68,7 @@ def query_local_media(dbtype,get,properties):
     for item in items:
         local_items.append({'title': item.get('title', ''),
                             'originaltitle': item.get('originaltitle', ''),
-                            'imdbnumber': item.get('uniqueid', {}).get('imdb'),
+                            'imdbnumber': item.get('imdbnumber', ''),
                             'year': item.get('year', ''),
                             'dbid': item.get('%sid' % dbtype, ''),
                             'playcount': item.get('playcount', ''),
@@ -101,38 +103,34 @@ def omdb_call(imdbnumber=None,title=None,year=None,content_type=None):
     if omdb_cache:
         return omdb_cache
 
-    for i in range(1,4): # loop if heavy server load
+    else:
         try:
-            request = requests.get(url, timeout=5)
-            if request.ok:
-                result = request.json()
-                break
+            request = requests.get(url)
+            result = request.json()
 
-        except Exception:
-            if i < 3:
-                xbmc.sleep(500)
-            else:
-                return omdb
+            omdb['awards'] = result.get('Awards')
+            omdb['imdbRating'] = result.get('imdbRating')
+            omdb['imdbVotes'] = result.get('imdbVotes')
+            omdb['DVD'] = date_format(result.get('DVD'),scheme='DD MMM YYYY')
 
-    omdb['awards'] = result.get('Awards')
-    omdb['imdbRating'] = result.get('imdbRating')
-    omdb['imdbVotes'] = result.get('imdbVotes')
-    omdb['DVD'] = date_format(result.get('DVD'),scheme='DD MMM YYYY')
+            delete_keys = [key for key,value in omdb.items() if value == 'N/A' or value == 'NA']
+            for key in delete_keys:
+                del omdb[key]
 
-    delete_keys = [key for key,value in omdb.items() if value == 'N/A' or value == 'NA']
-    for key in delete_keys:
-        del omdb[key]
+            for rating in result['Ratings']:
+                if rating['Source'] == 'Rotten Tomatoes':
+                    omdb['rotten'] = rating['Value'][:-1]
+                elif rating['Source'] == 'Metacritic':
+                    omdb['metacritic'] = rating['Value'][:-4]
 
-    for rating in result['Ratings']:
-        if rating['Source'] == 'Rotten Tomatoes':
-            omdb['rotten'] = rating['Value'][:-1]
+        except Exception as error:
+            log('OMDB Error: %s' % error)
+            pass
 
-        elif rating['Source'] == 'Metacritic':
-            omdb['metacritic'] = rating['Value'][:-4]
+        else:
+            write_cache(url,omdb)
 
-    write_cache(url,omdb)
-
-    return omdb
+        return omdb
 
 
 def omdb_properties(list_item,imdbnumber):

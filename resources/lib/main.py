@@ -295,6 +295,8 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
         self.action[key] = value
 
     def onInit(self):
+        execute('ClearProperty(tmdb_next_call,home)')
+
         if self.first_load:
             self.add_items()
 
@@ -310,7 +312,7 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
                 clist.addItems(items)
             except RuntimeError as error:
                 log('Control with id %s cannot be filled. Error --> %s' % (str(index), error), DEBUG)
-
+                pass
             index += 1
 
     def onAction(self,action):
@@ -335,10 +337,17 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
 
     def quit(self):
         close_action = self.getProperty('onclose')
+        onnext_action = self.getProperty('onnext')
         onback_action = self.getProperty('onback_%s' % self.getFocusId())
+
+        if self.action.get('call') and self.action.get('id'):
+            execute('SetProperty(tmdb_next_call,true,home)')
+            if onnext_action:
+                execute(onnext_action)
 
         if self.action.get('call') == 'back' and onback_action:
             execute(onback_action)
+
         else:
             if close_action:
                 execute(close_action)
@@ -370,6 +379,8 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         self.action[key] = value
 
     def onInit(self):
+        execute('ClearProperty(tmdb_next_call,home)')
+
         if self.first_load:
             self.add_items()
 
@@ -385,7 +396,7 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
                 clist.addItems(items)
             except RuntimeError as error:
                 log('Control with id %s cannot be filled. Error --> %s' % (str(index), error), DEBUG)
-
+                pass
             index += 1
 
     def onAction(self,action):
@@ -418,10 +429,17 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
 
     def quit(self):
         close_action = self.getProperty('onclose')
+        onnext_action = self.getProperty('onnext')
         onback_action = self.getProperty('onback_%s' % self.getFocusId())
+
+        if self.action.get('call') and self.action.get('id'):
+            execute('SetProperty(tmdb_next_call,true,home)')
+            if onnext_action:
+                execute(onnext_action)
 
         if self.action.get('call') == 'back' and onback_action:
             execute(onback_action)
+
         else:
             if close_action:
                 execute(close_action)
@@ -448,23 +466,24 @@ class DialogSeason(xbmcgui.WindowXMLDialog):
         self.action[key] = value
 
     def onInit(self):
+        execute('ClearProperty(tmdb_next_call,home)')
+
         if self.first_load:
             self.add_items()
 
     def add_items(self):
         self.first_load = False
 
-        index = 10051
+        index = [10051, 10052, 10056, 10059]
         li = [self.details, self.cast, self.gueststars, self.posters]
 
         for items in li:
             try:
-                clist = self.getControl(index)
+                clist = self.getControl(index[li.index(items)])
                 clist.addItems(items)
             except RuntimeError as error:
-                log('Control with id %s cannot be filled. Error --> %s' % (str(index), error), DEBUG)
-
-            index += 1
+                log('Control with id %s cannot be filled. Error --> %s' % (str(index[li.index(items)]), error), DEBUG)
+                pass
 
     def onAction(self,action):
         if action.getId() in [92,10]:
@@ -488,10 +507,17 @@ class DialogSeason(xbmcgui.WindowXMLDialog):
 
     def quit(self):
         close_action = self.getProperty('onclose')
+        onnext_action = self.getProperty('onnext')
         onback_action = self.getProperty('onback_%s' % self.getFocusId())
+
+        if self.action.get('call') and self.action.get('id'):
+            execute('SetProperty(tmdb_next_call,true,home)')
+            if onnext_action:
+                execute(onnext_action)
 
         if self.action.get('call') == 'back' and onback_action:
             execute(onback_action)
+
         else:
             if close_action:
                 execute(close_action)
