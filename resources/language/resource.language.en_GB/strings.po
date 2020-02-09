@@ -246,3 +246,8 @@ msgstr ""
 msgctxt "#32046"
 msgid "Watched episodes"
 msgstr ""
+
+#: /resources/settings.xml
+msgctxt "#32047"
+msgid "Install context menu addon"
+msgstr ""
