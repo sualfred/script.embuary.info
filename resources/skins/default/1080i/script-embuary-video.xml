@@ -1431,7 +1431,7 @@
 										<font>font12</font>
 										<shadowcolor>50000000</shadowcolor>
 										<textoffsetx>10</textoffsetx>
-										<scroll>false</scroll>
+										<scroll>true</scroll>
 										<align>center</align>
 									</control>
 								</control>
@@ -1496,7 +1496,7 @@
 									<left>29</left>
 									<top>303</top>
 									<control type="label">
-										<width>543</width>
+										<width>557</width>
 										<label>$INFO[ListItem.Label]</label>
 										<font>font10</font>
 										<shadowcolor>50000000</shadowcolor>
@@ -1506,7 +1506,7 @@
 									</control>
 									<control type="label">
 										<top>28</top>
-										<width>543</width>
+										<width>557</width>
 										<label>$INFO[ListItem.label2]</label>
 										<font>font12</font>
 										<shadowcolor>50000000</shadowcolor>
@@ -1560,7 +1560,7 @@
 									<left>29</left>
 									<top>303</top>
 									<control type="label">
-										<width>543</width>
+										<width>555</width>
 										<label>$INFO[ListItem.Label]</label>
 										<font>font10</font>
 										<shadowcolor>50000000</shadowcolor>
@@ -1570,7 +1570,7 @@
 									</control>
 									<control type="label">
 										<top>28</top>
-										<width>543</width>
+										<width>555</width>
 										<label>$INFO[ListItem.label2]</label>
 										<font>font12</font>
 										<shadowcolor>50000000</shadowcolor>
@@ -1641,7 +1641,7 @@
 									<top>303</top>
 									<control type="label">
 										<top>14</top>
-										<width>543</width>
+										<width>555</width>
 										<label>$INFO[ListItem.Label]</label>
 										<font>font10</font>
 										<shadowcolor>50000000</shadowcolor>
@@ -1696,12 +1696,12 @@
 									<top>303</top>
 									<control type="label">
 										<top>14</top>
-										<width>543</width>
+										<width>555</width>
 										<label>$INFO[ListItem.Label]</label>
 										<font>font10</font>
 										<shadowcolor>50000000</shadowcolor>
 										<textoffsetx>10</textoffsetx>
-										<scroll>false</scroll>
+										<scroll>true</scroll>
 										<align>center</align>
 									</control>
 								</control>
@@ -1772,7 +1772,7 @@
 										<font>font10</font>
 										<shadowcolor>50000000</shadowcolor>
 										<textoffsetx>10</textoffsetx>
-										<scroll>true</scroll>
+										<scroll>false</scroll>
 										<align>center</align>
 									</control>
 								</control>
