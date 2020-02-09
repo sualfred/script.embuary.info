@@ -23,8 +23,8 @@
 		<!-- background -->
 		<control type="group">
 			<animation effect="fade" start="0" end="100" time="400">WindowOpen</animation>
-			<animation effect="fade" start="100" end="0" time="300" condition="String.IsEmpty(Window(home).Property(tmdb_next_call))">WindowClose</animation>
-			<animation effect="fade" start="100" end="0" time="0" condition="!String.IsEmpty(Window(home).Property(tmdb_next_call))">WindowClose</animation>
+			<animation effect="fade" start="100" end="0" time="300" condition="String.IsEmpty(Window(home).Property(script.embuary.info-nextcall))">WindowClose</animation>
+			<animation effect="fade" start="100" end="0" time="0" condition="!String.IsEmpty(Window(home).Property(script.embuary.info-nextcall))">WindowClose</animation>
 			<animation effect="fade" time="400">VisibleChange</animation>
 			<control type="image">
 				<width>1920</width>
@@ -56,11 +56,11 @@
 				<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" />
 				<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
 			</animation>
-			<animation type="WindowCLose" condition="String.IsEmpty(Window(home).Property(tmdb_next_call))">
+			<animation type="WindowCLose" condition="String.IsEmpty(Window(home).Property(script.embuary.info-nextcall))">
 				<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
 				<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
 			</animation>
-			<animation type="WindowCLose" condition="!String.IsEmpty(Window(home).Property(tmdb_next_call))">
+			<animation type="WindowCLose" condition="!String.IsEmpty(Window(home).Property(script.embuary.info-nextcall))">
 				<effect type="fade" start="100" end="0" time="0" tween="sine" easing="out" />
 			</animation>
 
@@ -748,7 +748,7 @@
 				</control>
 			</control>
 
-			<!-- posters -->
+			<!-- images -->
 			<control type="group">
 				<visible>true</visible>
 				<visible>Integer.IsGreater(Container(10054).NumItems,0) | Container(10054).IsUpdating</visible>
@@ -761,7 +761,7 @@
 						<width>900</width>
 						<height>90</height>
 						<align>left</align>
-						<label>$LOCALIZE[20021]</label>
+						<label>$ADDON[script.embuary.info 32010]</label>
 						<textcolor>ffffffff</textcolor>
 						<shadowcolor>50000000</shadowcolor>
 						<font>font13</font>
@@ -890,8 +890,8 @@
 				<right>35</right>
 				<height>100</height>
 				<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
-				<animation effect="fade" start="100" end="0" time="200" condition="String.IsEmpty(Window(home).Property(tmdb_next_call))">WindowClose</animation>
-				<animation effect="fade" start="100" end="0" time="0" condition="!String.IsEmpty(Window(home).Property(tmdb_next_call))">WindowClose</animation>
+				<animation effect="fade" start="100" end="0" time="200" condition="String.IsEmpty(Window(home).Property(script.embuary.info-nextcall))">WindowClose</animation>
+				<animation effect="fade" start="100" end="0" time="0" condition="!String.IsEmpty(Window(home).Property(script.embuary.info-nextcall))">WindowClose</animation>
 				<control type="label">
 					<left>0</left>
 					<right>150</right>
