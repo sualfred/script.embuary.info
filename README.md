@@ -85,6 +85,11 @@ Special properties:
 * `Container(10051).ListItem.Property(Votes.IMDB)` = IMDb votes
 * `Container(10051).ListItem.Property(Rating.IMDB)` = IMDb rating
 * `Container(10051).ListItem.Property(Rating.Rotten)` = Rotten Tomatoes rating
+* `Container(10051).ListItem.Property(Rating.Rotten_Avg)` = Average Rotten Tomatoes rating
+* `Container(10051).ListItem.Property(Votes.Rotten)` = Rotten Tomatoes votes
+* `Container(10051).ListItem.Property(Rating.Rotten_User)` = Rotten Tomatoes user rating
+* `Container(10051).ListItem.Property(Rating.Rotten_User_Avg)` = Average Rotten Tomatoes user rating
+* `Container(10051).ListItem.Property(Votes.Rotten_User)` = Rotten Tomatoes user votes
 * `Container(10051).ListItem.Property(Rating.Metacritic)` = Metacritic rating
 * `Container(10051).ListItem.Property(Release)` = Retail release date
 * `Container(10051).ListItem.Property(Budget)` = Budget

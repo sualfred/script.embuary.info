@@ -258,7 +258,7 @@
 							<visible>!String.IsEmpty(Container(10051).ListItem.Property(rating.imdb))</visible>
 						</control>
 						<control type="label">
-							<label>[COLOR FF12A0C7]Rotten Tomatoes:[/COLOR][CR]$INFO[Container(10051).ListItem.Property(rating.rotten)] / 100</label>
+							<label>[COLOR FF12A0C7]Rotten Tomatoes:[/COLOR][CR]$INFO[Container(10051).ListItem.Property(rating.rotten)] / 100$INFO[Container(10051).ListItem.Property(votes.rotten), (,)]</label>
 							<height>80</height>
 							<font>font12</font>
 							<textcolor>ffffffff</textcolor>
