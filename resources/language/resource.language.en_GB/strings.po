@@ -251,3 +251,8 @@ msgstr ""
 msgctxt "#32047"
 msgid "Install context menu addon"
 msgstr ""
+
+#: /resources/skins/default/1080i/script-embuary-video.xml
+msgctxt "#32048"
+msgid "Next episode"
+msgstr ""

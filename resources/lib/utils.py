@@ -35,27 +35,20 @@ IMAGEPATH = 'https://image.tmdb.org/t/p/original'
 ########################
 
 def get_local_media():
-    #local_media = get_cache('local_items')
-    local_media = None
-
-    if not local_media:
-        local_media = {}
-        local_media['shows'] = query_local_media('tvshow',
-                                                get='VideoLibrary.GetTVShows',
-                                                properties=['title', 'originaltitle', 'year', 'playcount', 'episode', 'watchedepisodes']
-                                                )
-        local_media['movies'] = query_local_media('movie',
-                                                get='VideoLibrary.GetMovies',
-                                                properties=['title', 'originaltitle', 'year', 'imdbnumber', 'playcount', 'file']
-                                                )
-
-        write_cache('local_items',local_media,1)
+    local_media = {}
+    local_media['shows'] = query_local_media('tvshow',
+                                            get='VideoLibrary.GetTVShows',
+                                            properties=['title', 'originaltitle', 'year', 'playcount', 'episode', 'watchedepisodes']
+                                            )
+    local_media['movies'] = query_local_media('movie',
+                                            get='VideoLibrary.GetMovies',
+                                            properties=['title', 'originaltitle', 'year', 'imdbnumber', 'playcount', 'file']
+                                            )
 
     return local_media
 
 
 def query_local_media(dbtype,get,properties):
-    log('blaaaaa', force=True)
     items = json_call(get,properties,sort={'order': 'descending', 'method': 'year'})
 
     try:
@@ -166,33 +159,35 @@ def omdb_properties(list_item,imdbnumber):
 
 def tmdb_call(request_url,error_check=False,error=ADDON.getLocalizedString(32019)):
     try:
-        for i in range(1,10):
-            request = requests.get(request_url)
-            if not str(request.status_code).startswith('5'):
-                break
-            log('TMDb server error: Code ' + str(request.status_code))
-            xbmc.sleep(500)
+        for i in range(1,4): # loop if heavy server load
+            try:
+                request = requests.get(request_url, timeout=5)
+
+                if str(request.status_code).startswith('5'):
+                    raise Exception(str(request.status_code))
+
+            except Exception as error:
+                log('TMDb server error: Code ' + error)
+                xbmc.sleep(500)
 
         if request.status_code == 401:
-            error = ADDON.getLocalizedString(32022)
-            raise Exception
+            raise Exception(ADDON.getLocalizedString(32022))
 
         elif request.status_code == 404:
-            raise Exception
+            raise Exception(error)
 
-        elif request.status_code != requests.codes.ok:
-            error = 'Code ' + str(request.status_code)
-            raise Exception
+        elif not request.ok:
+            raise Exception('Code ' + str(request.status_code))
 
         result = request.json()
 
         if error_check:
-            if len(result) == 0: raise Exception
-            if 'results' in result and len(result['results']) == 0: raise Exception
+            if len(result) == 0 or ('results' in result and len(result['results']) == 0):
+                raise Exception(error)
 
         return result
 
-    except Exception:
+    except Exception as error:
         tmdb_error(error)
 
 

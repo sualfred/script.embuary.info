@@ -303,7 +303,7 @@ class DialogPerson(xbmcgui.WindowXMLDialog):
         self.action[key] = value
 
     def onInit(self):
-        execute('ClearProperty(tmdb_next_call,home)')
+        execute('ClearProperty(script.embuary.info-nextcall,home)')
 
         if self.first_load:
             self.add_items()
@@ -387,7 +387,7 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         self.action[key] = value
 
     def onInit(self):
-        execute('ClearProperty(tmdb_next_call,home)')
+        execute('ClearProperty(script.embuary.info-nextcall,home)')
 
         if self.first_load:
             self.add_items()
@@ -442,7 +442,7 @@ class DialogVideo(xbmcgui.WindowXMLDialog):
         onback_action = self.getProperty('onback_%s' % self.getFocusId())
 
         if self.action.get('call') and self.action.get('id'):
-            execute('SetProperty(tmdb_next_call,true,home)')
+            execute('SetProperty(script.embuary.info-nextcall,true,home)')
             if onnext_action:
                 execute(onnext_action)
 
@@ -475,7 +475,7 @@ class DialogSeason(xbmcgui.WindowXMLDialog):
         self.action[key] = value
 
     def onInit(self):
-        execute('ClearProperty(tmdb_next_call,home)')
+        execute('ClearProperty(script.embuary.info-nextcall,home)')
 
         if self.first_load:
             self.add_items()
@@ -520,7 +520,7 @@ class DialogSeason(xbmcgui.WindowXMLDialog):
         onback_action = self.getProperty('onback_%s' % self.getFocusId())
 
         if self.action.get('call') and self.action.get('id'):
-            execute('SetProperty(tmdb_next_call,true,home)')
+            execute('SetProperty(script.embuary.info-nextcall,true,home)')
             if onnext_action:
                 execute(onnext_action)
 
