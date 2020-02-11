@@ -307,7 +307,7 @@
 							<scroll>false</scroll>
 							<align>left</align>
 							<aligny>top</aligny>
-							<visible>!String.IsEmpty(Container(10051).ListItem.DBID) + !String.IsEmpty(Container(10051).ListItem.Property(WatchedEpisodes)) + !String.IsEmpty(Container(10051).ListItem.Property(TotalEpisodes))</visible>
+							<visible>!String.IsEmpty(Container(10051).ListItem.Property(NextEpisode_date))</visible>
 						</control>
 					</control>
 					<control type="grouplist">
