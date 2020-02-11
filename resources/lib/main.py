@@ -120,7 +120,8 @@ class TheMovieDB(object):
 
                     if title.lower() == self.query.lower() or original_title.lower() == self.query.lower():
                         if self.query_year:
-                            if self.query_year == item.get('release_date', '')[:-6]:
+                            premiered = item.get('first_air_date', '') if self.call == 'tv' else item.get('release_date', '')
+                            if self.query_year == premiered[:-6]:
                                 exact_results.append(item)
                         else:
                             exact_results.append(item)
