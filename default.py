@@ -5,6 +5,7 @@
 import xbmcgui
 
 from resources.lib.helper import *
+from resources.lib.utils import *
 from resources.lib.main import *
 
 ########################
@@ -17,6 +18,9 @@ class Main:
 
         if self.call == 'textviewer':
             textviewer(self.params)
+
+        elif self.call == 'refresh_library_cache':
+            get_local_media(force=True)
 
         elif self.call:
             TheMovieDB(self.call, self.params)

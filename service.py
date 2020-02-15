@@ -6,7 +6,6 @@
 import xbmc
 
 from resources.lib.helper import *
-from resources.lib.utils import *
 
 ########################
 
@@ -17,7 +16,7 @@ class Service(xbmc.Monitor):
 
     def onNotification(self, sender, method, data):
         if method in ['VideoLibrary.OnUpdate', 'VideoLibrary.OnScanFinished', 'VideoLibrary.OnCleanFinished']:
-            get_local_media(force=True)
+            execute('AlarmClock(EmbuaryInfoRefreshLibraryCache,RunScript(script.embuary.info,call=refresh_library_cache),00:05,silent)')
 
 
 if __name__ == "__main__":
