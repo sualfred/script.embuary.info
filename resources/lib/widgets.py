@@ -63,7 +63,6 @@ def index():
                          plugin.url_for(listing, i),
                          ListItem(INDEX_MENU[i].get('name')), True)
 
-
     search_item = ListItem(xbmc.getLocalizedString(137))
     search_item.setArt({'icon': 'DefaultMusicSearch.png'})
     addDirectoryItem(plugin.handle,
@@ -184,12 +183,8 @@ def listing(directory,call=None,page=1,pages=1):
 
 
 # helpers
-def _dict_match(get,source,key,value,key2=None,value2=None):
-    if not key2:
-        result = [i.get(get) for i in source if i.get(key) == value]
-    else:
-        result = [i.get(get) for i in source if i.get(key) == value and i.get(key2) == value2]
-
+def _dict_match(get,source,key,value):
+    result = [i.get(get) for i in source if i.get(key) == value]
     if result:
         return result[0]
 
@@ -217,7 +212,7 @@ def _category(content='',category='',call=None,info=None):
         plugincontent = 'videos'
 
     if not category:
-        category = _dict_match('name', INDEX_MENU[content]['menu'], 'call', call, 'info', content)
+        category = _dict_match('name', INDEX_MENU[content]['menu'], 'call', call)
 
     set_plugincontent(content=plugincontent, category=str(category))
 
