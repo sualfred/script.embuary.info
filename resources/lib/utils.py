@@ -449,7 +449,7 @@ def tmdb_handle_person(item):
     list_item.setProperty('gender', gender)
     list_item.setProperty('id', str(item.get('id', '')))
     list_item.setProperty('call', 'person')
-    list_item.setArt({'icon': 'DefaultActor.png', 'thumb': icon})
+    list_item.setArt({'icon': 'DefaultActor.png', 'thumb': icon, 'poster': icon})
 
     return list_item
 
@@ -493,7 +493,7 @@ def tmdb_handle_movie(item,local_items=None,full_info=False,mediatype='movie'):
                                 'studio': tmdb_join_items(item.get('production_companies', '')),
                                 'mediatype': mediatype}
                                  )
-    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon, 'fanart': backdrop})
+    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon, 'poster': icon, 'fanart': backdrop})
     list_item.setProperty('role', item.get('character', ''))
     list_item.setProperty('budget', format_currency(item.get('budget')))
     list_item.setProperty('revenue', format_currency(item.get('revenue')))
@@ -557,7 +557,7 @@ def tmdb_handle_tvshow(item,local_items=None,full_info=False,mediatype='tvshow')
                                 'studio': tmdb_join_items(item.get('networks', '')),
                                 'mediatype': mediatype}
                                 )
-    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon, 'fanart': backdrop})
+    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon, 'poster': icon, 'fanart': backdrop})
     list_item.setProperty('TotalEpisodes', str(local_info['episodes']))
     list_item.setProperty('WatchedEpisodes', str(local_info['watchedepisodes']))
     list_item.setProperty('UnWatchedEpisodes', str(local_info['unwatchedepisodes']))
@@ -618,7 +618,7 @@ def tmdb_handle_season(item,tvshow_details,full_info=False):
                                 'mpaa': tmdb_get_cert(tvshow_details),
                                 'mediatype': 'season'}
                                 )
-    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon, 'fanart': backdrop})
+    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon, 'poster': icon, 'fanart': backdrop})
     list_item.setProperty('TotalEpisodes', str(episodes_count))
     list_item.setProperty('id', str(tvshow_details['id']))
     list_item.setProperty('call', 'tv')
@@ -664,7 +664,7 @@ def tmdb_handle_credits(item):
     icon = IMAGEPATH + item['profile_path'] if item['profile_path'] is not None else ''
     list_item = xbmcgui.ListItem(label=item['name'])
     list_item.setLabel2(item['label2'])
-    list_item.setArt({'icon': 'DefaultActor.png', 'thumb': icon})
+    list_item.setArt({'icon': 'DefaultActor.png', 'thumb': icon, 'poster': icon})
     list_item.setProperty('id', str(item.get('id', '')))
     list_item.setProperty('call', 'person')
 
@@ -675,7 +675,7 @@ def tmdb_handle_yt_videos(item):
     icon = 'https://img.youtube.com/vi/%s/0.jpg' % str(item['key'])
     list_item = xbmcgui.ListItem(label=item['name'])
     list_item.setLabel2(item.get('type', ''))
-    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon})
+    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon, 'landscape': icon})
     list_item.setProperty('ytid', str(item['key']))
     list_item.setProperty('call', 'youtube')
 
