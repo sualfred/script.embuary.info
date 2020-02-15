@@ -364,7 +364,7 @@ def tmdb_calc_age(birthday,deathday=None):
 
 def tmdb_error(message=ADDON.getLocalizedString(32019)):
     busydialog(close=True)
-    DIALOG.ok(ADDON.getLocalizedString(32000),message)
+    DIALOG.ok(ADDON.getLocalizedString(32000),str(message))
 
 
 def tmdb_studios(list_item,item,key):
