@@ -467,7 +467,7 @@ def tmdb_handle_movie(item,local_items=None,full_info=False,mediatype='movie'):
     if premiered in ['2999-01-01', '1900-01-01']:
         premiered = ''
 
-    local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,imdbnumber)
+    local_info = tmdb_check_localdb(local_items, label, originaltitle, premiered, imdbnumber)
     dbid = local_info['dbid']
     is_local = True if dbid > 0 else False
 
@@ -533,7 +533,7 @@ def tmdb_handle_tvshow(item,local_items=None,full_info=False,mediatype='tvshow')
     if premiered in ['2999-01-01', '1900-01-01']:
         premiered = ''
 
-    local_info = tmdb_check_localdb(local_items,label,originaltitle,premiered,tvdb_id)
+    local_info = tmdb_check_localdb(local_items, label, originaltitle, premiered, tvdb_id)
     dbid = local_info['dbid']
     is_local = True if dbid > 0 else False
 

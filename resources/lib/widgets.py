@@ -159,7 +159,6 @@ def listing(directory,call=None,page=1,pages=1):
         result = None
 
         for i in INDEX_MENU[directory].get('menu'):
-            log(i, force=True)
             addDirectoryItem(plugin.handle,
                              plugin.url_for(listing, directory, i.get('call')),
                              ListItem(i.get('name')), True)
