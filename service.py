@@ -9,6 +9,9 @@ from resources.lib.helper import *
 
 ########################
 
+''' Local library is cached for 24h. This service updates the cache if the library has been changed.
+    Since multiple .OnUpdate() callbacks can happen at the same time the refreshing is done by Kodi's AlarmClock function.
+'''
 class Service(xbmc.Monitor):
     def __init__(self):
         while not self.abortRequested():

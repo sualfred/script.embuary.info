@@ -139,16 +139,23 @@ You can add a custom onback or a general onclose action in script-embuary-video.
 ## Widgets
 The script ships following widgets:
 
-* `plugin://script.embuary.info/?info=trending&amp;call=movie&amp;get=week` = trending movies
-* `plugin://script.embuary.info/?info=movies&amp;call=upcoming` = upcoming movies
-* `plugin://script.embuary.info/?info=movies&amp;call=now_playing` = now playing movies
-* `plugin://script.embuary.info/?info=movies&amp;call=top_rated` = top rated movies
-* `plugin://script.embuary.info/?info=movies&amp;call=popular` = popular movies
-* `plugin://script.embuary.info/?info=trending&amp;call=tv&amp;get=week` = trending shows
-* `plugin://script.embuary.info/?info=tvshows&amp;call=top_rated` = top rates shows
-* `plugin://script.embuary.info/?info=tvshows&amp;call=popular` = popular shows
-* `plugin://script.embuary.info/?info=tvshows&amp;call=airing_today` = shows airing today
-* `plugin://script.embuary.info/?info=tvshows&amp;call=on_the_air` = shows on the air
+* `plugin://script.embuary.info/movie/trending` = trending movies
+* `plugin://script.embuary.info/movie/upcoming` = upcoming movies
+* `plugin://script.embuary.info/movie/now_playing` = now playing movies
+* `plugin://script.embuary.info/movie/top_rated` = top rated movies
+* `plugin://script.embuary.info/movie/popular` = popular movies
+* `plugin://script.embuary.info/movie/discover/all` = discover movies
+* `plugin://script.embuary.info/movie/discover/year/1996` = discover movies by year
+* `plugin://script.embuary.info/movie/discover/genre/28` = discover movies by TMDb genre ID
+
+* `plugin://script.embuary.info/tv/trending` = trending shows
+* `plugin://script.embuary.info/tv/top_rated` = top rates shows
+* `plugin://script.embuary.info/tv/popular` = popular shows
+* `plugin://script.embuary.info/tv/airing_today` = shows airing today
+* `plugin://script.embuary.info/tv/on_the_air` = shows on the air
+* `plugin://script.embuary.info/tv/discover/all` = discover shows
+* `plugin://script.embuary.info/tv/discover/year/1996` = discover shows by year
+* `plugin://script.embuary.info/tv/discover/genre/28` = discover shows by TMDb genre ID
 
 All of them can be accessed by the addons -> video addons node so it's easy to set them with the skinshortcuts script.
 
