@@ -218,11 +218,12 @@ def _category(content='',category='',call=None,info=None):
 
 
 def _query(content_type,call,get=None,params=None):
-    cache_key = 'widget' + content_type + call + str(get)
-    tmdb = get_cache(cache_key)
     args = {'region': COUNTRY_CODE}
     if params:
         args.update(params)
+
+    cache_key = 'widget' + content_type + call + str(get) + str(args)
+    tmdb = get_cache(cache_key)
 
     if not tmdb:
         tmdb = tmdb_query(action=content_type,
