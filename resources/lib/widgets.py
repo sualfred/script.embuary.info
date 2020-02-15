@@ -231,11 +231,11 @@ def _query(content_type,call,get=None,params=None):
                           params=args
                           )
 
-        if tmdb:
-            write_cache(cache_key,tmdb,3)
-            return tmdb.get('results'), tmdb.get('total_pages')
+    if tmdb:
+        write_cache(cache_key,tmdb,3)
+        return tmdb.get('results'), tmdb.get('total_pages')
 
-    return {}
+    return {}, 1
 
 
 def _discover_option(call,option):

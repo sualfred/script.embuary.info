@@ -35,7 +35,7 @@ IMAGEPATH = 'https://image.tmdb.org/t/p/original'
 ########################
 
 def get_local_media(force=False):
-    local_media = get_cache('local_items')
+    local_media = get_cache('local_db')
 
     if not local_media or force:
         local_media = {}
@@ -48,7 +48,8 @@ def get_local_media(force=False):
                                                 properties=['title', 'originaltitle', 'year', 'uniqueid', 'playcount', 'file']
                                                 )
 
-        write_cache('local_items', local_media, 24)
+    if local_media:
+        write_cache('local_db', local_media, 24)
 
     return local_media
 
