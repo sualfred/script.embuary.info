@@ -34,16 +34,21 @@ IMAGEPATH = 'https://image.tmdb.org/t/p/original'
 
 ########################
 
-def get_local_media():
-    local_media = {}
-    local_media['shows'] = query_local_media('tvshow',
-                                            get='VideoLibrary.GetTVShows',
-                                            properties=['title', 'originaltitle', 'year', 'playcount', 'episode', 'watchedepisodes']
-                                            )
-    local_media['movies'] = query_local_media('movie',
-                                            get='VideoLibrary.GetMovies',
-                                            properties=['title', 'originaltitle', 'year', 'imdbnumber', 'playcount', 'file']
-                                            )
+def get_local_media(force=False):
+    local_media = get_cache('local_items')
+
+    if not local_media or force:
+        local_media = {}
+        local_media['shows'] = query_local_media('tvshow',
+                                                get='VideoLibrary.GetTVShows',
+                                                properties=['title', 'originaltitle', 'year', 'playcount', 'episode', 'watchedepisodes', 'uniqueid']
+                                                )
+        local_media['movies'] = query_local_media('movie',
+                                                get='VideoLibrary.GetMovies',
+                                                properties=['title', 'originaltitle', 'year', 'uniqueid', 'playcount', 'file']
+                                                )
+
+        write_cache('local_items', local_media, 24)
 
     return local_media
 
@@ -60,7 +65,7 @@ def query_local_media(dbtype,get,properties):
     for item in items:
         local_items.append({'title': item.get('title', ''),
                             'originaltitle': item.get('originaltitle', ''),
-                            'imdbnumber': item.get('imdbnumber', ''),
+                            'imdbnumber': item.get('uniqueid', {}).get('imdb', ''),
                             'year': item.get('year', ''),
                             'dbid': item.get('%sid' % dbtype, ''),
                             'playcount': item.get('playcount', ''),
