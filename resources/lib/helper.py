@@ -18,18 +18,10 @@ import simplecache
 
 ########################
 
-PYTHON3 = True if sys.version_info.major == 3 else False
-
 ADDON = xbmcaddon.Addon()
 ADDON_ID = ADDON.getAddonInfo('id')
 ADDON_VERSION = ADDON.getAddonInfo('version')
-
-''' Python 2<->3 compatibility
-'''
-if not PYTHON3:
-    ADDON_PATH = ADDON.getAddonInfo('path').decode('utf-8')
-else:
-    ADDON_PATH = ADDON.getAddonInfo('path')
+ADDON_PATH = ADDON.getAddonInfo('path')
 
 NOTICE = xbmc.LOGNOTICE
 WARNING = xbmc.LOGWARNING
@@ -56,16 +48,8 @@ def log(txt,loglevel=DEBUG,json=False,force=False):
     if json:
         txt = json_prettyprint(txt)
 
-    if not PYTHON3:
-        if isinstance(txt, str):
-            txt = txt.decode('utf-8')
-
     message = u'[ %s ] %s' % (ADDON_ID,txt)
-
-    if not PYTHON3:
-        xbmc.log(msg=message.encode('utf-8'), level=loglevel)
-    else:
-        xbmc.log(msg=message, level=loglevel)
+    xbmc.log(msg=message, level=loglevel)
 
 
 def get_cache(key):

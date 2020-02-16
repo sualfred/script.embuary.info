@@ -10,18 +10,8 @@ import xbmcgui
 import requests
 import datetime
 import xml.etree.ElementTree as ET
-
-''' Python 2<->3 compatibility
-'''
-try:
-    from urllib import urlencode
-except ImportError:
-    from urllib.parse import urlencode
-
-try:
-    import urllib2 as urllib
-except ImportError:
-    import urllib.request as urllib
+import urllib.request as urllib
+from urllib.parse import urlencode
 
 from resources.lib.helper import *
 

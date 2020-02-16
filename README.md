@@ -144,18 +144,20 @@ The script ships following widgets:
 * `plugin://script.embuary.info/movie/now_playing` = now playing movies
 * `plugin://script.embuary.info/movie/top_rated` = top rated movies
 * `plugin://script.embuary.info/movie/popular` = popular movies
-* `plugin://script.embuary.info/movie/discover/all` = discover movies
-* `plugin://script.embuary.info/movie/discover/year/1996` = discover movies by year
-* `plugin://script.embuary.info/movie/discover/genre/28` = discover movies by TMDb genre ID
 
 * `plugin://script.embuary.info/tv/trending` = trending shows
 * `plugin://script.embuary.info/tv/top_rated` = top rates shows
 * `plugin://script.embuary.info/tv/popular` = popular shows
 * `plugin://script.embuary.info/tv/airing_today` = shows airing today
 * `plugin://script.embuary.info/tv/on_the_air` = shows on the air
-* `plugin://script.embuary.info/tv/discover/all` = discover shows
-* `plugin://script.embuary.info/tv/discover/year/1996` = discover shows by year
-* `plugin://script.embuary.info/tv/discover/genre/28` = discover shows by TMDb genre ID
+
+* `plugin://script.embuary.info/discover/tv/all` = discover shows
+* `plugin://script.embuary.info/discover/tv/year/1996` = discover shows by year
+* `plugin://script.embuary.info/discover/tv/genre/28` = discover shows by TMDb genre ID
+* `plugin://script.embuary.info/discover/movie/all` = discover movies
+* `plugin://script.embuary.info/discover/movie/year/1996` = discover movies by year
+* `plugin://script.embuary.info/discover/movie/genre/28` = discover movies by TMDb genre ID
+* `plugin://script.embuary.info/discover/person` = discover persons
 
 All of them can be accessed by the addons -> video addons node so it's easy to set them with the skinshortcuts script.
 
