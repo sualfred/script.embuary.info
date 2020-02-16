@@ -215,7 +215,7 @@ def tmdb_query(action,call=None,get=None,season=None,season_get=None,params=None
     url = API_URL + action + call + get + season + season_get
     url = '{0}?{1}'.format(url, urlencode(args))
 
-    return tmdb_call(url,error_check)
+    return tmdb_call(url, error_check)
 
 
 def tmdb_search(call,query,year=None,include_adult='false'):
