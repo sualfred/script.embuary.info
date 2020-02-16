@@ -177,18 +177,22 @@ def tmdb_call(request_url,error_check=False,error=ADDON.getLocalizedString(32019
                 xbmc.sleep(500)
 
         if request.status_code == 401:
+            log('401', ERROR)
             raise Exception(ADDON.getLocalizedString(32022))
 
         elif request.status_code == 404:
+            log('404', ERROR)
             raise Exception(error)
 
         elif not request.ok:
+            log('request not ok', ERROR)
             raise Exception('Code ' + str(request.status_code))
 
         result = request.json()
 
         if error_check:
             if len(result) == 0 or ('results' in result and len(result['results']) == 0):
+                log('error krampf', ERROR)
                 raise Exception(error)
 
         return result
@@ -214,7 +218,7 @@ def tmdb_query(action,call=None,get=None,season=None,season_get=None,params=None
 
     url = API_URL + action + call + get + season + season_get
     url = '{0}?{1}'.format(url, urlencode(args))
-
+    log(url,force=True)
     return tmdb_call(url,error_check)
 
 

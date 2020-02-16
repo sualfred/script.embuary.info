@@ -296,3 +296,8 @@ msgstr ""
 msgctxt "#32056"
 msgid "Previous page"
 msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32057"
+msgid "Discover people"
+msgstr ""

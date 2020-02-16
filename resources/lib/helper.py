@@ -34,6 +34,7 @@ else:
 NOTICE = xbmc.LOGNOTICE
 WARNING = xbmc.LOGWARNING
 DEBUG = xbmc.LOGDEBUG
+ERROR = xbmc.LOGERROR
 
 DIALOG = xbmcgui.Dialog()
 
