@@ -307,3 +307,8 @@ msgstr "Entdecke Serien anhand Genre"
 msgctxt "#32056"
 msgid "Previous page"
 msgstr "Vorherige Seite"
+
+#: /resources/lib/widgets.py
+msgctxt "#32057"
+msgid "Discover people"
+msgstr "Entdecke Personen"
