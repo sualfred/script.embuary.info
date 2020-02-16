@@ -108,7 +108,7 @@ def search():
 @plugin.route('/discover/<directory>/<option>')
 @plugin.route('/discover/<directory>/<option>/<filterby>')
 @plugin.route('/discover/<directory>/<option>/<filterby>/<page>')
-def discover(directory=None,option='-',filterby='-',page=1,pages=1):
+def discover(directory=None,option=None,filterby=None,page=1,pages=1):
     if not directory:
         for i in INDEX_MENU['discover'].get('menu'):
             li_item = ListItem(i.get('name'))
@@ -139,9 +139,11 @@ def discover(directory=None,option='-',filterby='-',page=1,pages=1):
 
         elif not option:
             for i in DISCOVER_INDEX[directory]:
+                li_item = ListItem(i.get('name'))
+                li_item.setArt(DEFAULT_ART)
                 addDirectoryItem(plugin.handle,
                                  plugin.url_for(discover, directory, i.get('option')),
-                                 ListItem(i.get('name')), True)
+                                 li_item, True)
 
             _category(category=category)
 
