@@ -276,12 +276,12 @@ msgstr "Entdecken"
 #: /resources/lib/widgets.py
 msgctxt "#32050"
 msgid "Discover movies"
-msgstr "Entdecke Filme"
+msgstr "Filme entdecken"
 
 #: /resources/lib/widgets.py
 msgctxt "#32051"
 msgid "Discover TV shows"
-msgstr "Entdecke Serien"
+msgstr "Serien entdecken"
 
 #: /resources/lib/widgets.py
 msgctxt "#32052"
@@ -307,3 +307,8 @@ msgstr "Entdecke Serien anhand Genre"
 msgctxt "#32056"
 msgid "Previous page"
 msgstr "Vorherige Seite"
+
+#: /resources/lib/widgets.py
+msgctxt "#32057"
+msgid "Discover people"
+msgstr "Personen entdecken"
