@@ -112,6 +112,9 @@ def omdb_call(imdbnumber=None,title=None,year=None,content_type=None):
 
                 result = request.text
 
+                if not PYTHON3:
+                    result = result.encode('utf-8')
+
                 tree = ET.ElementTree(ET.fromstring(result))
                 root = tree.getroot()
 
