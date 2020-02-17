@@ -48,8 +48,8 @@ def get_local_media(force=False):
                                                 properties=['title', 'originaltitle', 'year', 'uniqueid', 'playcount', 'file']
                                                 )
 
-    if local_media:
-        write_cache('local_db', local_media, 24)
+        if local_media:
+            write_cache('local_db', local_media, 24)
 
     return local_media
 
@@ -67,6 +67,8 @@ def query_local_media(dbtype,get,properties):
         local_items.append({'title': item.get('title', ''),
                             'originaltitle': item.get('originaltitle', ''),
                             'imdbnumber': item.get('uniqueid', {}).get('imdb', ''),
+                            'tmdbid': item.get('uniqueid', {}).get('tmdb', ''),
+                            'tvdbid': item.get('uniqueid', {}).get('tvdb', ''),
                             'year': item.get('year', ''),
                             'dbid': item.get('%sid' % dbtype, ''),
                             'playcount': item.get('playcount', ''),
