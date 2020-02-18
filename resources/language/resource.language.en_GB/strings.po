@@ -301,3 +301,13 @@ msgstr ""
 msgctxt "#32057"
 msgid "Discover people"
 msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32058"
+msgid "Next 7 days"
+msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32059"
+msgid "Next airing episodes of your TV show library"
+msgstr ""

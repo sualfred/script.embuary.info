@@ -48,6 +48,21 @@ INDEX_MENU = {
             { 'name': ADDON.getLocalizedString(32036), 'call': 'on_the_air' }
         ]
     },
+    'nextaired': {
+        'name': ADDON.getLocalizedString(32059),
+        'route': 'nextaired',
+        'folder': True,
+        'menu': [
+            { 'name': ADDON.getLocalizedString(32058), 'day': 'week' },
+            { 'name': xbmc.getLocalizedString(11), 'day': '0' },
+            { 'name': xbmc.getLocalizedString(12), 'day': '1' },
+            { 'name': xbmc.getLocalizedString(13), 'day': '2' },
+            { 'name': xbmc.getLocalizedString(14), 'day': '3' },
+            { 'name': xbmc.getLocalizedString(15), 'day': '4' },
+            { 'name': xbmc.getLocalizedString(16), 'day': '5' },
+            { 'name': xbmc.getLocalizedString(17), 'day': '6' },
+        ]
+    },
     'search': {
         'name': xbmc.getLocalizedString(137),
         'route': 'search',
@@ -80,7 +95,7 @@ plugin = routing.Plugin()
 # entrypoint
 @plugin.route('/')
 def index():
-    for i in ['discover', 'movie', 'tv', 'search']:
+    for i in ['discover', 'movie', 'tv', 'nextaired', 'search']:
         item =  INDEX_MENU[i]
         li_item = ListItem(item['name'])
         li_item.setArt(DEFAULT_ART)
@@ -100,6 +115,128 @@ def dialog(call,tmdbid):
 @plugin.route('/search')
 def search():
     execute('RunScript(script.embuary.info)')
+
+
+# next aired
+@plugin.route('/nextaired')
+@plugin.route('/nextaired/<day>')
+def nextaired(day=None):
+    if not day:
+        for i in INDEX_MENU['nextaired'].get('menu'):
+            li_item = ListItem(i.get('name'))
+            li_item.setArt(DEFAULT_ART)
+            addDirectoryItem(plugin.handle,
+                             plugin.url_for(nextaired, i.get('day')),
+                             li_item, True)
+
+        _category(category=INDEX_MENU['nextaired']['name'])
+
+    else:
+        _nextaired(day)
+
+    endOfDirectory(plugin.handle)
+
+def _nextaired(day):
+    airing_ids = []
+    airing_ids_names = {}
+    next_shows, pages = _query('tv', 'on_the_air')
+
+    if pages > 1:
+        for p in range(2, pages+1):
+            tmp_next_shows, tmp = _query('tv', 'on_the_air', params={'page': p})
+            next_shows = next_shows + tmp_next_shows
+
+    for item in next_shows:
+        next_show_id = int(item['id'])
+        airing_ids.append(next_show_id)
+        airing_ids_names[next_show_id] = [item.get('name', ''), item.get('original_name', '')]
+
+    local_ids = []
+    local_media = get_local_media()
+
+    for item in local_media['shows']:
+        found_data = None
+
+        title = item.get('title')
+        originaltitle = item.get('originaltitle')
+        tmdb_id = item.get('tmdbid')
+        tmdb_id = item.get('tmdbid')
+        imdb_id = item.get('imdbnumber')
+        tvdb_id = item.get('tvdbid')
+
+        if tmdb_id:
+            if int(tmdb_id) in airing_ids:
+                local_ids.append(tmdb_id)
+            continue
+
+        else:
+            for i in airing_ids:
+                names = airing_ids_names[i]
+                if title in names or originaltitle in names:
+                    if imdb_id:
+                        found_data = tmdb_find(call='tv', external_id=imdb_id, error_check=False)
+
+                    if not found_data and tvdb_id:
+                        found_data = tmdb_find(call='tv', external_id=tvdb_id, error_check=False)
+
+                    if found_data:
+                        if tmdb_id[0].get('id', '') in airing_ids:
+                            local_ids.append(tmdb_id[0].get('id'))
+
+    shows = []
+    for item in local_ids:
+        show = _query('tv', item, get_details=True)
+        if show and show.get('next_episode_to_air', {}).get('air_date'):
+            next_episode = show['next_episode_to_air']
+            weekday, weekday_code = date_weekday(next_episode.get('air_date'))
+
+            if not day in [None, 'week'] and int(day) != weekday_code:
+                continue
+
+            details = {}
+            details['art'] = {}
+            details['art']['poster'] = IMAGEPATH + show['poster_path'] if show['poster_path'] is not None else ''
+            details['art']['fanart'] = IMAGEPATH + show['backdrop_path'] if show['backdrop_path'] is not None else ''
+            details['art']['thumb'] = IMAGEPATH + next_episode['still_path'] if next_episode['still_path'] is not None else ''
+            details['art']['thumb'] = details['art']['thumb'] or details['art']['fanart']
+            details['premiered'] = next_episode.get('air_date', '')
+            details['weekday'] = weekday
+            details['tvshowtitle'] = show.get('name') or show.get('original_name') or ''
+            details['title'] = next_episode.get('name', xbmc.getLocalizedString(13205))
+            details['season'] = str(next_episode.get('season_number', 0))
+            details['episode'] = str(next_episode.get('episode_number', 0))
+            details['plot'] = next_episode.get('overview', '')
+            details['id'] = str(show.get('id'))
+
+            if day in [None, 'week']:
+                details['label'] = '%s: %s %sx%s. %s' % (details.get('premiered'), details.get('tvshowtitle'), details.get('season'), details.get('episode'), details.get('title'))
+            else:
+                details['label'] = '%s %sx%s. %s' % (details.get('tvshowtitle'), details.get('season'), details.get('episode'), details.get('title'))
+
+            shows.append(details)
+
+    shows = sort_dict(shows,'premiered')
+
+    for item in shows:
+        list_item = ListItem(label=item.get('label'))
+        list_item.setInfo('video', {'title': item.get('title'),
+                                    'tvshowtitle': item.get('tvshowtitle'),
+                                    'plot': item.get('plot'),
+                                    'premiered': item.get('premiered'),
+                                    'season': item.get('season'),
+                                    'episode': item.get('episode'),
+                                    'mediatype': 'episode'}
+                                    )
+
+        list_item.setProperty('AirDay', item.get('weekday'))
+
+        list_item.setArt({'icon': 'DefaultVideo.png'})
+        list_item.setArt(item.get('art'))
+
+        addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', item['id']), list_item)
+
+    category = 0 if day == 'week' else int(day) + 1
+    _category(content='videos', category=INDEX_MENU['nextaired']['menu'][category]['name'])
 
 
 # discover
@@ -269,7 +406,7 @@ def _listing(directory, call, page, pages):
 
     endOfDirectory(plugin.handle)
 
-# helpers
+#helpers
 def _dict_match(get,source,key,value):
     result = [i.get(get) for i in source if i.get(key) == value]
     if result:
@@ -302,13 +439,15 @@ def _category(content='',category='',call=None,info=None):
         plugincontent = 'movies'
     elif content == 'person':
         plugincontent = 'actors'
+    elif content:
+        plugincontent = content
     else:
         plugincontent = ''
 
     set_plugincontent(content=plugincontent, category=str(category))
 
 
-def _query(content_type,call,get=None,params=None):
+def _query(content_type,call,get=None,params=None,get_details=False):
     args = {'region': COUNTRY_CODE}
     if params:
         args.update(params)
@@ -325,9 +464,15 @@ def _query(content_type,call,get=None,params=None):
 
     if tmdb:
         write_cache(cache_key,tmdb,3)
-        return tmdb.get('results'), tmdb.get('total_pages')
 
-    return {}, 1
+    if not get_details:
+        try:
+            return tmdb.get('results'), tmdb.get('total_pages')
+        except KeyError:
+            return [], 1
+
+    else:
+        return tmdb
 
 
 def _nextpage(page,pages):

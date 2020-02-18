@@ -187,6 +187,17 @@ def date_delta(date):
     return date - datetime.date.today()
 
 
+def date_weekday(date):
+    try:
+        weekdays = (xbmc.getLocalizedString(11), xbmc.getLocalizedString(12), xbmc.getLocalizedString(13), xbmc.getLocalizedString(14), xbmc.getLocalizedString(15), xbmc.getLocalizedString(16), xbmc.getLocalizedString(17))
+        date = arrow.get(date, 'YYYY-MM-DD').date()
+        weekday = date.weekday()
+        return weekdays[weekday], weekday
+
+    except Exception:
+        return
+
+
 def get_bool(value,string='true'):
     try:
         if value.lower() == string:

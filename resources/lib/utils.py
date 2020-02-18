@@ -248,7 +248,7 @@ def tmdb_search(call,query,year=None,include_adult='false'):
         return ''
 
 
-def tmdb_find(call,external_id):
+def tmdb_find(call,external_id,error_check=True):
     if external_id.startswith('tt'):
         external_source = 'imdb_id'
     else:
@@ -265,7 +265,7 @@ def tmdb_find(call,external_id):
     else:
         result = result['tv_results']
 
-    if not result:
+    if not result and error_check:
         tmdb_error(ADDON.getLocalizedString(32019))
 
     return result
