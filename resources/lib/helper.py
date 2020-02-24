@@ -15,6 +15,7 @@ import operator
 import arrow
 import sys
 import simplecache
+import hashlib
 
 ########################
 
@@ -176,7 +177,8 @@ def date_format(value,date='short',scheme='YYYY-MM-DD'):
     try:
         date_time = arrow.get(value, scheme)
         value = date_time.strftime(xbmc.getRegion('date%s' % date))
-    except Exception:
+    except Exception as error:
+        log(error + ' ---> ' + str(value), WARNING)
         pass
 
     return value
@@ -275,3 +277,19 @@ def set_plugincontent(content=None,category=None):
 
 def json_prettyprint(string):
     return json.dumps(string, sort_keys=True, indent=4, separators=(',', ': '))
+
+
+def urljoin(*args):
+    ''' Joins given arguments into an url. Trailing but not leading slashes are
+        stripped for each argument.
+    '''
+    arglist = [arg for arg in args if arg is not None]
+    return '/'.join(map(lambda x: str(x).rstrip('/'), arglist))
+
+
+def md5hash(value):
+    if not PYTHON3:
+        return hashlib.md5(str(value)).hexdigest()
+
+    value = str(value).encode()
+    return hashlib.md5(value).hexdigest()

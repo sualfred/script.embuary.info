@@ -5,7 +5,7 @@
 import xbmcgui
 
 from resources.lib.helper import *
-from resources.lib.utils import *
+from resources.lib.tmdb import *
 from resources.lib.main import *
 
 ########################

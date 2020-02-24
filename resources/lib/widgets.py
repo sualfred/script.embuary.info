@@ -9,7 +9,11 @@ from xbmcplugin import addDirectoryItem, endOfDirectory
 from datetime import date
 
 from resources.lib.helper import *
-from resources.lib.utils import *
+from resources.lib.tmdb import *
+from resources.lib.tvdb import *
+from resources.lib.trakt import *
+from resources.lib.localdb import *
+from resources.lib.nextaired import *
 
 ########################
 
@@ -107,9 +111,13 @@ def index():
 
 
 # actions
-@plugin.route('/info/<call>/<tmdbid>')
-def dialog(call,tmdbid):
-    execute('RunScript(script.embuary.info,call=%s,tmdb_id=%s)' % (call, tmdbid))
+@plugin.route('/info/<call>/<idtype>/<tmdbid>')
+def dialog(call,idtype,tmdbid):
+    if idtype == 'tmdb':
+        execute('RunScript(script.embuary.info,call=%s,tmdb_id=%s)' % (call, tmdbid))
+    elif idtype == 'external':
+        execute('RunScript(script.embuary.info,call=%s,external_id=%s)' % (call, tmdbid))
+
 
 
 @plugin.route('/search')
@@ -137,103 +145,40 @@ def nextaired(day=None):
     endOfDirectory(plugin.handle)
 
 def _nextaired(day):
-    airing_ids = []
-    airing_ids_names = {}
-    next_shows, pages = _query('tv', 'on_the_air')
+    next_aired = NEXT_AIRED()
+    next_aired_results = next_aired.get(day)
 
-    if pages > 1:
-        for p in range(2, pages+1):
-            tmp_next_shows, tmp = _query('tv', 'on_the_air', params={'page': p})
-            next_shows = next_shows + tmp_next_shows
-
-    for item in next_shows:
-        next_show_id = int(item['id'])
-        airing_ids.append(next_show_id)
-        airing_ids_names[next_show_id] = [item.get('name', ''), item.get('original_name', '')]
-
-    local_ids = []
-    local_media = get_local_media()
-
-    for item in local_media['shows']:
-        found_data = None
-
-        title = item.get('title')
-        originaltitle = item.get('originaltitle')
-        tmdb_id = item.get('tmdbid')
-        tmdb_id = item.get('tmdbid')
-        imdb_id = item.get('imdbnumber')
-        tvdb_id = item.get('tvdbid')
-
-        if tmdb_id:
-            if int(tmdb_id) in airing_ids:
-                local_ids.append(tmdb_id)
-            continue
-
-        else:
-            for i in airing_ids:
-                names = airing_ids_names[i]
-                if title in names or originaltitle in names:
-                    if imdb_id:
-                        found_data = tmdb_find(call='tv', external_id=imdb_id, error_check=False)
-
-                    if not found_data and tvdb_id:
-                        found_data = tmdb_find(call='tv', external_id=tvdb_id, error_check=False)
-
-                    if found_data:
-                        if tmdb_id[0].get('id', '') in airing_ids:
-                            local_ids.append(tmdb_id[0].get('id'))
-
-    shows = []
-    for item in local_ids:
-        show = _query('tv', item, get_details=True)
-        if show and show.get('next_episode_to_air', {}).get('air_date'):
-            next_episode = show['next_episode_to_air']
-            weekday, weekday_code = date_weekday(next_episode.get('air_date'))
-
-            if not day in [None, 'week'] and int(day) != weekday_code:
-                continue
-
-            details = {}
-            details['art'] = {}
-            details['art']['poster'] = IMAGEPATH + show['poster_path'] if show['poster_path'] is not None else ''
-            details['art']['fanart'] = IMAGEPATH + show['backdrop_path'] if show['backdrop_path'] is not None else ''
-            details['art']['thumb'] = IMAGEPATH + next_episode['still_path'] if next_episode['still_path'] is not None else ''
-            details['art']['thumb'] = details['art']['thumb'] or details['art']['fanart']
-            details['premiered'] = next_episode.get('air_date', '')
-            details['weekday'] = weekday
-            details['tvshowtitle'] = show.get('name') or show.get('original_name') or ''
-            details['title'] = next_episode.get('name', xbmc.getLocalizedString(13205))
-            details['season'] = str(next_episode.get('season_number', 0))
-            details['episode'] = str(next_episode.get('episode_number', 0))
-            details['plot'] = next_episode.get('overview', '')
-            details['id'] = str(show.get('id'))
-
-            if day in [None, 'week']:
-                details['label'] = '%s: %s %sx%s. %s' % (details.get('premiered'), details.get('tvshowtitle'), details.get('season'), details.get('episode'), details.get('title'))
+    for i in next_aired_results:
+        try:
+            art = i.get('filename', '')
+            if art:
+                thumb = 'https://artworks.thetvdb.com/banners/' + art
             else:
-                details['label'] = '%s %sx%s. %s' % (details.get('tvshowtitle'), details.get('season'), details.get('episode'), details.get('title'))
+                thumb = i['localart'].get('landscape') or i['localart'].get('fanart') or ''
 
-            shows.append(details)
+            if day != 'week' and day is not None:
+                label = '%s %sx%s. %s' % (i['showtitle'], i['airedSeason'], i['airedEpisodeNumber'], i['episodeName'])
+            else:
+                kodi_date = date_format(i['airing'])
+                label = '%s, %s: %s %sx%s. %s' % (i['weekday'], kodi_date, i['showtitle'], i['airedSeason'], i['airedEpisodeNumber'], i['episodeName'])
 
-    shows = sort_dict(shows,'premiered')
+            li_item = ListItem(label)
+            li_item.setArt(i.get('localart'))
+            li_item.setArt({'icon': 'DefaultVideo.png', 'thumb': thumb})
+            li_item.setInfo('video', {'title': i.get('episodeName', 'bla'),
+                                        'tvshowtitle': i.get('showtitle', ''),
+                                        'plot': i.get('overview', ''),
+                                        'premiered': i.get('airing', ''),
+                                        'season': str(i.get('airedSeason', '')),
+                                        'episode': str(i.get('airedEpisodeNumber', '')),
+                                        'mediatype': 'video'}
+                                        )
 
-    for item in shows:
-        list_item = ListItem(label=item.get('label'))
-        list_item.setInfo('video', {'title': item.get('title'),
-                                    'tvshowtitle': item.get('tvshowtitle'),
-                                    'plot': item.get('plot'),
-                                    'premiered': item.get('premiered'),
-                                    'season': item.get('season'),
-                                    'episode': item.get('episode'),
-                                    'mediatype': 'episode'}
-                                    )
+            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', 'external', i['seriesId']), li_item)
 
-        list_item.setProperty('AirDay', item.get('weekday'))
-
-        list_item.setArt({'icon': 'DefaultVideo.png'})
-        list_item.setArt(item.get('art'))
-
-        addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', item['id']), list_item)
+        except Exception as error:
+            log(error, force=True)
+            pass
 
     category = 0 if day == 'week' else int(day) + 1
     _category(content='videos', category=INDEX_MENU['nextaired']['menu'][category]['name'])
@@ -419,17 +364,17 @@ def _add(items,call):
     if call == 'tv':
         for item in items:
             list_item, is_local = tmdb_handle_tvshow(item, local_items=local_items.get('shows', []), mediatype='video')
-            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', item['id']), list_item)
+            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', 'tmdb', item['id']), list_item)
 
     elif call == 'movie':
         for item in items:
             list_item, is_local = tmdb_handle_movie(item, local_items=local_items.get('movies', []), mediatype='video')
-            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'movie', item['id']), list_item)
+            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'movie', 'tmdb', item['id']), list_item)
 
     elif call == 'person':
         for item in items:
             list_item = tmdb_handle_person(item)
-            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'person', item['id']), list_item)
+            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'person', 'tmdb', item['id']), list_item)
 
 
 def _category(content='',category='',call=None,info=None):
@@ -452,7 +397,7 @@ def _query(content_type,call,get=None,params=None,get_details=False):
     if params:
         args.update(params)
 
-    cache_key = 'widget' + content_type + call + str(get) + str(args)
+    cache_key = 'widget' + content_type + str(call) + str(get) + str(args)
     tmdb = get_cache(cache_key)
 
     if not tmdb:

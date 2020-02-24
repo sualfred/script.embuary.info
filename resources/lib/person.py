@@ -8,7 +8,7 @@ import xbmc
 import xbmcgui
 
 from resources.lib.helper import *
-from resources.lib.utils import *
+from resources.lib.tmdb import *
 
 ########################
 
@@ -33,9 +33,10 @@ class TMDBPersons(object):
 
             if not self.details:
                 self.details = tmdb_query(action='person',
-                                            call=self.tmdb_id,
-                                            params={'append_to_response': 'translations,movie_credits,tv_credits,images'}
-                                            )
+                                          call=self.tmdb_id,
+                                          params={'append_to_response': 'translations,movie_credits,tv_credits,images'},
+                                          show_error=True
+                                          )
 
                 write_cache(cache_key,self.details)
 

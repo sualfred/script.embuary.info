@@ -9,7 +9,7 @@ import xbmcgui
 import requests
 
 from resources.lib.helper import *
-from resources.lib.utils import *
+from resources.lib.tmdb import *
 
 ########################
 
@@ -36,7 +36,8 @@ class TMDBVideos(object):
             if not self.details:
                 self.details = tmdb_query(action=self.call,
                                           call=self.tmdb_id,
-                                          params={'append_to_response': 'release_dates,content_ratings,external_ids,credits,videos,translations,similar'}
+                                          params={'append_to_response': 'release_dates,content_ratings,external_ids,credits,videos,translations,similar'},
+                                          show_error=True
                                           )
 
                 write_cache(cache_key,self.details)
@@ -162,8 +163,8 @@ class TMDBVideos(object):
 
             if not collection_data:
                 collection_data = tmdb_query(action='collection',
-                                            call=collection_id
-                                            )
+                                             call=collection_id
+                                             )
 
                 write_cache(cache_key,collection_data)
 
