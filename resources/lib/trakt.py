@@ -28,7 +28,7 @@ def trakt_api(call=None):
                 raise Exception(str(request.status_code))
 
         except Exception as error:
-            log('Trakt server error: Code ' + str(error), force=True)
+            log('Trakt server error: Code ' + str(error), ERROR)
             xbmc.sleep(500)
 
         else:

@@ -179,7 +179,6 @@ def date_format(value,date='short',scheme='YYYY-MM-DD'):
         value = date_time.strftime(xbmc.getRegion('date%s' % date))
     except Exception as error:
         log(error + ' ---> ' + str(value), WARNING)
-        pass
 
     return value
 
@@ -198,6 +197,25 @@ def date_weekday(date):
 
     except Exception:
         return
+
+
+def time_format(value):
+    try:
+        utc = arrow.get(value)
+        utc_offset = time.timezone / -(60*60)
+        local = utc.shift(hours=utc_offset)
+        format = xbmc.getRegion('time').replace('%I%I', '%I').replace('%H%H', '%H').replace(':%S', '')
+
+        if format.startswith('%I'):
+            ampm = 'AM' if utc.hour < 12 else 'PM'
+            return local.strftime(format) + ' ' + ampm
+
+        else:
+            return local.strftime(format)
+
+    except Exception as error:
+        log(error + ' ---> ' + str(value), WARNING)
+        return ''
 
 
 def get_bool(value,string='true'):

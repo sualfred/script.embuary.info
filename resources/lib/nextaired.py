@@ -6,6 +6,7 @@
 import json
 import sys
 import requests
+import xbmc
 
 from resources.lib.helper import *
 from resources.lib.tvdb import *
@@ -14,7 +15,7 @@ from resources.lib.localdb import *
 
 ########################
 
-class NEXT_AIRED():
+class NextAired():
     def __init__(self):
         self.date_today = str(datetime.date.today())
 
@@ -38,7 +39,7 @@ class NEXT_AIRED():
             self.airing_items = airing_items
             self.getdata()
 
-        if self.airing_items['week']:
+        if self.airing_items:
             write_cache(cache_key, self.airing_items, 24)
 
     def get(self,day=None):
@@ -46,18 +47,17 @@ class NEXT_AIRED():
             return self.airing_items[day]
         else:
             return self.airing_items['week']
-        pass
 
     def getdata(self):
         if not self.local_media:
             return
 
-        tvdb_api = TVDB_API()
-        trakt_results = trakt_api('/calendars/all/shows/' + self.date_today + '/7?countries=' + COUNTRY_CODE.lower() + '%2Cus')
-
         local_media_data = []
         for item in self.local_media:
             local_media_data.append([item.get('tmdbid'), item.get('tvdbid'), item.get('imdbnumber'), item.get('art'), item.get('title'), item.get('originaltitle')])
+
+        tvdb_api = TVDB_API()
+        trakt_results = trakt_api('/calendars/all/shows/' + self.date_today + '/7?countries=' + COUNTRY_CODE.lower() + '%2Cus')
 
         if trakt_results:
             for item in trakt_results:
@@ -66,6 +66,7 @@ class NEXT_AIRED():
 
                 tmp = {}
                 tmp['date'] = item.get('first_aired')[:10]
+                tmp['airing'] = item.get('first_aired')
                 tmp['show'] = show.get('title')
                 tmp['show_tmdbid'] = show.get('ids', {}).get('tmdb')
                 tmp['show_tvdbid'] = show.get('ids', {}).get('tvdb')
@@ -87,8 +88,9 @@ class NEXT_AIRED():
 
                             if tvdb_query:
                                 tvdb_query['localart'] = i[3]
-                                tvdb_query['showtitle'] = i[4]
+                                tvdb_query['showtitle'] = i[4] or i[5]
                                 tvdb_query['airing'] = tmp['date']
+                                tvdb_query['airing_time'] = time_format(tmp['airing'])
                                 tvdb_query['weekday'] = weekday
                                 tvdb_query['weekday_code'] = weekday_code
 

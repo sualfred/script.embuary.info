@@ -145,7 +145,7 @@ def nextaired(day=None):
     endOfDirectory(plugin.handle)
 
 def _nextaired(day):
-    next_aired = NEXT_AIRED()
+    next_aired = NextAired()
     next_aired_results = next_aired.get(day)
 
     for i in next_aired_results:
@@ -166,18 +166,19 @@ def _nextaired(day):
             li_item.setArt(i.get('localart'))
             li_item.setArt({'icon': 'DefaultVideo.png', 'thumb': thumb})
             li_item.setInfo('video', {'title': i.get('episodeName', 'bla'),
-                                        'tvshowtitle': i.get('showtitle', ''),
-                                        'plot': i.get('overview', ''),
-                                        'premiered': i.get('airing', ''),
-                                        'season': str(i.get('airedSeason', '')),
-                                        'episode': str(i.get('airedEpisodeNumber', '')),
-                                        'mediatype': 'video'}
-                                        )
+                                      'tvshowtitle': i.get('showtitle', ''),
+                                      'plot': i.get('overview', ''),
+                                      'premiered': i.get('airing', ''),
+                                      'season': str(i.get('airedSeason', '')),
+                                      'episode': str(i.get('airedEpisodeNumber', '')),
+                                      'mediatype': 'video'}
+                                      )
+            li_item.setProperty('AirDay', i['airing'])
+            li_item.setProperty('AirTime', i['airing_time'])
 
             addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', 'external', i['seriesId']), li_item)
 
         except Exception as error:
-            log(error, force=True)
             pass
 
     category = 0 if day == 'week' else int(day) + 1

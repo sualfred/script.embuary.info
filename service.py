@@ -6,6 +6,7 @@
 import xbmc
 
 from resources.lib.helper import *
+from resources.lib.nextaired import *
 
 ########################
 
@@ -23,4 +24,7 @@ class Service(xbmc.Monitor):
 
 
 if __name__ == "__main__":
+    if condition('Library.HasContent(TVShows)'):
+        NextAired()
+
     Service()
