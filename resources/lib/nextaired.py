@@ -64,9 +64,10 @@ class NextAired():
                 show = item.get('show', {})
                 episode = item.get('episode', {})
 
+                airing_date, airing_time = utc_to_local(item.get('first_aired'))
+                weekday, weekday_code = date_weekday(airing_date)
+
                 tmp = {}
-                tmp['date'] = item.get('first_aired')[:10]
-                tmp['airing'] = item.get('first_aired')
                 tmp['show'] = show.get('title')
                 tmp['show_tmdbid'] = show.get('ids', {}).get('tmdb')
                 tmp['show_tvdbid'] = show.get('ids', {}).get('tvdb')
@@ -75,8 +76,6 @@ class NextAired():
                 tmp['season'] = episode.get('season')
                 tmp['episode_tmdbid'] = episode.get('ids', {}).get('tmdb')
                 tmp['episode_tvdbid'] = episode.get('ids', {}).get('tvdb')
-
-                weekday, weekday_code = date_weekday(tmp['date'])
 
                 for i in local_media_data:
                     if str(tmp['show_tmdbid']) == i[0] or str(tmp['show_tvdbid']) == i[1] or str(tmp['show_imdbid']) == i[2]:
@@ -89,8 +88,8 @@ class NextAired():
                             if tvdb_query:
                                 tvdb_query['localart'] = i[3]
                                 tvdb_query['showtitle'] = i[4] or i[5]
-                                tvdb_query['airing'] = tmp['date']
-                                tvdb_query['airing_time'] = time_format(tmp['airing'])
+                                tvdb_query['airing'] = airing_date
+                                tvdb_query['airing_time'] = airing_time
                                 tvdb_query['weekday'] = weekday
                                 tvdb_query['weekday_code'] = weekday_code
 
