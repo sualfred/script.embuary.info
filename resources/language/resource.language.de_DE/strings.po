@@ -131,13 +131,14 @@ msgstr "API Key"
 
 #: /resources/settings.xml
 msgctxt "#32020"
-msgid "Caching"
-msgstr "Caching"
+msgid "Developer settings"
+msgstr "Entwickler-Einstellungen"
 
 #: /resources/settings.xml
 msgctxt "#32021"
-msgid "Enable caching of fetched data"
-msgstr "Aktiviere Caching von abgerufenen Daten"
+msgid "Enable caching (highly recommended - only turn off for debugging)"
+msgstr ""
+"Caching aktivieren (dringend empfohlen - nur zum Debuggen deaktivieren)"
 
 #: /resources/settings.xml
 msgctxt "#32024"
@@ -312,3 +313,13 @@ msgstr "Vorherige Seite"
 msgctxt "#32057"
 msgid "Discover people"
 msgstr "Personen entdecken"
+
+#: /resources/lib/widgets.py
+msgctxt "#32058"
+msgid "Next 7 days"
+msgstr "Nächste 7 Tage"
+
+#: /resources/lib/widgets.py
+msgctxt "#32059"
+msgid "Next airing episodes of your TV show library"
+msgstr "Kommende Folgen deiner TV-Show-Bibliothek"
