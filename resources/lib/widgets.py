@@ -148,6 +148,9 @@ def _nextaired(day):
     next_aired = NextAired()
     next_aired_results = next_aired.get(day)
 
+    if day == 'week':
+        next_aired_results = sort_dict(next_aired_results, 'airing')
+
     for i in next_aired_results:
         try:
             art = i.get('filename', '')
