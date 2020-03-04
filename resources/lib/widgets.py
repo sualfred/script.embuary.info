@@ -183,9 +183,13 @@ def _nextaired(day):
                                       'premiered': airing_date,
                                       'season': season,
                                       'episode': episode,
+                                      'status': i.get('status', ''),
+                                      'country': i.get('country', ''),
+                                      'studio': i.get('network', ''),
+                                      'duration': i.get('runtime', 0),
                                       'mediatype': 'episode'}
                                       )
-            li_item.setProperty('AirDay', airing_date)
+            li_item.setProperty('AirDay', i['weekday'])
             li_item.setProperty('AirTime', airing_time)
 
             addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', 'external', i['seriesId']), li_item)
@@ -402,7 +406,7 @@ def _category(content='',category='',call=None,info=None):
     else:
         plugincontent = ''
 
-    set_plugincontent(content=plugincontent, category=str(category))
+    set_plugincontent(content=plugincontent, category=category)
 
 
 def _query(content_type,call,get=None,params=None,get_details=False):

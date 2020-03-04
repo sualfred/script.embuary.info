@@ -54,7 +54,7 @@ class NextAired():
             local_media_data.append([item.get('tmdbid'), item.get('tvdbid'), item.get('imdbnumber'), item.get('art'), item.get('title'), item.get('originaltitle'), item.get('year')])
 
         tvdb_api = TVDB_API()
-        trakt_results = trakt_api('/calendars/all/shows/' + self.date_today + '/7?countries=' + COUNTRY_CODE.lower() + '%2Cus')
+        trakt_results = trakt_api('/calendars/all/shows/' + self.date_today + '/7?extended=full&countries=' + COUNTRY_CODE.lower() + '%2Cus')
 
         if trakt_results:
             for item in trakt_results:
@@ -64,20 +64,23 @@ class NextAired():
                 airing_date, airing_time = utc_to_local(item.get('first_aired'))
                 weekday, weekday_code = date_weekday(airing_date)
 
-                tmp = {}
-                tmp['show'] = show.get('title')
-                tmp['year'] = show.get('year')
-                tmp['show_tmdbid'] = show.get('ids', {}).get('tmdb')
-                tmp['show_tvdbid'] = show.get('ids', {}).get('tvdb')
-                tmp['show_imdbid'] = show.get('ids', {}).get('imdb')
-                tmp['episode_tvdbid'] = episode.get('ids', {}).get('tvdb')
+                tvshowtitle = show.get('title')
+                network = show.get('network')
+                country = show.get('country')
+                status = show.get('status')
+                runtime = episode.get('runtime') * 60 if episode.get('runtime') else 0
+                year = show.get('year')
+                tmdb_id = show.get('ids', {}).get('tmdb')
+                tvdb_id = show.get('ids', {}).get('tvdb')
+                imdb_id = show.get('ids', {}).get('imdb')
+                tvdb_id_episode = episode.get('ids', {}).get('tvdb')
 
                 for i in local_media_data:
-                    if str(tmp['show_tmdbid']) == i[0] or str(tmp['show_tvdbid']) == i[1] or str(tmp['show_imdbid']) == i[2] or (tmp['show'] in [i[4], i[5]] and tmp['year'] == i[6]):
-                        tvdb_query = tvdb_api.call('/episodes/' + str(tmp['episode_tvdbid']))
+                    if str(tmdb_id) == i[0] or str(tvdb_id) == i[1] or str(imdb_id) == i[2] or (tvshowtitle in [i[4], i[5]] and year == i[6]):
+                        tvdb_query = tvdb_api.call('/episodes/' + str(tvdb_id_episode))
 
                         if tvdb_query and not tvdb_query['overview'] and COUNTRY_CODE != 'US':
-                            tvdb_query = tvdb_api.call('/episodes/' + str(tmp['episode_tvdbid']), lang='us')
+                            tvdb_query = tvdb_api.call('/episodes/' + str(tvdb_id_episode), lang='us')
 
                         if tvdb_query:
                             tvdb_query['localart'] = i[3]
@@ -86,6 +89,10 @@ class NextAired():
                             tvdb_query['airing_time'] = airing_time
                             tvdb_query['weekday'] = weekday
                             tvdb_query['weekday_code'] = weekday_code
+                            tvdb_query['network'] = network
+                            tvdb_query['country'] = country
+                            tvdb_query['status'] = status
+                            tvdb_query['runtime'] = runtime
 
                             self.airing_items['week'].append(tvdb_query)
                             self.airing_items[str(weekday_code)].append(tvdb_query)

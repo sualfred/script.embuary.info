@@ -169,8 +169,7 @@ The script ships following widgets:
 * `plugin://script.embuary.info/nextaired/6` = airing episodes based on your local TV show library (Sunday)
 
 Next airing special properties:
-* `ListItem.Property(AirDay)` = Airing date; Same as `ListItem.Premiered`
+* `ListItem.Property(AirDay)` = Airing day (Monday, Wednesday, etc.)
 * `ListItem.Property(AirTime)` = Airing time
-
 
 All of them can be accessed by the addons -> video addons node so it's easy to set them with the skinshortcuts script.
