@@ -3,10 +3,7 @@
 
 ########################
 
-import json
-import sys
 import requests
-import xbmc
 
 from resources.lib.helper import *
 from resources.lib.tvdb import *

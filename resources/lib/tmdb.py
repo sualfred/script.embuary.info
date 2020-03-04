@@ -3,8 +3,6 @@
 
 ########################
 
-import json
-import sys
 import xbmc
 import xbmcgui
 import requests
@@ -46,8 +44,6 @@ def tmdb_query(action,call=None,get=None,get2=None,get3=None,get4=None,params=No
 
     url = urljoin(API_URL ,action, call, get, get2, get3, get4)
     url = '{0}?{1}'.format(url, urlencode(urlargs))
-
-    #log(url, force=True)
 
     try:
         request = None
@@ -152,14 +148,14 @@ def tmdb_select_dialog(list,call):
         default_img = 'DefaultVideo.png'
         img = 'poster_path'
         label = 'title'
-        label2 = 'tmdb_get_year(item.get("release_date",""))'
+        label2 = 'tmdb_get_year(item.get("release_date", ""))'
 
     elif call == 'tv':
         default_img = 'DefaultVideo.png'
         img = 'poster_path'
         label = 'name'
         label2 = 'first_air_date'
-        label2 = 'tmdb_get_year(item.get("first_air_date",""))'
+        label2 = 'tmdb_get_year(item.get("first_air_date", ""))'
 
     else:
         return
@@ -238,7 +234,7 @@ def tmdb_calc_age(birthday,deathday=None):
 
 def tmdb_error(message=ADDON.getLocalizedString(32019)):
     busydialog(close=True)
-    DIALOG.ok(ADDON.getLocalizedString(32000),str(message))
+    DIALOG.ok(ADDON.getLocalizedString(32000), str(message))
 
 
 def tmdb_studios(list_item,item,key):
@@ -284,7 +280,7 @@ def tmdb_check_localdb(local_items,title,originaltitle,year,imdbnumber=False):
                     if item['originaltitle'] == originaltitle or item['title'] == originaltitle or item['title'] == title:
                         found_local = True
                         break
-                elif tmdb_year in [item_year-2,item_year-1,item_year+1,item_year+2]:
+                elif tmdb_year in [item_year-2, item_year-1, item_year+1, item_year+2]:
                     if item['title'] == title and item['originaltitle'] == originaltitle:
                         found_local = True
                         break
@@ -335,7 +331,7 @@ def tmdb_handle_movie(item,local_items=None,full_info=False,mediatype='movie'):
     originaltitle = item.get('original_title', '')
     imdbnumber = item.get('imdb_id', '')
     collection = item.get('belongs_to_collection', '')
-    duration = item.get('runtime') * 60 if item.get('runtime',0) > 0 else ''
+    duration = item.get('runtime') * 60 if item.get('runtime', 0) > 0 else ''
 
     premiered = item.get('release_date')
     if premiered in ['2999-01-01', '1900-01-01']:
@@ -359,8 +355,8 @@ def tmdb_handle_movie(item,local_items=None,full_info=False,mediatype='movie'):
                                 'duration': duration,
                                 'status': item.get('status', ''),
                                 'plot': tmdb_fallback_info(item, 'overview'),
-                                'director': tmdb_join_items_by(item.get('crew', ''),key_is='job',value_is='Director'),
-                                'writer': tmdb_join_items_by(item.get('crew', ''),key_is='department',value_is='Writing'),
+                                'director': tmdb_join_items_by(item.get('crew', ''), key_is='job', value_is='Director'),
+                                'writer': tmdb_join_items_by(item.get('crew', ''), key_is='department', value_is='Writing'),
                                 'country': tmdb_join_items(item.get('production_countries', '')),
                                 'genre': tmdb_join_items(item.get('genres', '')),
                                 'studio': tmdb_join_items(item.get('production_companies', '')),
@@ -376,7 +372,7 @@ def tmdb_handle_movie(item,local_items=None,full_info=False,mediatype='movie'):
     list_item.setProperty('call', 'movie')
 
     if full_info:
-        tmdb_studios(list_item,item, 'production')
+        tmdb_studios(list_item, item, 'production')
         omdb_properties(list_item, imdbnumber)
 
         region_release = tmdb_get_region_release(item)

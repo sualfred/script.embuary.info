@@ -124,12 +124,12 @@ msgstr ""
 
 #: /resources/settings.xml
 msgctxt "#32020"
-msgid "Caching"
+msgid "Developer settings"
 msgstr ""
 
 #: /resources/settings.xml
 msgctxt "#32021"
-msgid "Enable caching of fetched data"
+msgid "Enable caching (highly recommended - only turn off for debugging)"
 msgstr ""
 
 #: /resources/settings.xml

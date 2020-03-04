@@ -16,7 +16,6 @@ import arrow
 import sys
 import simplecache
 import hashlib
-from dateutil import tz
 
 ########################
 
@@ -201,15 +200,13 @@ def date_weekday(date):
 
 
 def utc_to_local(value):
-    kodi_time_format = xbmc.getRegion('time').replace('%I%I', '%I').replace('%H%H', '%H').replace(':%S', '')
-
     conv_date = arrow.get(value).to('local')
     conv_date_str = conv_date.strftime('%Y-%m-%d')
-    conv_time_str = conv_date.strftime('%H:%M')
 
-    if kodi_time_format.startswith('%I'):
-        meridian = 'AM' if conv_date.hour < 12 else 'PM'
-        conv_time_str = conv_time_str + ' ' + meridian
+    if xbmc.getRegion('time').startswith('%I'):
+        conv_time_str = conv_date.strftime('%I:%M %p')
+    else:
+        conv_time_str = conv_date.strftime('%H:%M')
 
     return conv_date_str, conv_time_str
 

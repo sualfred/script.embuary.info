@@ -4,8 +4,8 @@
 ########################
 
 import json
-import sys
 import requests
+import xbmc
 
 from resources.lib.helper import *
 
