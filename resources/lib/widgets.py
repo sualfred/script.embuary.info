@@ -58,6 +58,7 @@ INDEX_MENU = {
         'folder': True,
         'menu': [
             { 'name': ADDON.getLocalizedString(32058), 'day': 'week' },
+            { 'name': xbmc.getLocalizedString(33006), 'day': 'today' },
             { 'name': xbmc.getLocalizedString(11), 'day': '0' },
             { 'name': xbmc.getLocalizedString(12), 'day': '1' },
             { 'name': xbmc.getLocalizedString(13), 'day': '2' },
@@ -145,8 +146,11 @@ def nextaired(day=None):
     endOfDirectory(plugin.handle)
 
 def _nextaired(day):
+    if day == 'today':
+        day_str, day = date_weekday()
+
     next_aired = NextAired()
-    next_aired_results = next_aired.get(day)
+    next_aired_results = next_aired.get(str(day))
 
     if day == 'week':
         next_aired_results = sort_dict(next_aired_results, 'airing')
@@ -197,7 +201,7 @@ def _nextaired(day):
         except Exception as error:
             pass
 
-    category = 0 if day == 'week' else int(day) + 1
+    category = 0 if day == 'week' else int(day) + 2
     _category(content='videos', category=INDEX_MENU['nextaired']['menu'][category]['name'])
 
 
