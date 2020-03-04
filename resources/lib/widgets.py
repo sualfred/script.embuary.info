@@ -168,7 +168,7 @@ def _nextaired(day):
             airing_time = i.get('airing_time', '')
             plot = i.get('overview') or xbmc.getLocalizedString(19055)
 
-            overview = [airing_date + ' ' + airing_time, plot]
+            overview = [date_format(airing_date) + ' ' + airing_time, plot]
             overview ='[CR][CR]'.join(filter(None, overview))
 
             li_item = ListItem(label)
