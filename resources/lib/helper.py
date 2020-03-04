@@ -76,7 +76,7 @@ def get_cache(key):
 
 def write_cache(key,data,cache_time=336):
     if data:
-        CACHE.set(CACHE_PREFIX + key,data,expiration=datetime.timedelta(hours=cache_time))
+        CACHE.set(CACHE_PREFIX + key, data, expiration=datetime.timedelta(hours=cache_time))
 
 
 def format_currency(integer):
@@ -102,7 +102,7 @@ def sort_dict(items,key,reverse=False):
             else:
                 item[key] = '1900-01-01'
 
-    return sorted(items,key=operator.itemgetter(key),reverse=reverse)
+    return sorted(items, key=operator.itemgetter(key),reverse=reverse)
 
 
 def remove_quotes(label):
@@ -143,7 +143,7 @@ def textviewer(params):
     DIALOG.textviewer(remove_quotes(params.get('header', '')), remove_quotes(params.get('message', '')))
 
 
-def winprop(key, value=None, clear=False, window_id=10000):
+def winprop(key,value=None,clear=False,window_id=10000):
     window = xbmcgui.Window(window_id)
 
     if clear:

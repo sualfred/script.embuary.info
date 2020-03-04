@@ -19,7 +19,7 @@ from resources.lib.nextaired import *
 
 INDEX_MENU = {
     'discover': {
-        'name': ADDON.getLocalizedString(32049),
+        'name': 'The Movie DB - ' + ADDON.getLocalizedString(32049),
         'route': 'discover',
         'folder': True,
         'menu': [
@@ -29,7 +29,7 @@ INDEX_MENU = {
         ]
     },
     'movie': {
-        'name': xbmc.getLocalizedString(342),
+        'name': 'The Movie DB - ' + xbmc.getLocalizedString(342),
         'route': 'movie_listing',
         'folder': True,
         'menu': [
@@ -41,7 +41,7 @@ INDEX_MENU = {
         ]
     },
     'tv': {
-        'name': xbmc.getLocalizedString(20343),
+        'name': 'The Movie DB - ' + xbmc.getLocalizedString(20343),
         'route': 'tv_listing',
         'folder': True,
         'menu': [
@@ -53,7 +53,7 @@ INDEX_MENU = {
         ]
     },
     'nextaired': {
-        'name': ADDON.getLocalizedString(32059),
+        'name': 'Trakt.tv - ' + ADDON.getLocalizedString(32059),
         'route': 'nextaired',
         'folder': True,
         'menu': [
@@ -162,19 +162,28 @@ def _nextaired(day):
                 kodi_date = date_format(i['airing'])
                 label = '%s, %s: %s %sx%s. %s' % (i['weekday'], kodi_date, i['showtitle'], i['airedSeason'], i['airedEpisodeNumber'], i['episodeName'])
 
+            season = str(i.get('airedSeason', ''))
+            episode = str(i.get('airedEpisodeNumber', ''))
+            airing_date = i.get('airing', '')
+            airing_time = i.get('airing_time', '')
+            plot = i.get('overview') or xbmc.getLocalizedString(19055)
+
+            overview = [airing_date + ' ' + airing_time, plot]
+            overview ='[CR][CR]'.join(filter(None, overview))
+
             li_item = ListItem(label)
             li_item.setArt(i.get('localart'))
             li_item.setArt({'icon': 'DefaultVideo.png', 'thumb': thumb})
-            li_item.setInfo('video', {'title': i.get('episodeName', 'bla'),
-                                      'tvshowtitle': i.get('showtitle', ''),
-                                      'plot': i.get('overview', ''),
-                                      'premiered': i.get('airing', ''),
-                                      'season': str(i.get('airedSeason', '')),
-                                      'episode': str(i.get('airedEpisodeNumber', '')),
-                                      'mediatype': 'video'}
+            li_item.setInfo('video', {'title': i.get('episodeName') or xbmc.getLocalizedString(13205),
+                                      'tvshowtitle': i.get('showtitle') or xbmc.getLocalizedString(13205),
+                                      'plot': overview,
+                                      'premiered': airing_date,
+                                      'season': season,
+                                      'episode': episode,
+                                      'mediatype': 'episode'}
                                       )
-            li_item.setProperty('AirDay', i['airing'])
-            li_item.setProperty('AirTime', i['airing_time'])
+            li_item.setProperty('AirDay', airing_date)
+            li_item.setProperty('AirTime', airing_time)
 
             addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', 'external', i['seriesId']), li_item)
 
@@ -364,12 +373,12 @@ def _add(items,call):
 
     if call == 'tv':
         for item in items:
-            list_item, is_local = tmdb_handle_tvshow(item, local_items=local_items.get('shows', []), mediatype='video')
+            list_item, is_local = tmdb_handle_tvshow(item, local_items=local_items.get('shows', []))
             addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', 'tmdb', item['id']), list_item)
 
     elif call == 'movie':
         for item in items:
-            list_item, is_local = tmdb_handle_movie(item, local_items=local_items.get('movies', []), mediatype='video')
+            list_item, is_local = tmdb_handle_movie(item, local_items=local_items.get('movies', []))
             addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'movie', 'tmdb', item['id']), list_item)
 
     elif call == 'person':
