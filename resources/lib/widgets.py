@@ -59,13 +59,15 @@ INDEX_MENU = {
         'menu': [
             { 'name': ADDON.getLocalizedString(32058), 'day': 'week' },
             { 'name': xbmc.getLocalizedString(33006), 'day': 'today' },
-            { 'name': xbmc.getLocalizedString(11), 'day': '0' },
-            { 'name': xbmc.getLocalizedString(12), 'day': '1' },
-            { 'name': xbmc.getLocalizedString(13), 'day': '2' },
-            { 'name': xbmc.getLocalizedString(14), 'day': '3' },
-            { 'name': xbmc.getLocalizedString(15), 'day': '4' },
-            { 'name': xbmc.getLocalizedString(16), 'day': '5' },
-            { 'name': xbmc.getLocalizedString(17), 'day': '6' },
+        ],
+        'days': [
+            xbmc.getLocalizedString(11),
+            xbmc.getLocalizedString(12),
+            xbmc.getLocalizedString(13),
+            xbmc.getLocalizedString(14),
+            xbmc.getLocalizedString(15),
+            xbmc.getLocalizedString(16),
+            xbmc.getLocalizedString(17)
         ]
     },
     'search': {
@@ -138,6 +140,21 @@ def nextaired(day=None):
                              plugin.url_for(nextaired, i.get('day')),
                              li_item, True)
 
+
+        utc = arrow.utcnow()
+        local_date = utc.to('local')
+
+        for i in range(6):
+            local_date = local_date.shift(days=1)
+            kodi_date = date_format(local_date.date(), date='long')
+            tmp_day_str, tmp_day = date_weekday(local_date)
+
+            li_item = ListItem(tmp_day_str + ', ' + kodi_date)
+            li_item.setArt(DEFAULT_ART)
+            addDirectoryItem(plugin.handle,
+                             plugin.url_for(nextaired, tmp_day),
+                             li_item, True)
+
         _category(category=INDEX_MENU['nextaired']['name'])
 
     else:
@@ -201,8 +218,12 @@ def _nextaired(day):
         except Exception as error:
             pass
 
-    category = 0 if day == 'week' else int(day) + 2
-    _category(content='videos', category=INDEX_MENU['nextaired']['menu'][category]['name'])
+    if day == 'week':
+        category = INDEX_MENU['nextaired']['menu'][0]['name']
+    else:
+        category = INDEX_MENU['nextaired']['days'][int(day)]
+
+    _category(content='videos', category=category)
 
 
 # discover

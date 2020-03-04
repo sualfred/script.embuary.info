@@ -173,9 +173,9 @@ def winprop(key,value=None,clear=False,window_id=10000):
         return result
 
 
-def date_format(value,date='short',scheme='YYYY-MM-DD'):
+def date_format(value,date='short'):
     try:
-        date_time = arrow.get(value, scheme)
+        date_time = arrow.get(value)
         value = date_time.strftime(xbmc.getRegion('date%s' % date))
 
     except Exception:
@@ -191,7 +191,8 @@ def date_delta(date):
 
 def date_weekday(date=None):
     if not date:
-        date = datetime.date.today()
+        utc = arrow.utcnow()
+        date = utc.to('local').date()
 
     try:
         weekdays = (xbmc.getLocalizedString(11), xbmc.getLocalizedString(12), xbmc.getLocalizedString(13), xbmc.getLocalizedString(14), xbmc.getLocalizedString(15), xbmc.getLocalizedString(16), xbmc.getLocalizedString(17))
