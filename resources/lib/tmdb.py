@@ -50,6 +50,8 @@ def tmdb_query(action,call=None,get=None,get2=None,get3=None,get4=None,params=No
     #log(url, force=True)
 
     try:
+        request = None
+
         for i in range(1,4): # loop if heavy server load
             try:
                 request = requests.get(url, timeout=5)
@@ -57,15 +59,15 @@ def tmdb_query(action,call=None,get=None,get2=None,get3=None,get4=None,params=No
                 if str(request.status_code).startswith('5'):
                     raise Exception(str(request.status_code))
 
-            except Exception as error:
+            except Exception:
                 xbmc.sleep(500)
 
-        if request.status_code == 401:
-            error = ADDON.getLocalizedString(32022)
+        if not request or request.status_code == 404:
+            error = ADDON.getLocalizedString(32019)
             raise Exception(error)
 
-        elif request.status_code == 404:
-            error = ADDON.getLocalizedString(32019)
+        elif request.status_code == 401:
+            error = ADDON.getLocalizedString(32022)
             raise Exception(error)
 
         elif not request.ok:

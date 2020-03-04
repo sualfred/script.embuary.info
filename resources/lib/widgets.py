@@ -414,7 +414,7 @@ def _query(content_type,call,get=None,params=None,get_details=False):
     if not get_details:
         try:
             return tmdb.get('results'), tmdb.get('total_pages')
-        except KeyError:
+        except Exception:
             return [], 1
 
     else:
