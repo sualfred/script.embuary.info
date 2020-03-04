@@ -177,8 +177,9 @@ def date_format(value,date='short',scheme='YYYY-MM-DD'):
     try:
         date_time = arrow.get(value, scheme)
         value = date_time.strftime(xbmc.getRegion('date%s' % date))
-    except Exception as error:
-        log(error + ' ---> ' + str(value), WARNING)
+
+    except Exception:
+        pass
 
     return value
 

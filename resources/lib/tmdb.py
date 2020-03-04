@@ -213,9 +213,11 @@ def tmdb_select_dialog_small(list):
 def tmdb_calc_age(birthday,deathday=None):
     if deathday is not None:
         ref_day = deathday.split("-")
+
     elif birthday:
         date = datetime.date.today()
         ref_day = [date.year, date.month, date.day]
+
     else:
         return ''
 
@@ -309,9 +311,9 @@ def tmdb_handle_person(item):
 
     icon = IMAGEPATH + item['profile_path'] if item['profile_path'] is not None else ''
     list_item = xbmcgui.ListItem(label=item['name'])
-    list_item.setProperty('birthday', date_format(item.get('birthday')))
-    list_item.setProperty('deathday', date_format(item.get('deathday')))
-    list_item.setProperty('age', str(tmdb_calc_age(item.get('birthday', ''),item.get('deathday', None))))
+    list_item.setProperty('birthday', date_format(item.get('birthday', '')))
+    list_item.setProperty('deathday', date_format(item.get('deathday', '')))
+    list_item.setProperty('age', str(tmdb_calc_age(item.get('birthday', ''), item.get('deathday'))))
     list_item.setProperty('biography', tmdb_fallback_info(item, 'biography'))
     list_item.setProperty('place_of_birth', item.get('place_of_birth', ''))
     list_item.setProperty('known_for_department', item.get('known_for_department', ''))
