@@ -288,8 +288,5 @@ def urljoin(*args):
 
 
 def md5hash(value):
-    if not PYTHON3:
-        return hashlib.md5(str(value)).hexdigest()
-
     value = str(value).encode()
     return hashlib.md5(value).hexdigest()
