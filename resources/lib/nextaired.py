@@ -14,7 +14,8 @@ from resources.lib.localdb import *
 
 class NextAired():
     def __init__(self):
-        self.date_today = str(datetime.date.today())
+        utc = arrow.utcnow()
+        self.date_today = utc.to('local').strftime('%Y-%m-%d')
 
         local_media = get_local_media()
         self.local_media = local_media['shows']
