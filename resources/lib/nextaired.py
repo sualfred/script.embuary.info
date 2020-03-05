@@ -15,7 +15,9 @@ from resources.lib.localdb import *
 class NextAired():
     def __init__(self):
         utc = arrow.utcnow()
-        self.date_today = utc.to('local').strftime('%Y-%m-%d')
+        self.date_today = utc.strftime('%Y-%m-%d')
+
+        log('using following UTC date to call trakt: ' + self.date_today, force=True)
 
         local_media = get_local_media()
         self.local_media = local_media['shows']
@@ -97,5 +99,11 @@ class NextAired():
 
                             self.airing_items['week'].append(tvdb_query)
                             self.airing_items[str(weekday_code)].append(tvdb_query)
+
+                            log('#######', force=True)
+                            log('item: ' + tvshowtitle + ' ' + tvdb_query.get('episodeName'), force=True)
+                            log('utc airing date: ' + item.get('first_aired'), force=True)
+                            log('local tz airing date: ' + airing_date, force=True)
+                            log('local tz airing weekday: ' + weekday, force=True)
 
                         break

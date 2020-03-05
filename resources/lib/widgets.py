@@ -142,7 +142,7 @@ def nextaired(day=None):
 
 
         utc = arrow.utcnow()
-        local_date = utc.to('local')
+        local_date = utc.to(TIMEZONE)
 
         for i in range(6):
             local_date = local_date.shift(days=1)
