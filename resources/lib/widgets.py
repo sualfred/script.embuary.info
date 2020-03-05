@@ -146,10 +146,10 @@ def nextaired(day=None):
 
         for i in range(6):
             local_date = local_date.shift(days=1)
-            kodi_date = date_format(local_date.date(), date='long')
+            long_date = local_date.strftime('%A, %d %B %Y')
             tmp_day_str, tmp_day = date_weekday(local_date)
 
-            li_item = ListItem(tmp_day_str + ', ' + kodi_date)
+            li_item = ListItem(long_date)
             li_item.setArt(DEFAULT_ART)
             addDirectoryItem(plugin.handle,
                              plugin.url_for(nextaired, tmp_day),
@@ -193,7 +193,7 @@ def _nextaired(day):
             plot = i.get('overview') or xbmc.getLocalizedString(19055)
 
             overview = [date_format(airing_date) + ' ' + airing_time, plot]
-            overview ='[CR][CR]'.join(filter(None, overview))
+            overview ='[CR]'.join(filter(None, overview))
 
             li_item = ListItem(label)
             li_item.setArt(i.get('localart'))
@@ -212,6 +212,7 @@ def _nextaired(day):
                                       )
             li_item.setProperty('AirDay', i['weekday'])
             li_item.setProperty('AirTime', airing_time)
+            li_item.setProperty('IsPlayable', 'false')
 
             addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', 'external', i['seriesId']), li_item)
 
