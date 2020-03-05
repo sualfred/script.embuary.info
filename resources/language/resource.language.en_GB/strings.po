@@ -124,12 +124,12 @@ msgstr ""
 
 #: /resources/settings.xml
 msgctxt "#32020"
-msgid "Caching"
+msgid "Developer settings"
 msgstr ""
 
 #: /resources/settings.xml
 msgctxt "#32021"
-msgid "Enable caching of fetched data"
+msgid "Enable caching (highly recommended - only turn off for debugging)"
 msgstr ""
 
 #: /resources/settings.xml
@@ -300,4 +300,14 @@ msgstr ""
 #: /resources/lib/widgets.py
 msgctxt "#32057"
 msgid "Discover people"
+msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32058"
+msgid "Next 7 days"
+msgstr ""
+
+#: /resources/lib/widgets.py
+msgctxt "#32059"
+msgid "Next airing episodes of your TV show library"
 msgstr ""

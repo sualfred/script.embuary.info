@@ -15,6 +15,7 @@ import operator
 import arrow
 import sys
 import simplecache
+import hashlib
 
 ########################
 
@@ -59,7 +60,7 @@ def get_cache(key):
 
 def write_cache(key,data,cache_time=336):
     if data:
-        CACHE.set(CACHE_PREFIX + key,data,expiration=datetime.timedelta(hours=cache_time))
+        CACHE.set(CACHE_PREFIX + key, data, expiration=datetime.timedelta(hours=cache_time))
 
 
 def format_currency(integer):
@@ -85,7 +86,7 @@ def sort_dict(items,key,reverse=False):
             else:
                 item[key] = '1900-01-01'
 
-    return sorted(items,key=operator.itemgetter(key),reverse=reverse)
+    return sorted(items, key=operator.itemgetter(key),reverse=reverse)
 
 
 def remove_quotes(label):
@@ -126,7 +127,7 @@ def textviewer(params):
     DIALOG.textviewer(remove_quotes(params.get('header', '')), remove_quotes(params.get('message', '')))
 
 
-def winprop(key, value=None, clear=False, window_id=10000):
+def winprop(key,value=None,clear=False,window_id=10000):
     window = xbmcgui.Window(window_id)
 
     if clear:
@@ -156,10 +157,11 @@ def winprop(key, value=None, clear=False, window_id=10000):
         return result
 
 
-def date_format(value,date='short',scheme='YYYY-MM-DD'):
+def date_format(value,date='short'):
     try:
-        date_time = arrow.get(value, scheme)
+        date_time = arrow.get(value)
         value = date_time.strftime(xbmc.getRegion('date%s' % date))
+
     except Exception:
         pass
 
@@ -169,6 +171,33 @@ def date_format(value,date='short',scheme='YYYY-MM-DD'):
 def date_delta(date):
     date = arrow.get(date, 'YYYY-MM-DD').date()
     return date - datetime.date.today()
+
+
+def date_weekday(date=None):
+    if not date:
+        utc = arrow.utcnow()
+        date = utc.to('local').date()
+
+    try:
+        weekdays = (xbmc.getLocalizedString(11), xbmc.getLocalizedString(12), xbmc.getLocalizedString(13), xbmc.getLocalizedString(14), xbmc.getLocalizedString(15), xbmc.getLocalizedString(16), xbmc.getLocalizedString(17))
+        date = arrow.get(date).date()
+        weekday = date.weekday()
+        return weekdays[weekday], weekday
+
+    except Exception:
+        return '', ''
+
+
+def utc_to_local(value):
+    conv_date = arrow.get(value).to('local')
+    conv_date_str = conv_date.strftime('%Y-%m-%d')
+
+    if xbmc.getRegion('time').startswith('%I'):
+        conv_time_str = conv_date.strftime('%I:%M %p')
+    else:
+        conv_time_str = conv_date.strftime('%H:%M')
+
+    return conv_date_str, conv_time_str
 
 
 def get_bool(value,string='true'):
@@ -248,3 +277,19 @@ def set_plugincontent(content=None,category=None):
 
 def json_prettyprint(string):
     return json.dumps(string, sort_keys=True, indent=4, separators=(',', ': '))
+
+
+def urljoin(*args):
+    ''' Joins given arguments into an url. Trailing but not leading slashes are
+        stripped for each argument.
+    '''
+    arglist = [arg for arg in args if arg is not None]
+    return '/'.join(map(lambda x: str(x).rstrip('/'), arglist))
+
+
+def md5hash(value):
+    if not PYTHON3:
+        return hashlib.md5(str(value)).hexdigest()
+
+    value = str(value).encode()
+    return hashlib.md5(value).hexdigest()

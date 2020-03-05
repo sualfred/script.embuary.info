@@ -5,7 +5,7 @@
 import xbmcgui
 
 from resources.lib.helper import *
-from resources.lib.utils import *
+from resources.lib.tmdb import *
 from resources.lib.main import *
 
 ########################
@@ -24,7 +24,7 @@ class Main:
         else:
             ''' It takes a couple of milliseconds until the script starts (Kodi<->Python delay). This could cause double calls
                 for users with a nervous "DO IT NOW!!!11!"-finger. This is a ugly but working workaround. Will be replaced with
-                a better one if found and it won't be too complex -> #TODO
+                a better one if found and if it won't be too complex -> #TODO
             '''
             if not winprop('script.embuary.info-double_start_workaround.bool'):
                 winprop('script.embuary.info-double_start_workaround.bool', True)

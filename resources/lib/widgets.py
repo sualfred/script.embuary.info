@@ -9,13 +9,17 @@ from xbmcplugin import addDirectoryItem, endOfDirectory
 from datetime import date
 
 from resources.lib.helper import *
-from resources.lib.utils import *
+from resources.lib.tmdb import *
+from resources.lib.tvdb import *
+from resources.lib.trakt import *
+from resources.lib.localdb import *
+from resources.lib.nextaired import *
 
 ########################
 
 INDEX_MENU = {
     'discover': {
-        'name': ADDON.getLocalizedString(32049),
+        'name': 'The Movie DB - ' + ADDON.getLocalizedString(32049),
         'route': 'discover',
         'folder': True,
         'menu': [
@@ -25,7 +29,7 @@ INDEX_MENU = {
         ]
     },
     'movie': {
-        'name': xbmc.getLocalizedString(342),
+        'name': 'The Movie DB - ' + xbmc.getLocalizedString(342),
         'route': 'movie_listing',
         'folder': True,
         'menu': [
@@ -37,7 +41,7 @@ INDEX_MENU = {
         ]
     },
     'tv': {
-        'name': xbmc.getLocalizedString(20343),
+        'name': 'The Movie DB - ' + xbmc.getLocalizedString(20343),
         'route': 'tv_listing',
         'folder': True,
         'menu': [
@@ -46,6 +50,24 @@ INDEX_MENU = {
             { 'name': ADDON.getLocalizedString(32034), 'call': 'popular' },
             { 'name': ADDON.getLocalizedString(32035), 'call': 'airing_today' },
             { 'name': ADDON.getLocalizedString(32036), 'call': 'on_the_air' }
+        ]
+    },
+    'nextaired': {
+        'name': 'Trakt.tv - ' + ADDON.getLocalizedString(32059),
+        'route': 'nextaired',
+        'folder': True,
+        'menu': [
+            { 'name': ADDON.getLocalizedString(32058), 'day': 'week' },
+            { 'name': xbmc.getLocalizedString(33006), 'day': 'today' },
+        ],
+        'days': [
+            xbmc.getLocalizedString(11),
+            xbmc.getLocalizedString(12),
+            xbmc.getLocalizedString(13),
+            xbmc.getLocalizedString(14),
+            xbmc.getLocalizedString(15),
+            xbmc.getLocalizedString(16),
+            xbmc.getLocalizedString(17)
         ]
     },
     'search': {
@@ -80,7 +102,7 @@ plugin = routing.Plugin()
 # entrypoint
 @plugin.route('/')
 def index():
-    for i in ['discover', 'movie', 'tv', 'search']:
+    for i in ['discover', 'movie', 'tv', 'nextaired', 'search']:
         item =  INDEX_MENU[i]
         li_item = ListItem(item['name'])
         li_item.setArt(DEFAULT_ART)
@@ -92,14 +114,117 @@ def index():
 
 
 # actions
-@plugin.route('/info/<call>/<tmdbid>')
-def dialog(call,tmdbid):
-    execute('RunScript(script.embuary.info,call=%s,tmdb_id=%s)' % (call, tmdbid))
+@plugin.route('/info/<call>/<idtype>/<tmdbid>')
+def dialog(call,idtype,tmdbid):
+    if idtype == 'tmdb':
+        execute('RunScript(script.embuary.info,call=%s,tmdb_id=%s)' % (call, tmdbid))
+    elif idtype == 'external':
+        execute('RunScript(script.embuary.info,call=%s,external_id=%s)' % (call, tmdbid))
+
 
 
 @plugin.route('/search')
 def search():
     execute('RunScript(script.embuary.info)')
+
+
+# next aired
+@plugin.route('/nextaired')
+@plugin.route('/nextaired/<day>')
+def nextaired(day=None):
+    if not day:
+        for i in INDEX_MENU['nextaired'].get('menu'):
+            li_item = ListItem(i.get('name'))
+            li_item.setArt(DEFAULT_ART)
+            addDirectoryItem(plugin.handle,
+                             plugin.url_for(nextaired, i.get('day')),
+                             li_item, True)
+
+
+        utc = arrow.utcnow()
+        local_date = utc.to('local')
+
+        for i in range(6):
+            local_date = local_date.shift(days=1)
+            long_date = local_date.strftime('%A, %d %B %Y')
+            tmp_day_str, tmp_day = date_weekday(local_date)
+
+            li_item = ListItem(long_date)
+            li_item.setArt(DEFAULT_ART)
+            addDirectoryItem(plugin.handle,
+                             plugin.url_for(nextaired, tmp_day),
+                             li_item, True)
+
+        _category(category=INDEX_MENU['nextaired']['name'])
+
+    else:
+        _nextaired(day)
+
+    endOfDirectory(plugin.handle)
+
+def _nextaired(day):
+    if day == 'today':
+        day_str, day = date_weekday()
+
+    next_aired = NextAired()
+    next_aired_results = next_aired.get(str(day))
+
+    if day == 'week':
+        next_aired_results = sort_dict(next_aired_results, 'airing')
+
+    for i in next_aired_results:
+        try:
+            art = i.get('filename', '')
+            if art:
+                thumb = 'https://artworks.thetvdb.com/banners/' + art
+            else:
+                thumb = i['localart'].get('landscape') or i['localart'].get('fanart') or ''
+
+            if day != 'week' and day is not None:
+                label = '%s %sx%s. %s' % (i['showtitle'], i['airedSeason'], i['airedEpisodeNumber'], i['episodeName'])
+            else:
+                kodi_date = date_format(i['airing'])
+                label = '%s, %s: %s %sx%s. %s' % (i['weekday'], kodi_date, i['showtitle'], i['airedSeason'], i['airedEpisodeNumber'], i['episodeName'])
+
+            season = str(i.get('airedSeason', ''))
+            episode = str(i.get('airedEpisodeNumber', ''))
+            airing_date = i.get('airing', '')
+            airing_time = i.get('airing_time', '')
+            plot = i.get('overview') or xbmc.getLocalizedString(19055)
+
+            overview = [date_format(airing_date) + ' ' + airing_time, plot]
+            overview ='[CR]'.join(filter(None, overview))
+
+            li_item = ListItem(label)
+            li_item.setArt(i.get('localart'))
+            li_item.setArt({'icon': 'DefaultVideo.png', 'thumb': thumb})
+            li_item.setInfo('video', {'title': i.get('episodeName') or xbmc.getLocalizedString(13205),
+                                      'tvshowtitle': i.get('showtitle') or xbmc.getLocalizedString(13205),
+                                      'plot': overview,
+                                      'premiered': airing_date,
+                                      'season': season,
+                                      'episode': episode,
+                                      'status': i.get('status', ''),
+                                      'country': i.get('country', ''),
+                                      'studio': i.get('network', ''),
+                                      'duration': i.get('runtime', 0),
+                                      'mediatype': 'episode'}
+                                      )
+            li_item.setProperty('AirDay', i['weekday'])
+            li_item.setProperty('AirTime', airing_time)
+            li_item.setProperty('IsPlayable', 'false')
+
+            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', 'external', i['seriesId']), li_item)
+
+        except Exception as error:
+            pass
+
+    if day == 'week':
+        category = INDEX_MENU['nextaired']['menu'][0]['name']
+    else:
+        category = INDEX_MENU['nextaired']['days'][int(day)]
+
+    _category(content='videos', category=category)
 
 
 # discover
@@ -269,7 +394,7 @@ def _listing(directory, call, page, pages):
 
     endOfDirectory(plugin.handle)
 
-# helpers
+#helpers
 def _dict_match(get,source,key,value):
     result = [i.get(get) for i in source if i.get(key) == value]
     if result:
@@ -281,18 +406,18 @@ def _add(items,call):
 
     if call == 'tv':
         for item in items:
-            list_item, is_local = tmdb_handle_tvshow(item, local_items=local_items.get('shows', []), mediatype='video')
-            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', item['id']), list_item)
+            list_item, is_local = tmdb_handle_tvshow(item, local_items=local_items.get('shows', []))
+            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', 'tmdb', item['id']), list_item)
 
     elif call == 'movie':
         for item in items:
-            list_item, is_local = tmdb_handle_movie(item, local_items=local_items.get('movies', []), mediatype='video')
-            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'movie', item['id']), list_item)
+            list_item, is_local = tmdb_handle_movie(item, local_items=local_items.get('movies', []))
+            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'movie', 'tmdb', item['id']), list_item)
 
     elif call == 'person':
         for item in items:
             list_item = tmdb_handle_person(item)
-            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'person', item['id']), list_item)
+            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'person', 'tmdb', item['id']), list_item)
 
 
 def _category(content='',category='',call=None,info=None):
@@ -302,18 +427,20 @@ def _category(content='',category='',call=None,info=None):
         plugincontent = 'movies'
     elif content == 'person':
         plugincontent = 'actors'
+    elif content:
+        plugincontent = content
     else:
         plugincontent = ''
 
-    set_plugincontent(content=plugincontent, category=str(category))
+    set_plugincontent(content=plugincontent, category=category)
 
 
-def _query(content_type,call,get=None,params=None):
+def _query(content_type,call,get=None,params=None,get_details=False):
     args = {'region': COUNTRY_CODE}
     if params:
         args.update(params)
 
-    cache_key = 'widget' + content_type + call + str(get) + str(args)
+    cache_key = 'widget' + content_type + str(call) + str(get) + str(args)
     tmdb = get_cache(cache_key)
 
     if not tmdb:
@@ -325,9 +452,15 @@ def _query(content_type,call,get=None,params=None):
 
     if tmdb:
         write_cache(cache_key,tmdb,3)
-        return tmdb.get('results'), tmdb.get('total_pages')
 
-    return {}, 1
+    if not get_details:
+        try:
+            return tmdb.get('results'), tmdb.get('total_pages')
+        except Exception:
+            return [], 1
+
+    else:
+        return tmdb
 
 
 def _nextpage(page,pages):
