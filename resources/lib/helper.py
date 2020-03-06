@@ -48,6 +48,7 @@ CACHE.enable_mem_cache = False
 CACHE_ENABLED = ADDON.getSettingBool('cache_enabled')
 CACHE_PREFIX = ADDON_ID + '_' + ADDON_VERSION + '_' + DEFAULT_LANGUAGE + COUNTRY_CODE + '_'
 
+#TIMEZONE = 'US/Alaska'
 TIMEZONE = 'local'
 
 ########################

@@ -14,8 +14,9 @@ from resources.lib.localdb import *
 
 class NextAired():
     def __init__(self):
-        utc = arrow.utcnow()
-        self.date_today = utc.strftime('%Y-%m-%d')
+        utc_date = arrow.utcnow()
+        local_date = utc_date.to(TIMEZONE)
+        self.date_today = utc_date.strftime('%Y-%m-%d')
 
         log('using following UTC date to call trakt: ' + self.date_today, force=True)
 
@@ -26,6 +27,12 @@ class NextAired():
         self.airing_items = get_cache(cache_key)
 
         if not self.airing_items:
+            self.valid_days = []
+            tmp_day = local_date
+            for i in range(7):
+                self.valid_days.append(tmp_day.strftime('%Y-%m-%d'))
+                tmp_day = tmp_day.shift(days=1)
+
             airing_items = {}
             airing_items['week'] = []
             airing_items['0'] = []
@@ -57,7 +64,7 @@ class NextAired():
             local_media_data.append([item.get('tmdbid'), item.get('tvdbid'), item.get('imdbnumber'), item.get('art'), item.get('title'), item.get('originaltitle'), item.get('year')])
 
         tvdb_api = TVDB_API()
-        trakt_results = trakt_api('/calendars/all/shows/' + self.date_today + '/7?extended=full&countries=' + COUNTRY_CODE.lower() + '%2Cus')
+        trakt_results = trakt_api('/calendars/all/shows/' + self.date_today + '/8?extended=full&countries=' + COUNTRY_CODE.lower() + '%2Cus')
 
         if trakt_results:
             for item in trakt_results:
@@ -66,6 +73,9 @@ class NextAired():
 
                 airing_date, airing_time = utc_to_local(item.get('first_aired'))
                 weekday, weekday_code = date_weekday(airing_date)
+
+                if airing_date not in self.valid_days:
+                    continue
 
                 tvshowtitle = show.get('title')
                 network = show.get('network')
