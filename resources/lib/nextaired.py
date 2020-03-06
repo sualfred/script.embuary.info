@@ -68,14 +68,18 @@ class NextAired():
 
         if trakt_results:
             for item in trakt_results:
-                show = item.get('show', {})
-                episode = item.get('episode', {})
-
                 airing_date, airing_time = utc_to_local(item.get('first_aired'))
                 weekday, weekday_code = date_weekday(airing_date)
 
+                ''' Because Trakt is using UTC dates it's possible that the airing item is already in the past
+                    for some timezones. Let's compare the converted airing date and only pick the ones for the
+                    users timezone.
+                '''
                 if airing_date not in self.valid_days:
                     continue
+
+                show = item.get('show', {})
+                episode = item.get('episode', {})
 
                 tvshowtitle = show.get('title')
                 network = show.get('network')

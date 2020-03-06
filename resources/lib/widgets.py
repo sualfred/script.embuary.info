@@ -68,6 +68,20 @@ INDEX_MENU = {
             xbmc.getLocalizedString(15),
             xbmc.getLocalizedString(16),
             xbmc.getLocalizedString(17)
+        ],
+        'months': [
+            xbmc.getLocalizedString(21),
+            xbmc.getLocalizedString(22),
+            xbmc.getLocalizedString(23),
+            xbmc.getLocalizedString(24),
+            xbmc.getLocalizedString(25),
+            xbmc.getLocalizedString(26),
+            xbmc.getLocalizedString(27),
+            xbmc.getLocalizedString(28),
+            xbmc.getLocalizedString(29),
+            xbmc.getLocalizedString(30),
+            xbmc.getLocalizedString(31),
+            xbmc.getLocalizedString(32)
         ]
     },
     'search': {
@@ -122,7 +136,6 @@ def dialog(call,idtype,tmdbid):
         execute('RunScript(script.embuary.info,call=%s,external_id=%s)' % (call, tmdbid))
 
 
-
 @plugin.route('/search')
 def search():
     execute('RunScript(script.embuary.info)')
@@ -146,10 +159,10 @@ def nextaired(day=None):
 
         for i in range(6):
             local_date = local_date.shift(days=1)
-            long_date = local_date.strftime('%A, %d %B %Y')
             tmp_day_str, tmp_day = date_weekday(local_date)
+            label = INDEX_MENU['nextaired']['days'][int(tmp_day)] + ', ' + local_date.strftime('%d') + '. ' + INDEX_MENU['nextaired']['months'][int(local_date.strftime('%m')) - 1] + ' ' + local_date.strftime('%Y')
 
-            li_item = ListItem(long_date)
+            li_item = ListItem(label)
             li_item.setArt(DEFAULT_ART)
             addDirectoryItem(plugin.handle,
                              plugin.url_for(nextaired, tmp_day),
