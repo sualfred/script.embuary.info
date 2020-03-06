@@ -18,10 +18,12 @@ class NextAired():
         local_date = utc_date.to(TIMEZONE)
         self.date_today = utc_date.strftime('%Y-%m-%d')
 
-        log('using following UTC date to call trakt: ' + self.date_today, force=True)
-
         local_media = get_local_media()
         self.local_media = local_media['shows']
+
+        for item in self.local_media:
+            del item['playcount']
+            del item['watchedepisodes']
 
         cache_key = 'nextaired_' + self.date_today + '_' + md5hash(self.local_media)
         self.airing_items = get_cache(cache_key)
@@ -94,10 +96,25 @@ class NextAired():
 
                 for i in local_media_data:
                     if str(tmdb_id) == i[0] or str(tvdb_id) == i[1] or str(imdb_id) == i[2] or (tvshowtitle in [i[4], i[5]] and year == i[6]):
-                        tvdb_query = tvdb_api.call('/episodes/' + str(tvdb_id_episode))
+                        tvdb_cache_key = 'nextaired_tvdb_episode_' + COUNTRY_CODE + '_' + str(tvdb_id_episode)
+                        tvdb_query = get_cache(tvdb_cache_key)
+
+                        if not tvdb_query:
+                            tvdb_query = tvdb_api.call('/episodes/' + str(tvdb_id_episode))
+
+                            if tvdb_query:
+                                write_cache(tvdb_cache_key, tvdb_query, 48)
 
                         if tvdb_query and not tvdb_query['overview'] and COUNTRY_CODE != 'US':
-                            tvdb_query = tvdb_api.call('/episodes/' + str(tvdb_id_episode), lang='us')
+                            tvdb_fallback_cache_key = 'nextaired_tvdb_episode_US_' + str(tvdb_id_episode)
+                            tvdb_query = get_cache(tvdb_fallback_cache_key)
+
+                            if not tvdb_query:
+                                tvdb_query = tvdb_api.call('/episodes/' + str(tvdb_id_episode), lang='us')
+
+                                if tvdb_query:
+                                    write_cache(tvdb_fallback_cache_key, tvdb_query, 48)
+
 
                         if tvdb_query:
                             tvdb_query['localart'] = i[3]
