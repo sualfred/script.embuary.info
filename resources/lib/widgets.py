@@ -68,20 +68,6 @@ INDEX_MENU = {
             xbmc.getLocalizedString(15),
             xbmc.getLocalizedString(16),
             xbmc.getLocalizedString(17)
-        ],
-        'months': [
-            xbmc.getLocalizedString(21),
-            xbmc.getLocalizedString(22),
-            xbmc.getLocalizedString(23),
-            xbmc.getLocalizedString(24),
-            xbmc.getLocalizedString(25),
-            xbmc.getLocalizedString(26),
-            xbmc.getLocalizedString(27),
-            xbmc.getLocalizedString(28),
-            xbmc.getLocalizedString(29),
-            xbmc.getLocalizedString(30),
-            xbmc.getLocalizedString(31),
-            xbmc.getLocalizedString(32)
         ]
     },
     'search': {
@@ -153,16 +139,18 @@ def nextaired(day=None):
                              plugin.url_for(nextaired, i.get('day')),
                              li_item, True)
 
-
         utc = arrow.utcnow()
         local_date = utc.to(TIMEZONE)
 
+        kodi_locale = json_call('Settings.GetSettingValue', params={'setting': 'locale.language'})
+        kodi_locale = kodi_locale['result']['value'][-5:]
+
         for i in range(6):
             local_date = local_date.shift(days=1)
+            translated_date = local_date.format(fmt='dddd, D. MMMM YYYY', locale=kodi_locale)
             tmp_day_str, tmp_day = date_weekday(local_date)
-            label = INDEX_MENU['nextaired']['days'][int(tmp_day)] + ', ' + local_date.strftime('%d') + '. ' + INDEX_MENU['nextaired']['months'][int(local_date.strftime('%m')) - 1] + ' ' + local_date.strftime('%Y')
 
-            li_item = ListItem(label)
+            li_item = ListItem(translated_date)
             li_item.setArt(DEFAULT_ART)
             addDirectoryItem(plugin.handle,
                              plugin.url_for(nextaired, tmp_day),
