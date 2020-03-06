@@ -131,10 +131,4 @@ class NextAired():
                             self.airing_items['week'].append(tvdb_query)
                             self.airing_items[str(weekday_code)].append(tvdb_query)
 
-                            log('#######', force=True)
-                            log('item: ' + tvshowtitle + ' ' + tvdb_query.get('episodeName'), force=True)
-                            log('utc airing date: ' + item.get('first_aired'), force=True)
-                            log('local tz airing date: ' + airing_date, force=True)
-                            log('local tz airing weekday: ' + weekday, force=True)
-
                         break
