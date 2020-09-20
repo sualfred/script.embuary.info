@@ -314,8 +314,8 @@ def tmdb_handle_person(item):
     list_item.setProperty('birthday', date_format(item.get('birthday', '')))
     list_item.setProperty('deathday', date_format(item.get('deathday', '')))
     list_item.setProperty('age', str(tmdb_calc_age(item.get('birthday', ''), item.get('deathday'))))
-    list_item.setProperty('biography', tmdb_fallback_info(item, 'biography').strip())
-    list_item.setProperty('place_of_birth', item.get('place_of_birth', '').strip())
+    list_item.setProperty('biography', tmdb_fallback_info(item, 'biography'))
+    list_item.setProperty('place_of_birth', item.get('place_of_birth').strip() if item.get('place_of_birth') else '')
     list_item.setProperty('known_for_department', item.get('known_for_department', ''))
     list_item.setProperty('gender', gender)
     list_item.setProperty('id', str(item.get('id', '')))
@@ -507,14 +507,16 @@ def tmdb_fallback_info(item,key):
     key_value = item.get(key)
 
     if key_value:
-        return key_value.replace('&amp;', '&')
+        return key_value.replace('&amp;', '&').strip()
 
     try:
         for translation in item['translations']['translations']:
             if translation.get('iso_639_1') == FALLBACK_LANGUAGE:
                 if translation['data'][key]:
                     key_value = translation['data'][key]
-                    return key_value.replace('&amp;', '&')
+
+                    if key_value:
+                        return key_value.replace('&amp;', '&').strip()
 
     except Exception:
         pass
