@@ -504,20 +504,29 @@ def tmdb_handle_season(item,tvshow_details,full_info=False):
 
 
 def tmdb_fallback_info(item,key):
-    key_value = item.get(key)
+    if FALLBACK_LANGUAGE == DEFAULT_LANGUAGE:
+        key_value = item.get(key, '').replace('&amp;', '&').strip()
+    else:
+        key_value = tmdb_get_translation(item, key, DEFAULT_LANGUAGE)
 
-    if key_value:
-        return key_value.replace('&amp;', '&').strip()
+    # Default language is empty in the translations dict? Fall back to EN
+    if not key_value:
+        key_value = tmdb_get_translation(item, key, FALLBACK_LANGUAGE)
 
+    return key_value
+
+
+def tmdb_get_translation(item,key,language):
     try:
         for translation in item['translations']['translations']:
-            if translation.get('iso_639_1') == FALLBACK_LANGUAGE:
+
+            if translation.get('iso_639_1') == language:
+
                 if translation['data'][key]:
                     key_value = translation['data'][key]
 
                     if key_value:
-                        return key_value.replace('&amp;', '&').strip()
-
+                            return key_value.replace('&amp;', '&').strip()
     except Exception:
         pass
 
