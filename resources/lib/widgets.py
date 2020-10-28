@@ -10,7 +10,6 @@ from datetime import date
 
 from resources.lib.helper import *
 from resources.lib.tmdb import *
-from resources.lib.tvdb import *
 from resources.lib.trakt import *
 from resources.lib.localdb import *
 from resources.lib.nextaired import *
@@ -173,22 +172,19 @@ def _nextaired(day):
     if day == 'week':
         next_aired_results = sort_dict(next_aired_results, 'airing')
 
+    #log(next_aired_results,force=True,json=True)
+
     for i in next_aired_results:
         try:
-            art = i.get('filename', '')
-            if art:
-                thumb = 'https://artworks.thetvdb.com/banners/' + art
-            else:
-                thumb = i['localart'].get('landscape') or i['localart'].get('fanart') or ''
 
             if day != 'week' and day is not None:
-                label = '%s %sx%s. %s' % (i['showtitle'], i['airedSeason'], i['airedEpisodeNumber'], i['episodeName'])
+                label = '%s %sx%s. %s' % (i['showtitle'], i['season_number'], i['episode_number'], i['name'])
             else:
                 kodi_date = date_format(i['airing'])
-                label = '%s, %s: %s %sx%s. %s' % (i['weekday'], kodi_date, i['showtitle'], i['airedSeason'], i['airedEpisodeNumber'], i['episodeName'])
+                label = '%s, %s: %s %sx%s. %s' % (i['weekday'], kodi_date, i['showtitle'], i['season_number'], i['episode_number'], i['name'])
 
-            season = str(i.get('airedSeason', ''))
-            episode = str(i.get('airedEpisodeNumber', ''))
+            season = str(i.get('season_number', ''))
+            episode = str(i.get('episode_number', ''))
             airing_date = i.get('airing', '')
             airing_time = i.get('airing_time', '')
             plot = i.get('overview') or xbmc.getLocalizedString(19055)
@@ -196,10 +192,14 @@ def _nextaired(day):
             overview = [date_format(airing_date) + ' ' + airing_time, plot]
             overview ='[CR]'.join(filter(None, overview))
 
+            thumb = IMAGEPATH + i.get('still_path') if i.get('still_path') else ''
+            if not thumb:
+                thumb = i['localart'].get('landscape') or i['localart'].get('fanart') or ''
+
             li_item = ListItem(label)
             li_item.setArt(i.get('localart'))
             li_item.setArt({'icon': 'DefaultVideo.png', 'thumb': thumb})
-            li_item.setInfo('video', {'title': i.get('episodeName') or xbmc.getLocalizedString(13205),
+            li_item.setInfo('video', {'title': i.get('name') or xbmc.getLocalizedString(13205),
                                       'tvshowtitle': i.get('showtitle') or xbmc.getLocalizedString(13205),
                                       'plot': overview,
                                       'premiered': airing_date,
@@ -215,7 +215,7 @@ def _nextaired(day):
             li_item.setProperty('AirTime', airing_time)
             li_item.setProperty('IsPlayable', 'false')
 
-            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', 'external', i['seriesId']), li_item)
+            addDirectoryItem(plugin.handle, plugin.url_for(dialog, 'tv', 'tmdb', i['show_id']), li_item)
 
         except Exception as error:
             pass
