@@ -109,8 +109,8 @@
 					</control>
 					<control type="textbox">
 						<top>20</top>
-						<left>15</left>
-						<right>375</right>
+						<left>17</left>
+						<width>65%</width>
 						<height max="580">auto</height>
 						<align>justify</align>
 						<aligny>top</aligny>
@@ -881,13 +881,14 @@
 			<control type="image">
 				<left>0</left>
 				<top>0</top>
-				<width>110%</width>
+				<width>100%</width>
 				<height>170</height>
 				<texture>frame/InfoBar.png</texture>
 			</control>
 			<control type="group">
 				<left>35</left>
 				<right>35</right>
+				<top>10</top>
 				<height>100</height>
 				<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
 				<animation effect="fade" start="100" end="0" time="200" condition="String.IsEmpty(Window(home).Property(script.embuary.info-nextcall))">WindowClose</animation>
@@ -896,15 +897,14 @@
 					<left>0</left>
 					<right>150</right>
 					<label>$INFO[Container(10051).ListItem.Label]$INFO[Container(10051).ListItem.Year, ([COLOR FFA0A0A0],[/COLOR])]</label>
-					<font>font45</font>
+					<font>font_MainMenu</font>
 					<shadowcolor>50000000</shadowcolor>
 					<height>100</height>
 				</control>
 				<control type="image">
-					<top>10</top>
-					<right>0</right>
+					<posx>200r</posx>
 					<texture>tmdb.png</texture>
-					<height>65</height>
+					<height>100</height>
 					<width>200</width>
 					<aspectratio align="right">keep</aspectratio>
 				</control>
