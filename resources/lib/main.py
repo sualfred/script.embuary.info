@@ -3,16 +3,16 @@
 
 ########################
 
-import sys
 import xbmc
 import xbmcgui
-
+from resources.lib.episode import *
 from resources.lib.helper import *
-from resources.lib.tmdb import *
-from resources.lib.person import *
-from resources.lib.video import *
-from resources.lib.season import *
 from resources.lib.localdb import *
+from resources.lib.person import *
+from resources.lib.season import *
+from resources.lib.tmdb import *
+from resources.lib.video import *
+
 
 ########################
 
@@ -24,6 +24,7 @@ class TheMovieDB(object):
         self.call = call
         self.tmdb_id = params.get('tmdb_id')
         self.season = params.get('season')
+        self.episode = params.get('episode')
         self.query = remove_quotes(params.get('query'))
         self.query_year = params.get('year')
         self.exact_search = True if params.get('exact') == 'true' else False
@@ -154,12 +155,15 @@ class TheMovieDB(object):
         self.call_params['call'] = self.call
         self.call_params['tmdb_id'] = self.tmdb_id
         self.call_params['season'] = self.season
+        self.call_params['episode'] = self.episode
         self.request = self.call + str(self.tmdb_id)
 
         busydialog()
 
         if self.call == 'person':
             dialog = self.fetch_person()
+        elif self.call == 'tv' and self.season and self.episode:
+            dialog = self.fetch_episode()
         elif self.call == 'tv' and self.season:
             dialog = self.fetch_season()
         elif self.call == 'movie' or self.call == 'tv':
@@ -222,7 +226,23 @@ class TheMovieDB(object):
                               details=data['details'],
                               cast=data['cast'],
                               gueststars=data['gueststars'],
+                              crew=data['crew'],
                               posters=data['posters'],
+                              tmdb_id=self.tmdb_id
+                              )
+        return dialog
+
+    def fetch_episode(self):
+        data = TMDBEpisodes(self.call_params)
+        if not data['details']:
+            return
+
+        dialog = DialogEpisode('script-embuary-episode.xml', ADDON_PATH, 'default', '1080i',
+                              details=data['details'],
+                              cast=data['cast'],
+                              gueststars=data['gueststars'],
+                              crew=data['crew'],
+                              thumb=data['thumb'],
                               tmdb_id=self.tmdb_id
                               )
         return dialog
@@ -487,6 +507,85 @@ class DialogSeason(xbmcgui.WindowXMLDialog):
 
         index = [10051, 10052, 10056, 10059]
         li = [self.details, self.cast, self.gueststars, self.posters]
+
+        for items in li:
+            try:
+                clist = self.getControl(index[li.index(items)])
+                clist.addItems(items)
+            except RuntimeError as error:
+                log('Control with id %s cannot be filled. Error --> %s' % (str(index[li.index(items)]), error), DEBUG)
+                pass
+
+    def onAction(self,action):
+        if action.getId() in [92,10]:
+            self.action['id'] = ''
+            self.action['season'] = ''
+            self.action['call'] = 'back' if action.getId() == 92 else 'close'
+            self.quit()
+
+    def onClick(self,controlId):
+        next_id = xbmc.getInfoLabel('Container(%s).ListItem.Property(id)' % controlId)
+        next_call = xbmc.getInfoLabel('Container(%s).ListItem.Property(call)' % controlId)
+
+        if next_call in ['person'] and next_id:
+            self.action['id'] = next_id
+            self.action['call'] = next_call
+            self.action['season'] = ''
+            self.quit()
+
+        elif next_call == 'image':
+            FullScreenImage(controlId)
+
+    def quit(self):
+        close_action = self.getProperty('onclose')
+        onnext_action = self.getProperty('onnext')
+        onback_action = self.getProperty('onback_%s' % self.getFocusId())
+
+        if self.action.get('call') and self.action.get('id'):
+            execute('SetProperty(script.embuary.info-nextcall,true,home)')
+            if onnext_action:
+                execute(onnext_action)
+
+        if self.action.get('call') == 'back' and onback_action:
+            execute(onback_action)
+
+        else:
+            if close_action:
+                execute(close_action)
+            self.close()
+
+
+''' Episode dialog
+'''
+class DialogEpisode(xbmcgui.WindowXMLDialog):
+    def __init__(self,*args,**kwargs):
+        self.first_load = True
+        self.action = {}
+
+        self.tmdb_id = kwargs['tmdb_id']
+        self.details = kwargs['details']
+        self.cast = kwargs['cast']
+        self.gueststars = kwargs['gueststars']
+        self.crew = kwargs['crew']
+        self.thumb = kwargs['thumb']
+
+    def __getitem__(self,key):
+        return self.action[key]
+
+    def __setitem__(self,key,value):
+        self.action[key] = value
+
+    def onInit(self):
+        execute('ClearProperty(script.embuary.info-nextcall,home)')
+
+        if self.first_load:
+            self.add_items()
+
+    def add_items(self):
+        self.first_load = False
+
+        index = [10051, 10052, 10053, 10054, 10055]
+        li = [self.details, self.cast, self.gueststars, self.crew, self.thumb]
 
         for items in li:
             try:

@@ -20,7 +20,7 @@ class TMDBSeasons(object):
         self.season = call_request['season']
 
         if self.tmdb_id:
-            cache_key = 'season' + str(self.season) + str(self.tmdb_id)
+            cache_key = 'season_%s_%s' %(self.season, self.tmdb_id)
             self.details = get_cache(cache_key)
 
             if not self.details:
@@ -50,9 +50,9 @@ class TMDBSeasons(object):
             self.tvshow_details = self.get_tvshow_details()
             self.person_duplicate_handler = list()
 
+            self.result['gueststars'] = self.get_gueststars()
             self.result['details'] = self.get_details()
             self.result['cast'] = self.get_cast()
-            self.result['gueststars'] = self.get_gueststars()
             self.result['posters'] = self.get_images()
 
     def __getitem__(self, key):
