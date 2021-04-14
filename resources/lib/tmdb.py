@@ -524,20 +524,24 @@ def tmdb_fallback_info(item,key):
 
 
 def tmdb_get_translation(item,key,language):
+    key_value_iso_639_1 = ""
     try:
+        language_iso_639_1 = language[:2]
+        language_iso_3166_1 = language[3:] if len(language)>3 else None
+
         for translation in item['translations']['translations']:
-
-            if translation.get('iso_639_1') == language:
-
-                if translation['data'][key]:
-                    key_value = translation['data'][key]
-
-                    if key_value:
-                        return key_value.replace('&amp;', '&').strip()
+            if translation.get('iso_639_1') == language_iso_639_1 and translation['data'][key]:
+                key_value = translation['data'][key]
+                if key_value:
+                    key_value = key_value.replace('&amp;', '&').strip()
+                    if not language_iso_3166_1 or language_iso_3166_1 == translation.get('iso_3166_1'):
+                        return key_value
+                    else:
+                        key_value_iso_639_1 = key_value
     except Exception:
         pass
 
-    return ''
+    return key_value_iso_639_1
 
 
 def tmdb_handle_images(item):
