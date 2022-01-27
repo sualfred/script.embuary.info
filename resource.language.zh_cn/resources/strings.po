@@ -1,0 +1,258 @@
+# Embuary Info language file
+# Addon Name: Embuary Info
+# Addon id: script.embuary.info
+# Addon Provider: sualfred
+msgid ""
+msgstr ""
+"Project-Id-Version: Embuary Helper\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-10-27 18:42+0000\n"
+"Last-Translator: taxigps <taxigps@sina.com>\n"
+"Language-Team: Chinese (China) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-embuary-info/zh_cn/>\n"
+"Language: zh_cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.8\n"
+
+msgctxt "#32000"
+msgid "Error"
+msgstr "错误"
+
+msgctxt "#32001"
+msgid "This is a tool to provide features to a skin and requires skin integration."
+msgstr "这是一个为皮肤提供功能的工具，需要被皮肤集成。"
+
+msgctxt "#32002"
+msgid "(Get a free API key on www.omdbapi.com)"
+msgstr "（在 www.omdbapi.com 获得免费 API 密钥）"
+
+msgctxt "#32003"
+msgid "Certification country"
+msgstr "电影分级国别"
+
+msgctxt "#32019"
+msgid "No information found"
+msgstr "未找到任何信息"
+
+msgctxt "#32022"
+msgid "Invalid TheMovieDB API key"
+msgstr "无效的 TheMovieDB API 密钥"
+
+msgctxt "#32004"
+msgid "Person"
+msgstr "人物"
+
+msgctxt "#32005"
+msgid "Search for"
+msgstr "搜索"
+
+msgctxt "#32006"
+msgid "Age"
+msgstr "年龄"
+
+msgctxt "#32007"
+msgid "Place of birth"
+msgstr "出生地"
+
+msgctxt "#32008"
+msgid "Facts"
+msgstr "事实"
+
+msgctxt "#32009"
+msgid "Similar"
+msgstr "类似的"
+
+msgctxt "#32010"
+msgid "Images"
+msgstr "图片"
+
+msgctxt "#32011"
+msgid "Premiered"
+msgstr "首演"
+
+msgctxt "#32012"
+msgid "Retail"
+msgstr "零售"
+
+msgctxt "#32013"
+msgid "Budget"
+msgstr "预算"
+
+msgctxt "#32014"
+msgid "Revenue"
+msgstr "收入"
+
+msgctxt "#32015"
+msgid "Awards"
+msgstr "奖项"
+
+msgctxt "#32016"
+msgid "Seasons"
+msgstr "季"
+
+msgctxt "#32017"
+msgid "Known for"
+msgstr "闻名于"
+
+msgctxt "#32018"
+msgid "Crew"
+msgstr "团队"
+
+msgctxt "#32023"
+msgid "API key"
+msgstr "API 密钥"
+
+msgctxt "#32020"
+msgid "Developer settings"
+msgstr "开发人员设置"
+
+msgctxt "#32021"
+msgid "Enable caching (highly recommended - only turn off for debugging)"
+msgstr "启用缓存（强烈建议 - 仅在调试时关闭）"
+
+msgctxt "#32024"
+msgid "Default language"
+msgstr "默认语言"
+
+msgctxt "#32025"
+msgid "items in your library"
+msgstr "你的资料库中项目"
+
+msgctxt "#32026"
+msgid "Misc."
+msgstr "杂项"
+
+msgctxt "#32027"
+msgid "Hide person appearances in reality/talk/news shows"
+msgstr "在现实/谈话/新闻节目中隐藏人物形象"
+
+msgctxt "#32028"
+msgid "Hide person appearances in specials/documentaries/behind the scenes movies"
+msgstr "在特辑/纪录片/幕后电影中隐藏人物形象"
+
+msgctxt "#32029"
+msgid "Top rated movies"
+msgstr "高分电影"
+
+msgctxt "#32030"
+msgid "Now playing movies"
+msgstr "正在上映的电影"
+
+msgctxt "#32031"
+msgid "Upcoming movies"
+msgstr "即将上映的电影"
+
+msgctxt "#32032"
+msgid "Popular movies"
+msgstr "热门电影"
+
+msgctxt "#32033"
+msgid "Top rated TV shows"
+msgstr "高分剧集"
+
+msgctxt "#32034"
+msgid "Popular TV shows"
+msgstr "热门剧集"
+
+msgctxt "#32035"
+msgid "TV shows airing today"
+msgstr "今日播出的剧集"
+
+msgctxt "#32036"
+msgid "TV shows airing in the next 7 days"
+msgstr "未来7天播出的剧集"
+
+msgctxt "#32037"
+msgid "Collection"
+msgstr "系列"
+
+msgctxt "#32039"
+msgid "Guest stars"
+msgstr "客串明星"
+
+msgctxt "#32040"
+msgid "Season"
+msgstr "季"
+
+msgctxt "#32038"
+msgid "Widgets"
+msgstr "小部件"
+
+msgctxt "#32041"
+msgid "Hide items from similar movies if they are part of the collection"
+msgstr "隐藏类似电影中属于同系列的电影"
+
+msgctxt "#32042"
+msgid "Trending movies"
+msgstr "流行电影"
+
+msgctxt "#32043"
+msgid "Trending shows"
+msgstr "流行剧集"
+
+msgctxt "#32044"
+msgid "Hide upcoming items"
+msgstr "隐藏即将上映的项目"
+
+msgctxt "#32045"
+msgid "Allow items of the next [n] days"
+msgstr "允许接下来 [n] 天的项目"
+
+msgctxt "#32046"
+msgid "Watched episodes"
+msgstr "已观看的集"
+
+msgctxt "#32047"
+msgid "Install context menu addon"
+msgstr "安装上下文菜单插件"
+
+msgctxt "#32048"
+msgid "Next episode"
+msgstr "下一集"
+
+msgctxt "#32049"
+msgid "Discover"
+msgstr "探索"
+
+msgctxt "#32050"
+msgid "Discover movies"
+msgstr "探索电影"
+
+msgctxt "#32051"
+msgid "Discover TV shows"
+msgstr "探索剧集"
+
+msgctxt "#32052"
+msgid "Discover movies by year"
+msgstr "按年探索电影"
+
+msgctxt "#32053"
+msgid "Discover movies by genre"
+msgstr "按类型探索电影"
+
+msgctxt "#32054"
+msgid "Discover TV shows by year"
+msgstr "按年探索剧集"
+
+msgctxt "#32055"
+msgid "Discover TV shows by genre"
+msgstr "按类型探索剧集"
+
+msgctxt "#32056"
+msgid "Previous page"
+msgstr "上一页"
+
+msgctxt "#32057"
+msgid "Discover people"
+msgstr "探索人物"
+
+msgctxt "#32058"
+msgid "Next 7 days"
+msgstr "未来7天"
+
+msgctxt "#32059"
+msgid "Next airing episodes of your TV show library"
+msgstr "你的剧集资料库下一播出集"
