@@ -17,6 +17,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.7.2\n"
 
+msgctxt "Addon Summary"
+msgid "Embuary Info Script"
+msgstr "Embuary Info Script"
+
+msgctxt "Addon Description"
+msgid "Helper script to provide The Movie DB informations for persons, shows and movies. Works best with a skin integration."
+msgstr "Helfer Script das Abfragen von The Movie DB informationen für Personen, Serien und Filme zu ermöglichen. Funktioniert am besten mit einer Skin Integration."
+
 msgctxt "#32000"
 msgid "Error"
 msgstr "Fehler"
