@@ -5,102 +5,105 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-02-26 23:09+0000\n"
+"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"Language-Team: Portuguese (Portugal) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-embuary-info/pt_pt/>\n"
 "Language: pt_pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.11\n"
 
 msgctxt "#32000"
 msgid "Error"
-msgstr ""
+msgstr "Erro"
 
 msgctxt "#32001"
 msgid "This is a tool to provide features to a skin and requires skin integration."
-msgstr ""
+msgstr "Esta ferramenta disponibiliza recursos para serem utilizados num tema e necessita integração com esse tema."
 
 msgctxt "#32002"
 msgid "(Get a free API key on www.omdbapi.com)"
-msgstr ""
+msgstr "(Obtenha uma chave API gratuita em www.omdbapi.com)"
 
 msgctxt "#32003"
 msgid "Certification country"
-msgstr ""
+msgstr "País de certificação"
 
 msgctxt "#32019"
 msgid "No information found"
-msgstr ""
+msgstr "Não foi encontrada informação"
 
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
-msgstr ""
+msgstr "Chave API TheMovieDB inválida"
 
 msgctxt "#32004"
 msgid "Person"
-msgstr ""
+msgstr "Pessoa"
 
 msgctxt "#32005"
 msgid "Search for"
-msgstr ""
+msgstr "Procurar por"
 
 msgctxt "#32006"
 msgid "Age"
-msgstr ""
+msgstr "Idade"
 
 msgctxt "#32007"
 msgid "Place of birth"
-msgstr ""
+msgstr "Naturalidade"
 
 msgctxt "#32008"
 msgid "Facts"
-msgstr ""
+msgstr "Fatos"
 
 msgctxt "#32009"
 msgid "Similar"
-msgstr ""
+msgstr "Similar"
 
 msgctxt "#32010"
 msgid "Images"
-msgstr ""
+msgstr "Imagens"
 
 msgctxt "#32011"
 msgid "Premiered"
-msgstr ""
+msgstr "Estreou em"
 
 msgctxt "#32012"
 msgid "Retail"
-msgstr ""
+msgstr "Comercial"
 
 msgctxt "#32013"
 msgid "Budget"
-msgstr ""
+msgstr "Orçamento"
 
 msgctxt "#32014"
 msgid "Revenue"
-msgstr ""
+msgstr "Receita"
 
 msgctxt "#32015"
 msgid "Awards"
-msgstr ""
+msgstr "Prémios"
 
 msgctxt "#32016"
 msgid "Seasons"
-msgstr ""
+msgstr "Temporadas"
 
 msgctxt "#32017"
 msgid "Known for"
-msgstr ""
+msgstr "Conhecido por"
 
 msgctxt "#32018"
 msgid "Crew"
-msgstr ""
+msgstr "Pessoal"
 
 msgctxt "#32023"
 msgid "API key"
-msgstr ""
+msgstr "Chave API"
 
 msgctxt "#32020"
 msgid "Developer settings"
@@ -112,23 +115,23 @@ msgstr ""
 
 msgctxt "#32024"
 msgid "Default language"
-msgstr ""
+msgstr "Idioma padrão"
 
 msgctxt "#32025"
 msgid "items in your library"
-msgstr ""
+msgstr "Itens na sua coleção"
 
 msgctxt "#32026"
 msgid "Misc."
-msgstr ""
+msgstr "Outros"
 
 msgctxt "#32027"
 msgid "Hide person appearances in reality/talk/news shows"
-msgstr ""
+msgstr "Ocultar presença desta pessoa em reality shows, talk shows ou notícias"
 
 msgctxt "#32028"
 msgid "Hide person appearances in specials/documentaries/behind the scenes movies"
-msgstr ""
+msgstr "Ocultar presença desta pessoa em filmes especiais/documentários/atrás das cenas"
 
 msgctxt "#32029"
 msgid "Top rated movies"
@@ -140,7 +143,7 @@ msgstr ""
 
 msgctxt "#32031"
 msgid "Upcoming movies"
-msgstr ""
+msgstr "Próximos filmes"
 
 msgctxt "#32032"
 msgid "Popular movies"
@@ -164,7 +167,7 @@ msgstr ""
 
 msgctxt "#32037"
 msgid "Collection"
-msgstr ""
+msgstr "Coleção"
 
 msgctxt "#32039"
 msgid "Guest stars"
@@ -172,11 +175,11 @@ msgstr ""
 
 msgctxt "#32040"
 msgid "Season"
-msgstr ""
+msgstr "Temporada"
 
 msgctxt "#32038"
 msgid "Widgets"
-msgstr ""
+msgstr "Widgets"
 
 msgctxt "#32041"
 msgid "Hide items from similar movies if they are part of the collection"
@@ -184,7 +187,7 @@ msgstr ""
 
 msgctxt "#32042"
 msgid "Trending movies"
-msgstr ""
+msgstr "Filmes em voga"
 
 msgctxt "#32043"
 msgid "Trending shows"
@@ -208,7 +211,7 @@ msgstr ""
 
 msgctxt "#32048"
 msgid "Next episode"
-msgstr ""
+msgstr "Próximo episódio"
 
 msgctxt "#32049"
 msgid "Discover"

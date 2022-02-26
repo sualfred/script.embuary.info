@@ -5,8 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
+"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-06-08 09:37+0000\n"
+"PO-Revision-Date: 2022-02-26 23:09+0000\n"
 "Last-Translator: Christian Gade <gade@kodi.tv>\n"
 "Language-Team: Portuguese (Brazil) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-embuary-info/pt_br/>\n"
 "Language: pt_br\n"
@@ -14,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.6.2\n"
+"X-Generator: Weblate 4.11\n"
 
 msgctxt "#32000"
 msgid "Error"
@@ -26,83 +27,83 @@ msgstr "Esta é uma ferramenta para fornecer recursos a uma skin e requer integr
 
 msgctxt "#32002"
 msgid "(Get a free API key on www.omdbapi.com)"
-msgstr ""
+msgstr "(Consiga uma API key de graça em www.omdbapi.com)"
 
 msgctxt "#32003"
 msgid "Certification country"
-msgstr ""
+msgstr "País da classificação indicativa"
 
 msgctxt "#32019"
 msgid "No information found"
-msgstr ""
+msgstr "Nenhuma informação encontrada"
 
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
-msgstr ""
+msgstr "TheMovieDB API key inválida"
 
 msgctxt "#32004"
 msgid "Person"
-msgstr ""
+msgstr "Pessoa"
 
 msgctxt "#32005"
 msgid "Search for"
-msgstr ""
+msgstr "Procurar por"
 
 msgctxt "#32006"
 msgid "Age"
-msgstr ""
+msgstr "Idade"
 
 msgctxt "#32007"
 msgid "Place of birth"
-msgstr ""
+msgstr "Local do nascimento"
 
 msgctxt "#32008"
 msgid "Facts"
-msgstr ""
+msgstr "Fatos"
 
 msgctxt "#32009"
 msgid "Similar"
-msgstr ""
+msgstr "Semelhantes"
 
 msgctxt "#32010"
 msgid "Images"
-msgstr ""
+msgstr "Imagens"
 
 msgctxt "#32011"
 msgid "Premiered"
-msgstr ""
+msgstr "Estréia"
 
 msgctxt "#32012"
 msgid "Retail"
-msgstr ""
+msgstr "Comercial"
 
 msgctxt "#32013"
 msgid "Budget"
-msgstr ""
+msgstr "Orçamento"
 
 msgctxt "#32014"
 msgid "Revenue"
-msgstr ""
+msgstr "Receita"
 
 msgctxt "#32015"
 msgid "Awards"
-msgstr ""
+msgstr "Prêmios"
 
 msgctxt "#32016"
 msgid "Seasons"
-msgstr ""
+msgstr "Temporadas"
 
 msgctxt "#32017"
 msgid "Known for"
-msgstr ""
+msgstr "Conhecido por"
 
 msgctxt "#32018"
 msgid "Crew"
-msgstr ""
+msgstr "Equipe"
 
 msgctxt "#32023"
 msgid "API key"
-msgstr ""
+msgstr "Chave API"
 
 msgctxt "#32020"
 msgid "Developer settings"
@@ -114,83 +115,83 @@ msgstr ""
 
 msgctxt "#32024"
 msgid "Default language"
-msgstr ""
+msgstr "Idioma principal"
 
 msgctxt "#32025"
 msgid "items in your library"
-msgstr ""
+msgstr "itens na sua biblioteca"
 
 msgctxt "#32026"
 msgid "Misc."
-msgstr ""
+msgstr "Diversos"
 
 msgctxt "#32027"
 msgid "Hide person appearances in reality/talk/news shows"
-msgstr ""
+msgstr "Ocultar participação de pessoas em reality shows, talk shows e notícias"
 
 msgctxt "#32028"
 msgid "Hide person appearances in specials/documentaries/behind the scenes movies"
-msgstr ""
+msgstr "Ocultar participação de pessoas em especiais, documentários e making-of de filmes"
 
 msgctxt "#32029"
 msgid "Top rated movies"
-msgstr ""
+msgstr "Filmes mais bem avaliados"
 
 msgctxt "#32030"
 msgid "Now playing movies"
-msgstr ""
+msgstr "Filmes em reprodução"
 
 msgctxt "#32031"
 msgid "Upcoming movies"
-msgstr ""
+msgstr "Próximos filmes"
 
 msgctxt "#32032"
 msgid "Popular movies"
-msgstr ""
+msgstr "Filmes populares"
 
 msgctxt "#32033"
 msgid "Top rated TV shows"
-msgstr ""
+msgstr "Seriados mais bem avaliados"
 
 msgctxt "#32034"
 msgid "Popular TV shows"
-msgstr ""
+msgstr "Seriados populares"
 
 msgctxt "#32035"
 msgid "TV shows airing today"
-msgstr ""
+msgstr "Seriados com exibição hoje"
 
 msgctxt "#32036"
 msgid "TV shows airing in the next 7 days"
-msgstr ""
+msgstr "Seriados com exibição nos próximos 7 dias"
 
 msgctxt "#32037"
 msgid "Collection"
-msgstr ""
+msgstr "Coleção"
 
 msgctxt "#32039"
 msgid "Guest stars"
-msgstr ""
+msgstr "Participações especiais"
 
 msgctxt "#32040"
 msgid "Season"
-msgstr ""
+msgstr "Temporada"
 
 msgctxt "#32038"
 msgid "Widgets"
-msgstr ""
+msgstr "Widgets"
 
 msgctxt "#32041"
 msgid "Hide items from similar movies if they are part of the collection"
-msgstr ""
+msgstr "Ocultar itens em filmes semelhantes se eles fizerem parte da coleção"
 
 msgctxt "#32042"
 msgid "Trending movies"
-msgstr ""
+msgstr "Filmes em tendência"
 
 msgctxt "#32043"
 msgid "Trending shows"
-msgstr ""
+msgstr "Seriados em tendência"
 
 msgctxt "#32044"
 msgid "Hide upcoming items"
@@ -210,7 +211,7 @@ msgstr ""
 
 msgctxt "#32048"
 msgid "Next episode"
-msgstr ""
+msgstr "Próximo episódio"
 
 msgctxt "#32049"
 msgid "Discover"
