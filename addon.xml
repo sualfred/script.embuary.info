@@ -24,9 +24,7 @@
             <fanart>resources/fanart.jpg</fanart>
         </assets>
         <summary lang="de_DE">Embuary Info Script</summary>
-        <summary lang="de_DE">Embuary Info Script</summary>
         <summary lang="en_GB">Embuary Info Script</summary>
-        <description lang="de_DE">Helfer Script das Abfragen von The Movie DB informationen für Personen, Serien und Filme zu ermöglichen. Funktioniert am besten mit einer Skin Integration.</description>
         <description lang="de_DE">Helfer Script das Abfragen von The Movie DB informationen für Personen, Serien und Filme zu ermöglichen. Funktioniert am besten mit einer Skin Integration.</description>
         <description lang="en_GB">Helper script to provide The Movie DB informations for persons, shows and movies. Works best with a skin integration.</description>
     </extension>
