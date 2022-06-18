@@ -35,6 +35,7 @@ def tmdb_query(action,call=None,get=None,get2=None,get3=None,get4=None,params=No
 
     url = urljoin(API_URL ,action, call, get, get2, get3, get4)
     url = '{0}?{1}'.format(url, urlencode(urlargs))
+    #log(url, force=True)
 
     try:
         request = None
@@ -493,6 +494,40 @@ def tmdb_handle_season(item,tvshow_details,full_info=False):
     if full_info:
         tmdb_studios(list_item,tvshow_details, 'production')
         tmdb_studios(list_item,tvshow_details, 'network')
+        omdb_properties(list_item, imdbnumber)
+
+    return list_item
+
+
+def tmdb_handle_episode(item,tvshow_details,full_info=False):
+    backdrop = IMAGEPATH + tvshow_details['backdrop_path'] if tvshow_details['backdrop_path'] else ''
+    icon = IMAGEPATH + (item['poster_path'] if item['poster_path'] else tvshow_details.get('poster_path',''))
+    tvshow_label = tvshow_details['name'] or tvshow_details['original_name']
+
+    list_item = xbmcgui.ListItem(label=tvshow_label)
+    list_item.setInfo('video', {'title': item['name'],
+                                'tvshowtitle': tvshow_label,
+                                'premiered': item.get('air_date', ''),
+                                'episode': str(item.get('episode_number', '')),
+                                'season': str(item.get('season_number', '')),
+                                'plot': item.get('overview', ''),
+                                'genre': tmdb_join_items(tvshow_details.get('genres', '')),
+                                'rating': item.get('vote_average', tvshow_details.get('vote_average', '')),
+                                'votes': item.get('vote_count', tvshow_details.get('vote_count', '')),
+                                'mpaa': tmdb_get_cert(tvshow_details),
+                                'mediatype': 'episode'}
+                      )
+
+    list_item.setArt({'icon': 'DefaultVideo.png', 'thumb': icon, 'poster': icon, 'fanart': backdrop})
+    list_item.setProperty('TotalEpisodes', str(item.get('TotalEpisodes', '')))
+    list_item.setProperty('id', str(tvshow_details['id']))
+    list_item.setProperty('call', 'tv')
+    list_item.setProperty('call_season', str(item.get('season_number', '')))
+
+    if full_info:
+        tmdb_studios(list_item, tvshow_details, 'production')
+        tmdb_studios(list_item, tvshow_details, 'network')
+        imdbnumber = tvshow_details['external_ids']['imdb_id'] if tvshow_details.get('external_ids') else ''
         omdb_properties(list_item, imdbnumber)
 
     return list_item
