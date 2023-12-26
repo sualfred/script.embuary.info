@@ -18,7 +18,7 @@ OMDB_API_KEY = ADDON.getSettingString('omdb_api_key')
 
 def omdb_api(imdbnumber=None,title=None,year=None,content_type=None):
     if imdbnumber:
-        url = 'http://www.omdbapi.com/?apikey=%s&i=%s&plot=short&r=xml&tomatoes=true' % (OMDB_API_KEY, imdbnumber)
+        url = 'https://www.omdbapi.com/?apikey=%s&i=%s&plot=short&r=xml&tomatoes=true' % (OMDB_API_KEY, imdbnumber)
 
     elif title and year and content_type:
         # urllib has issues with some asian letters
@@ -27,7 +27,7 @@ def omdb_api(imdbnumber=None,title=None,year=None,content_type=None):
         except KeyError:
             return
 
-        url = 'http://www.omdbapi.com/?apikey=%s&t=%s&year=%s&plot=short&r=xml&tomatoes=true' % (OMDB_API_KEY, title, year)
+        url = 'https://www.omdbapi.com/?apikey=%s&t=%s&year=%s&plot=short&r=xml&tomatoes=true' % (OMDB_API_KEY, title, year)
 
     else:
         return
