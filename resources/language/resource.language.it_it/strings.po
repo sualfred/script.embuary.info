@@ -7,39 +7,42 @@ msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-02-26 21:32+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"PO-Revision-Date: 2023-05-10 03:38+0000\n"
+"Last-Translator: Massimo Pissarello <mapi68@gmail.com>\n"
 "Language-Team: Italian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-embuary-info/it_it/>\n"
 "Language: it_it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 4.15.2\n"
 
 msgctxt "Addon Summary"
 msgid "Embuary Info Script"
-msgstr ""
+msgstr "Info script per Embuary"
 
 msgctxt "Addon Description"
-msgid "Helper script to provide The Movie DB informations for persons, shows and movies. Works best with a skin integration."
-msgstr ""
+msgid ""
+"Helper script to provide The Movie DB informations for persons, shows and "
+"movies. Works best with a skin integration."
+msgstr "Script di supporto per fornire informazioni su The Movie DB per persone, serie e film. Funziona meglio con l'integrazione nella skin."
 
 msgctxt "#32000"
 msgid "Error"
 msgstr "Errore"
 
 msgctxt "#32001"
-msgid "This is a tool to provide features to a skin and requires skin integration."
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
 msgstr "Questo è uno strumento per fornire funzionalità a una skin e richiede l'integrazione nella skin."
 
 msgctxt "#32002"
 msgid "(Get a free API key on www.omdbapi.com)"
-msgstr "(Ottieni una chiave API gratuita presso www.omdbapi.com)"
+msgstr "(Ottieni una chiave API gratuita su www.omdbapi.com)"
 
 msgctxt "#32003"
 msgid "Certification country"
-msgstr "Nazione certificata"
+msgstr "Paese di certificazione"
 
 msgctxt "#32019"
 msgid "No information found"
@@ -47,7 +50,7 @@ msgstr "Nessuna informazione trovata"
 
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
-msgstr "Chiave API TheMovieDB invalida"
+msgstr "Chiave API TheMovieDB non valida"
 
 msgctxt "#32004"
 msgid "Person"
@@ -55,7 +58,7 @@ msgstr "Persona"
 
 msgctxt "#32005"
 msgid "Search for"
-msgstr "Cerca per"
+msgstr "Cerca"
 
 msgctxt "#32006"
 msgid "Age"
@@ -83,19 +86,19 @@ msgstr "Prima visione"
 
 msgctxt "#32012"
 msgid "Retail"
-msgstr "Pubblico"
+msgstr "Distribuzione"
 
 msgctxt "#32013"
 msgid "Budget"
-msgstr "Bilancio"
+msgstr "Budget"
 
 msgctxt "#32014"
 msgid "Revenue"
-msgstr "Incassi"
+msgstr "Incasso"
 
 msgctxt "#32015"
 msgid "Awards"
-msgstr "Riconoscimenti"
+msgstr "Premi"
 
 msgctxt "#32016"
 msgid "Seasons"
@@ -113,13 +116,15 @@ msgctxt "#32023"
 msgid "API key"
 msgstr "Chiave API"
 
+#: /resources/settings.xml
 msgctxt "#32020"
 msgid "Developer settings"
-msgstr ""
+msgstr "Impostazioni sviluppatore"
 
+#: /resources/settings.xml
 msgctxt "#32021"
 msgid "Enable caching (highly recommended - only turn off for debugging)"
-msgstr ""
+msgstr "Abilita la memorizzazione nella cache (altamente consigliato: disattiva solo per il debug)"
 
 msgctxt "#32024"
 msgid "Default language"
@@ -127,7 +132,7 @@ msgstr "Lingua predefinita"
 
 msgctxt "#32025"
 msgid "items in your library"
-msgstr "Oggetti libreria"
+msgstr "elementi nella tua libreria"
 
 msgctxt "#32026"
 msgid "Misc."
@@ -135,11 +140,12 @@ msgstr "Varie"
 
 msgctxt "#32027"
 msgid "Hide person appearances in reality/talk/news shows"
-msgstr "Nasconde le persone apparse in reality/talk show/notiziari"
+msgstr "Nascondi le apparizioni delle persone nei reality/talk/news show"
 
 msgctxt "#32028"
-msgid "Hide person appearances in specials/documentaries/behind the scenes movies"
-msgstr "Nasconde le persone apparse in speciali/documentari/dietro le quinte"
+msgid ""
+"Hide person appearances in specials/documentaries/behind the scenes movies"
+msgstr "Nascondi le apparizioni delle persone negli speciali/documentari/film dietro le quinte"
 
 msgctxt "#32029"
 msgid "Top rated movies"
@@ -159,27 +165,28 @@ msgstr "Film popolari"
 
 msgctxt "#32033"
 msgid "Top rated TV shows"
-msgstr "Programmi TV più votati"
+msgstr "Serie TV più votate"
 
 msgctxt "#32034"
 msgid "Popular TV shows"
-msgstr "Programmi TV popolari"
+msgstr "Serie TV popolari"
 
 msgctxt "#32035"
 msgid "TV shows airing today"
-msgstr "Programmi TV in onda oggi"
+msgstr "Serie TV in onda oggi"
 
 msgctxt "#32036"
 msgid "TV shows airing in the next 7 days"
-msgstr "Programmi TV in onda nei prossimi 7 giorni"
+msgstr "Serie TV in onda nei prossimi 7 giorni"
 
 msgctxt "#32037"
 msgid "Collection"
-msgstr "Collezione"
+msgstr "Saga"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32039"
 msgid "Guest stars"
-msgstr ""
+msgstr "Ospiti speciali"
 
 msgctxt "#32040"
 msgid "Season"
@@ -187,11 +194,11 @@ msgstr "Stagione"
 
 msgctxt "#32038"
 msgid "Widgets"
-msgstr "Widgets"
+msgstr "Widget"
 
 msgctxt "#32041"
 msgid "Hide items from similar movies if they are part of the collection"
-msgstr "Nascondi elementi da film simili se fanno parte della raccolta"
+msgstr "Nascondi oggetti di film simili se fanno parte della saga"
 
 msgctxt "#32042"
 msgid "Trending movies"
@@ -199,68 +206,80 @@ msgstr "Film di tendenza"
 
 msgctxt "#32043"
 msgid "Trending shows"
-msgstr "Programmi di tendenza"
+msgstr "Serie di tendenza"
 
 msgctxt "#32044"
 msgid "Hide upcoming items"
-msgstr "Nascondi elementi in arrivo"
+msgstr "Nascondi elementi imminenti"
 
 msgctxt "#32045"
 msgid "Allow items of the next [n] days"
-msgstr "Consenti gli elementi dei prossimi [n] giorni"
+msgstr "Consenti elementi dei prossimi [n] giorni"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32046"
 msgid "Watched episodes"
-msgstr ""
+msgstr "Episodi visti"
 
+#: /resources/settings.xml
 msgctxt "#32047"
 msgid "Install context menu addon"
-msgstr ""
+msgstr "Installa add-on menu contestuale"
 
 msgctxt "#32048"
 msgid "Next episode"
 msgstr "Prossimo episodio"
 
+#: /resources/lib/widgets.py
 msgctxt "#32049"
 msgid "Discover"
-msgstr ""
+msgstr "Scoperta"
 
 msgctxt "#32050"
 msgid "Discover movies"
 msgstr "Scopri film"
 
+#: /resources/lib/widgets.py
 msgctxt "#32051"
 msgid "Discover TV shows"
-msgstr ""
+msgstr "Scopri serie TV"
 
+#: /resources/lib/widgets.py
 msgctxt "#32052"
 msgid "Discover movies by year"
-msgstr ""
+msgstr "Scopri film per anno"
 
+#: /resources/lib/widgets.py
 msgctxt "#32053"
 msgid "Discover movies by genre"
-msgstr ""
+msgstr "Scopri film per genere"
 
+#: /resources/lib/widgets.py
 msgctxt "#32054"
 msgid "Discover TV shows by year"
-msgstr ""
+msgstr "Scopri serie TV per anno"
 
+#: /resources/lib/widgets.py
 msgctxt "#32055"
 msgid "Discover TV shows by genre"
-msgstr ""
+msgstr "Scopri serie TV per genere"
 
+#: /resources/lib/widgets.py
 msgctxt "#32056"
 msgid "Previous page"
-msgstr ""
+msgstr "Pagina precedente"
 
+#: /resources/lib/widgets.py
 msgctxt "#32057"
 msgid "Discover people"
-msgstr ""
+msgstr "Scopri persone"
 
+#: /resources/lib/widgets.py
 msgctxt "#32058"
 msgid "Next 7 days"
-msgstr ""
+msgstr "Prossimi 7 giorni"
 
+#: /resources/lib/widgets.py
 msgctxt "#32059"
 msgid "Next airing episodes of your TV show library"
-msgstr ""
+msgstr "Prossimi episodi in onda dalla tua libreria di serie TV"

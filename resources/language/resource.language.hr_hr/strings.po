@@ -7,260 +7,322 @@ msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-02-26 20:09+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"PO-Revision-Date: 2023-01-14 09:15+0000\n"
+"Last-Translator: gogogogi <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-embuary-info/hr_hr/>\n"
 "Language: hr_hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 4.15\n"
 
 msgctxt "Addon Summary"
 msgid "Embuary Info Script"
-msgstr ""
+msgstr "Embuary informacijska skripta"
 
 msgctxt "Addon Description"
-msgid "Helper script to provide The Movie DB informations for persons, shows and movies. Works best with a skin integration."
-msgstr ""
+msgid ""
+"Helper script to provide The Movie DB informations for persons, shows and "
+"movies. Works best with a skin integration."
+msgstr "Skripta pomoći za pružanje The Movie DB informacija za osobe, TV serije i filmove. Najbolje radi integrirana u presvlaku."
 
 msgctxt "#32000"
 msgid "Error"
 msgstr "Greška"
 
 msgctxt "#32001"
-msgid "This is a tool to provide features to a skin and requires skin integration."
-msgstr ""
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
+msgstr "Ovo je alat koji omogućuje značajke za presvlaku i zahtijeva integraciju s presvlakom."
 
+#: /resources/settings.xml
 msgctxt "#32002"
 msgid "(Get a free API key on www.omdbapi.com)"
-msgstr ""
+msgstr "(Nabavite besplatan API ključ na www.omdbapi.com)"
 
+#: /resources/settings.xml
 msgctxt "#32003"
 msgid "Certification country"
-msgstr ""
+msgstr "Zemlja certifikacije"
 
+#: /resources/lib/tmdb.py
 msgctxt "#32019"
 msgid "No information found"
-msgstr ""
+msgstr "Nema pronađenih informacija"
 
+#: /resources/lib/utils.py
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
-msgstr ""
+msgstr "Nevaljan TheMovieDB API ključ"
 
+#: /default.py
 msgctxt "#32004"
 msgid "Person"
-msgstr ""
+msgstr "Osoba"
 
+#: /default.py
 msgctxt "#32005"
 msgid "Search for"
-msgstr ""
+msgstr "Pretraži po"
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32006"
 msgid "Age"
-msgstr ""
+msgstr "Dobi"
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32007"
 msgid "Place of birth"
-msgstr ""
+msgstr "Mjestu rođenja"
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32008"
 msgid "Facts"
-msgstr ""
+msgstr "Činjenicama"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32009"
 msgid "Similar"
-msgstr ""
+msgstr "Sličnosti"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32010"
 msgid "Images"
-msgstr ""
+msgstr "Slike"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32011"
 msgid "Premiered"
-msgstr ""
+msgstr "Premijera"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32012"
 msgid "Retail"
-msgstr ""
+msgstr "Maloprodaja"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32013"
 msgid "Budget"
-msgstr ""
+msgstr "Proračun"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32014"
 msgid "Revenue"
-msgstr ""
+msgstr "Prihod"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32015"
 msgid "Awards"
-msgstr ""
+msgstr "Nagrade"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32016"
 msgid "Seasons"
-msgstr ""
+msgstr "Sezone"
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32017"
 msgid "Known for"
-msgstr ""
+msgstr "Poznato po"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32018"
 msgid "Crew"
-msgstr ""
+msgstr "Ekipa"
 
+#: /resources/settings.xml
 msgctxt "#32023"
 msgid "API key"
-msgstr ""
+msgstr "API ključ"
 
+#: /resources/settings.xml
 msgctxt "#32020"
 msgid "Developer settings"
-msgstr ""
+msgstr "Razvijateljske postavke"
 
+#: /resources/settings.xml
 msgctxt "#32021"
 msgid "Enable caching (highly recommended - only turn off for debugging)"
-msgstr ""
+msgstr "Omogući predmemoriju (visokopreporučljivo - isključi samo pri otklanjanju grešaka)"
 
+#: /resources/settings.xml
 msgctxt "#32024"
 msgid "Default language"
-msgstr ""
+msgstr "Zadani jezik"
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32025"
 msgid "items in your library"
-msgstr ""
+msgstr "stavke u vašoj videoteci"
 
+#: /resources/settings.xml
 msgctxt "#32026"
 msgid "Misc."
-msgstr ""
+msgstr "Ostalo"
 
+#: /resources/settings.xml
 msgctxt "#32027"
 msgid "Hide person appearances in reality/talk/news shows"
-msgstr ""
+msgstr "Sakrij pojavljivanje osoba u realitijima/govornim emisijama/novostima"
 
+#: /resources/settings.xml
 msgctxt "#32028"
-msgid "Hide person appearances in specials/documentaries/behind the scenes movies"
-msgstr ""
+msgid ""
+"Hide person appearances in specials/documentaries/behind the scenes movies"
+msgstr "Sakrij pojavljivanje osoba u posebnim/dokumentarcima/iza scena filmova emisijama"
 
+#: /resources/lib/listing.py
 msgctxt "#32029"
 msgid "Top rated movies"
-msgstr ""
+msgstr "Najbolje ocijenjeni filmovi"
 
+#: /resources/lib/listing.py
 msgctxt "#32030"
 msgid "Now playing movies"
-msgstr ""
+msgstr "Trenutno gledani filmovi"
 
+#: /resources/lib/listing.py
 msgctxt "#32031"
 msgid "Upcoming movies"
-msgstr ""
+msgstr "Nadolazeći filmovi"
 
+#: /resources/lib/listing.py
 msgctxt "#32032"
 msgid "Popular movies"
-msgstr ""
+msgstr "Popularni filmovi"
 
+#: /resources/lib/listing.py
 msgctxt "#32033"
 msgid "Top rated TV shows"
-msgstr ""
+msgstr "Najbolje ocijenjene TV serije"
 
+#: /resources/lib/listing.py
 msgctxt "#32034"
 msgid "Popular TV shows"
-msgstr ""
+msgstr "Popularne TV serije"
 
+#: /resources/lib/listing.py
 msgctxt "#32035"
 msgid "TV shows airing today"
-msgstr ""
+msgstr "Večeras emitirane TV serije"
 
+#: /resources/lib/listing.py
 msgctxt "#32036"
 msgid "TV shows airing in the next 7 days"
-msgstr ""
+msgstr "TV serije emitirane u sljedećih 7 dana"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32037"
 msgid "Collection"
-msgstr ""
+msgstr "Kolekcija"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32039"
 msgid "Guest stars"
-msgstr ""
+msgstr "Gostujuće zvijezde"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32040"
 msgid "Season"
-msgstr ""
+msgstr "Sezona"
 
+#: /plugin.py
 msgctxt "#32038"
 msgid "Widgets"
-msgstr ""
+msgstr "Widgeti"
 
+#: /resources/settings.xml
 msgctxt "#32041"
 msgid "Hide items from similar movies if they are part of the collection"
-msgstr ""
+msgstr "Sakrij stavke iz sličnih filmova ako su dio kolekcije"
 
+#: /resources/lib/widgets.py
 msgctxt "#32042"
 msgid "Trending movies"
-msgstr ""
+msgstr "Filmovi u trendu"
 
+#: /resources/lib/widgets.py
 msgctxt "#32043"
 msgid "Trending shows"
-msgstr ""
+msgstr "TV serije u trendu"
 
+#: /resources/settings.xml
 msgctxt "#32044"
 msgid "Hide upcoming items"
-msgstr ""
+msgstr "Sakrij nadolazeće stake"
 
+#: /resources/settings.xml
 msgctxt "#32045"
 msgid "Allow items of the next [n] days"
-msgstr ""
+msgstr "Dopusti stavke sljedećih [n] dana"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32046"
 msgid "Watched episodes"
-msgstr ""
+msgstr "Odgledane epizode"
 
+#: /resources/settings.xml
 msgctxt "#32047"
 msgid "Install context menu addon"
-msgstr ""
+msgstr "Instaliraj dodatak sadržajnog izbornika"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32048"
 msgid "Next episode"
-msgstr ""
+msgstr "Sljedeća epizoda"
 
+#: /resources/lib/widgets.py
 msgctxt "#32049"
 msgid "Discover"
-msgstr ""
+msgstr "Otkrij"
 
+#: /resources/lib/widgets.py
 msgctxt "#32050"
 msgid "Discover movies"
-msgstr ""
+msgstr "Otkrij filmove"
 
+#: /resources/lib/widgets.py
 msgctxt "#32051"
 msgid "Discover TV shows"
-msgstr ""
+msgstr "Otkrij TV serije"
 
+#: /resources/lib/widgets.py
 msgctxt "#32052"
 msgid "Discover movies by year"
-msgstr ""
+msgstr "Otkrij filmove po godini"
 
+#: /resources/lib/widgets.py
 msgctxt "#32053"
 msgid "Discover movies by genre"
-msgstr ""
+msgstr "Otkrij filmove po žanru"
 
+#: /resources/lib/widgets.py
 msgctxt "#32054"
 msgid "Discover TV shows by year"
-msgstr ""
+msgstr "Otkrij TV serije po godini"
 
+#: /resources/lib/widgets.py
 msgctxt "#32055"
 msgid "Discover TV shows by genre"
-msgstr ""
+msgstr "Otkrij TV serije po žanru"
 
+#: /resources/lib/widgets.py
 msgctxt "#32056"
 msgid "Previous page"
-msgstr ""
+msgstr "Prijašnja stranica"
 
+#: /resources/lib/widgets.py
 msgctxt "#32057"
 msgid "Discover people"
-msgstr ""
+msgstr "Otkrij ljude"
 
+#: /resources/lib/widgets.py
 msgctxt "#32058"
 msgid "Next 7 days"
-msgstr ""
+msgstr "Sljedećih 7 dana"
 
+#: /resources/lib/widgets.py
 msgctxt "#32059"
 msgid "Next airing episodes of your TV show library"
-msgstr ""
+msgstr "Sljedeća emitirana epizoda vaše videoteke TV serije"
