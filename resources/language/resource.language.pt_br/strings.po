@@ -7,31 +7,36 @@ msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-02-26 23:09+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"PO-Revision-Date: 2024-05-13 23:04+0000\n"
+"Last-Translator: Havok Dan <havokdan@yahoo.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-embuary-info/pt_br/>\n"
 "Language: pt_br\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 5.5.4\n"
 
 msgctxt "Addon Summary"
 msgid "Embuary Info Script"
-msgstr ""
+msgstr "Script de Informações do Embuary"
 
 msgctxt "Addon Description"
-msgid "Helper script to provide The Movie DB informations for persons, shows and movies. Works best with a skin integration."
-msgstr ""
+msgid ""
+"Helper script to provide The Movie DB informations for persons, shows and "
+"movies. Works best with a skin integration."
+msgstr "Script auxiliar para fornecer informações do The Movie DB para pessoas, programas e filmes. Funciona melhor com integração da skin."
 
 msgctxt "#32000"
 msgid "Error"
 msgstr "Erro"
 
 msgctxt "#32001"
-msgid "This is a tool to provide features to a skin and requires skin integration."
-msgstr "Esta é uma ferramenta para fornecer recursos a uma skin e requer integração com a skin."
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
+msgstr ""
+"Esta é uma ferramenta para fornecer recursos a uma skin e requer integração "
+"com a skin."
 
 msgctxt "#32002"
 msgid "(Get a free API key on www.omdbapi.com)"
@@ -113,13 +118,15 @@ msgctxt "#32023"
 msgid "API key"
 msgstr "Chave API"
 
+#: /resources/settings.xml
 msgctxt "#32020"
 msgid "Developer settings"
-msgstr ""
+msgstr "Configurações do desenvolvedor"
 
+#: /resources/settings.xml
 msgctxt "#32021"
 msgid "Enable caching (highly recommended - only turn off for debugging)"
-msgstr ""
+msgstr "Habilite o cache (altamente recomendado - desligue apenas para depuração)"
 
 msgctxt "#32024"
 msgid "Default language"
@@ -135,11 +142,15 @@ msgstr "Diversos"
 
 msgctxt "#32027"
 msgid "Hide person appearances in reality/talk/news shows"
-msgstr "Ocultar participação de pessoas em reality shows, talk shows e notícias"
+msgstr ""
+"Ocultar participação de pessoas em reality shows, talk shows e notícias"
 
 msgctxt "#32028"
-msgid "Hide person appearances in specials/documentaries/behind the scenes movies"
-msgstr "Ocultar participação de pessoas em especiais, documentários e making-of de filmes"
+msgid ""
+"Hide person appearances in specials/documentaries/behind the scenes movies"
+msgstr ""
+"Ocultar participação de pessoas em especiais, documentários e making-of de "
+"filmes"
 
 msgctxt "#32029"
 msgid "Top rated movies"
@@ -201,66 +212,81 @@ msgctxt "#32043"
 msgid "Trending shows"
 msgstr "Seriados em tendência"
 
+#: /resources/settings.xml
 msgctxt "#32044"
 msgid "Hide upcoming items"
-msgstr ""
+msgstr "Ocultar itens futuros"
 
+#: /resources/settings.xml
 msgctxt "#32045"
 msgid "Allow items of the next [n] days"
-msgstr ""
+msgstr "Permitir itens dos próximos [n] dias"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32046"
 msgid "Watched episodes"
-msgstr ""
+msgstr "Episódios assistidos"
 
+#: /resources/settings.xml
 msgctxt "#32047"
 msgid "Install context menu addon"
-msgstr ""
+msgstr "Instale o addon do menu de contexto"
 
 msgctxt "#32048"
 msgid "Next episode"
 msgstr "Próximo episódio"
 
+#: /resources/lib/widgets.py
 msgctxt "#32049"
 msgid "Discover"
-msgstr ""
+msgstr "Descobrir"
 
+#: /resources/lib/widgets.py
 msgctxt "#32050"
 msgid "Discover movies"
-msgstr ""
+msgstr "Descobrir filmes"
 
+#: /resources/lib/widgets.py
 msgctxt "#32051"
 msgid "Discover TV shows"
-msgstr ""
+msgstr "Descobrir Séries de TV"
 
+#: /resources/lib/widgets.py
 msgctxt "#32052"
 msgid "Discover movies by year"
-msgstr ""
+msgstr "Descobrir filmes pelo ano"
 
+#: /resources/lib/widgets.py
 msgctxt "#32053"
 msgid "Discover movies by genre"
-msgstr ""
+msgstr "Descobrir filmes pelo gênero"
 
+#: /resources/lib/widgets.py
 msgctxt "#32054"
 msgid "Discover TV shows by year"
-msgstr ""
+msgstr "Descobrir Séries de TV pelo ano"
 
+#: /resources/lib/widgets.py
 msgctxt "#32055"
 msgid "Discover TV shows by genre"
-msgstr ""
+msgstr "Descobrir Séries de TV pelo gênero"
 
+#: /resources/lib/widgets.py
 msgctxt "#32056"
 msgid "Previous page"
-msgstr ""
+msgstr "Página anterior"
 
+#: /resources/lib/widgets.py
 msgctxt "#32057"
 msgid "Discover people"
-msgstr ""
+msgstr "Descubra pessoas"
 
+#: /resources/lib/widgets.py
 msgctxt "#32058"
 msgid "Next 7 days"
-msgstr ""
+msgstr "Próximos 7 dias"
 
+#: /resources/lib/widgets.py
 msgctxt "#32059"
 msgid "Next airing episodes of your TV show library"
-msgstr ""
+msgstr "Próximos episódios para exibição da sua biblioteca de programas de TV"

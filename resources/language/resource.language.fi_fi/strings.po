@@ -7,39 +7,42 @@ msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-01-18 09:13+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"PO-Revision-Date: 2024-04-22 15:04+0000\n"
+"Last-Translator: Oskari Lavinto <olavinto@protonmail.com>\n"
 "Language-Team: Finnish <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-embuary-info/fi_fi/>\n"
 "Language: fi_fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 5.4.3\n"
 
 msgctxt "Addon Summary"
 msgid "Embuary Info Script"
-msgstr ""
+msgstr "Embuary Info -komentosarja"
 
 msgctxt "Addon Description"
-msgid "Helper script to provide The Movie DB informations for persons, shows and movies. Works best with a skin integration."
-msgstr ""
+msgid ""
+"Helper script to provide The Movie DB informations for persons, shows and "
+"movies. Works best with a skin integration."
+msgstr "Tukilisäosa henkilöiden, sarjojen ja elokuvien tietojen näyttöön The Movie Database -tietokannasta. Toimii parhaiten, kun käytettävä ulkoasu tukee lisäosaa."
 
 msgctxt "#32000"
 msgid "Error"
 msgstr "Virhe"
 
 msgctxt "#32001"
-msgid "This is a tool to provide features to a skin and requires skin integration."
-msgstr "Tämä on työkalu, joka tarjoaa ominaisuuksia ulkoasulle ja vaatii ulkoasun integrointia."
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
+msgstr "Tämä on työkalu, joka tarjoaa ulkoasujen käyttöön lisäominaisuuksia ja se vaatii ulkoasukohtaisen integroinnin."
 
 msgctxt "#32002"
 msgid "(Get a free API key on www.omdbapi.com)"
-msgstr "(Hanki ilmainen API avain osoitteesta www.omdbapi.com)"
+msgstr "(hanki ilmainen API-avain osoitteesta www.omdbapi.com)"
 
 msgctxt "#32003"
 msgid "Certification country"
-msgstr "Sertifiointimaa"
+msgstr "Sisältöluokituksen maa"
 
 msgctxt "#32019"
 msgid "No information found"
@@ -47,7 +50,7 @@ msgstr "Tietoja ei löytynyt"
 
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
-msgstr "Virheellinen TheMovieDB API avain"
+msgstr "Virheellinen The Movie Database API-avain"
 
 msgctxt "#32004"
 msgid "Person"
@@ -55,7 +58,7 @@ msgstr "Henkilö"
 
 msgctxt "#32005"
 msgid "Search for"
-msgstr "Etsi"
+msgstr "Etsi kohdetta"
 
 msgctxt "#32006"
 msgid "Age"
@@ -63,7 +66,7 @@ msgstr "Ikä"
 
 msgctxt "#32007"
 msgid "Place of birth"
-msgstr "Synnyinpaikka"
+msgstr "Syntymäpaikka"
 
 msgctxt "#32008"
 msgid "Facts"
@@ -71,19 +74,20 @@ msgstr "Faktoja"
 
 msgctxt "#32009"
 msgid "Similar"
-msgstr "Samanlaisia"
+msgstr "Samankaltaisia"
 
 msgctxt "#32010"
 msgid "Images"
-msgstr "Kuvat"
+msgstr "Kuvia"
 
 msgctxt "#32011"
 msgid "Premiered"
 msgstr "Ensiesitys"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32012"
 msgid "Retail"
-msgstr ""
+msgstr "Jälleenmyynti"
 
 msgctxt "#32013"
 msgid "Budget"
@@ -91,7 +95,7 @@ msgstr "Budjetti"
 
 msgctxt "#32014"
 msgid "Revenue"
-msgstr "Tulot"
+msgstr "Tuotto"
 
 msgctxt "#32015"
 msgid "Awards"
@@ -111,7 +115,7 @@ msgstr "Henkilöstö"
 
 msgctxt "#32023"
 msgid "API key"
-msgstr "API avain"
+msgstr "API-avain"
 
 msgctxt "#32020"
 msgid "Developer settings"
@@ -119,7 +123,7 @@ msgstr "Kehittäjäasetukset"
 
 msgctxt "#32021"
 msgid "Enable caching (highly recommended - only turn off for debugging)"
-msgstr "Ota välimuisti käyttöön (erittäin suositeltavaa - poista se käytöstä vain virheenkorjausta varten)"
+msgstr "Käytä välimuistia (erittäin suositeltavaa - poista käytöstä vain vianselvitystä varten)"
 
 msgctxt "#32024"
 msgid "Default language"
@@ -127,7 +131,7 @@ msgstr "Oletuskieli"
 
 msgctxt "#32025"
 msgid "items in your library"
-msgstr "kirjastossasi olevia kohteita"
+msgstr "kohdetta kirjastossasi"
 
 msgctxt "#32026"
 msgid "Misc."
@@ -135,43 +139,44 @@ msgstr "Sekalaiset"
 
 msgctxt "#32027"
 msgid "Hide person appearances in reality/talk/news shows"
-msgstr "Piilota henkilön esiintymiset reality-, keskustelu- tai uutisohjelmissa"
+msgstr "Piilota esiintymiset tosi-tv-, keskustelu- tai uutisohjelmissa"
 
 msgctxt "#32028"
-msgid "Hide person appearances in specials/documentaries/behind the scenes movies"
-msgstr "Piilota henkilön esiintymiset spesiaaleissa/dokumentteissa/kulissien takana olevissa elokuvissa"
+msgid ""
+"Hide person appearances in specials/documentaries/behind the scenes movies"
+msgstr "Piilota esiintymiset erikoisjaksoissa/dokumenteissa/kulissien takana"
 
 msgctxt "#32029"
 msgid "Top rated movies"
-msgstr "Suosituimmat elokuvat"
+msgstr "Parhaiten arvioidut elokuvat"
 
 msgctxt "#32030"
 msgid "Now playing movies"
-msgstr "Tällä hetkellä esitettäviä elokuvia"
+msgstr "Esityksessä olevat elokuvat"
 
 msgctxt "#32031"
 msgid "Upcoming movies"
-msgstr "Tulevat elokuvat"
+msgstr "Tulossa olevat elokuvat"
 
 msgctxt "#32032"
 msgid "Popular movies"
-msgstr "Suosittuja elokuvia"
+msgstr "Suositut elokuvat"
 
 msgctxt "#32033"
 msgid "Top rated TV shows"
-msgstr "Suosituimmat TV-sarjat"
+msgstr "Parhaiten arvioidut sarjat"
 
 msgctxt "#32034"
 msgid "Popular TV shows"
-msgstr "Suosittuja TV-ohjelmia"
+msgstr "Suositut sarjat"
 
 msgctxt "#32035"
 msgid "TV shows airing today"
-msgstr "Tänään esitettäviä TV-ohjelmia"
+msgstr "Tänään esitettävät sarjat"
 
 msgctxt "#32036"
 msgid "TV shows airing in the next 7 days"
-msgstr "Seuraavan 7 päivän aikana esitettäviä TV-ohjelmia"
+msgstr "Seuraavien 7 päivän kuluessa esitettävät sarjat"
 
 msgctxt "#32037"
 msgid "Collection"
@@ -179,7 +184,7 @@ msgstr "Kokoelma"
 
 msgctxt "#32039"
 msgid "Guest stars"
-msgstr "Vierastähdet"
+msgstr "Vierailevat pääosat"
 
 msgctxt "#32040"
 msgid "Season"
@@ -191,23 +196,23 @@ msgstr "Widgetit"
 
 msgctxt "#32041"
 msgid "Hide items from similar movies if they are part of the collection"
-msgstr "Piilota kohteet vastaavista elokuvista, jos ne ovat osa kokoelmaa"
+msgstr "Piilota samankaltaisten elokuvien kohteet, jos ne ovat osa kokoelmaa"
 
 msgctxt "#32042"
 msgid "Trending movies"
-msgstr "Suositut elokuvat"
+msgstr "Nousussa olevat elokuvat"
 
 msgctxt "#32043"
 msgid "Trending shows"
-msgstr "Nousussa olevat ohjelmat"
+msgstr "Nousussa olevat sarjat"
 
 msgctxt "#32044"
 msgid "Hide upcoming items"
-msgstr "Piilota tulevat nimikkeet"
+msgstr "Piilota tulossa olevat kohteet"
 
 msgctxt "#32045"
 msgid "Allow items of the next [n] days"
-msgstr "Salli nimikkeet seuraavalta [n] päivältä"
+msgstr "Salli kohteet seuraavien [n] päivän ajalta"
 
 msgctxt "#32046"
 msgid "Watched episodes"
@@ -215,7 +220,7 @@ msgstr "Katsotut jaksot"
 
 msgctxt "#32047"
 msgid "Install context menu addon"
-msgstr "Asenna sisältövalikko lisäosa"
+msgstr "Asenna sisältövalikon lisäosa"
 
 msgctxt "#32048"
 msgid "Next episode"
@@ -231,23 +236,23 @@ msgstr "Löydä elokuvia"
 
 msgctxt "#32051"
 msgid "Discover TV shows"
-msgstr "Löydä TV-ohjelmia"
+msgstr "Löydä sarjoja"
 
 msgctxt "#32052"
 msgid "Discover movies by year"
-msgstr "Tutustu elokuviin vuoden mukaan"
+msgstr "Löydä elokuvia vuoden perusteella"
 
 msgctxt "#32053"
 msgid "Discover movies by genre"
-msgstr "Tutustu elokuviin tyylilajin mukaan"
+msgstr "Löydä elokuvia lajityypin perusteella"
 
 msgctxt "#32054"
 msgid "Discover TV shows by year"
-msgstr "Tutustu TV-ohjelmiin vuoden mukaan"
+msgstr "Löydä sarjoja vuoden perusteella"
 
 msgctxt "#32055"
 msgid "Discover TV shows by genre"
-msgstr "Tutustu TV-ohjelmiin tyylilajin mukaan"
+msgstr "Löydä sarjoja lajityypin perusteella"
 
 msgctxt "#32056"
 msgid "Previous page"
@@ -263,4 +268,4 @@ msgstr "Seuraavat 7 päivää"
 
 msgctxt "#32059"
 msgid "Next airing episodes of your TV show library"
-msgstr "TV-ohjelmakirjastosi seuraavat jaksot"
+msgstr "Sarjakirjastosi seuraavaksi esitettävät jaksot"

@@ -7,260 +7,322 @@ msgstr ""
 "Project-Id-Version: Embuary Helper\n"
 "Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-02-26 21:11+0000\n"
-"Last-Translator: Christian Gade <gade@kodi.tv>\n"
+"PO-Revision-Date: 2026-07-10 05:08+0000\n"
+"Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-embuary-info/cs_cz/>\n"
 "Language: cs_cz\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 2026.7\n"
 
 msgctxt "Addon Summary"
 msgid "Embuary Info Script"
-msgstr ""
+msgstr "Skript Embuary Info"
 
 msgctxt "Addon Description"
-msgid "Helper script to provide The Movie DB informations for persons, shows and movies. Works best with a skin integration."
-msgstr ""
+msgid ""
+"Helper script to provide The Movie DB informations for persons, shows and "
+"movies. Works best with a skin integration."
+msgstr "Pomocný skript poskytující informace z TMDb o osobách, seriálech a filmech. Nejlépe funguje s integrací ve vzhledu."
 
 msgctxt "#32000"
 msgid "Error"
 msgstr "Chyba"
 
 msgctxt "#32001"
-msgid "This is a tool to provide features to a skin and requires skin integration."
-msgstr ""
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
+msgstr "Tento nástroj poskytuje funkce pro vzhled a vyžaduje integraci ve vzhledu."
 
+#: /resources/settings.xml
 msgctxt "#32002"
 msgid "(Get a free API key on www.omdbapi.com)"
-msgstr ""
+msgstr "(Bezplatný klíč API získáte na www.omdbapi.com)"
 
+#: /resources/settings.xml
 msgctxt "#32003"
 msgid "Certification country"
-msgstr ""
+msgstr "Země certifikace"
 
+#: /resources/lib/tmdb.py
 msgctxt "#32019"
 msgid "No information found"
-msgstr ""
+msgstr "Nebyly nalezeny žádné informace"
 
+#: /resources/lib/utils.py
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
-msgstr ""
+msgstr "Neplatný klíč API TMDb"
 
+#: /default.py
 msgctxt "#32004"
 msgid "Person"
-msgstr ""
+msgstr "Osoba"
 
+#: /default.py
 msgctxt "#32005"
 msgid "Search for"
-msgstr ""
+msgstr "Hledat"
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32006"
 msgid "Age"
-msgstr ""
+msgstr "Věk"
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32007"
 msgid "Place of birth"
-msgstr ""
+msgstr "Místo narození"
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32008"
 msgid "Facts"
-msgstr ""
+msgstr "Fakta"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32009"
 msgid "Similar"
-msgstr ""
+msgstr "Podobné"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32010"
 msgid "Images"
-msgstr ""
+msgstr "Obrázky"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32011"
 msgid "Premiered"
-msgstr ""
+msgstr "Premiéra"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32012"
 msgid "Retail"
-msgstr ""
+msgstr "Vydání"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32013"
 msgid "Budget"
-msgstr ""
+msgstr "Rozpočet"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32014"
 msgid "Revenue"
-msgstr ""
+msgstr "Tržby"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32015"
 msgid "Awards"
-msgstr ""
+msgstr "Ocenění"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32016"
 msgid "Seasons"
-msgstr ""
+msgstr "Řady"
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32017"
 msgid "Known for"
-msgstr ""
+msgstr "Známé z"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32018"
 msgid "Crew"
-msgstr ""
+msgstr "Štáb"
 
+#: /resources/settings.xml
 msgctxt "#32023"
 msgid "API key"
-msgstr ""
+msgstr "Klíč API"
 
+#: /resources/settings.xml
 msgctxt "#32020"
 msgid "Developer settings"
-msgstr ""
+msgstr "Nastavení pro vývojáře"
 
+#: /resources/settings.xml
 msgctxt "#32021"
 msgid "Enable caching (highly recommended - only turn off for debugging)"
-msgstr ""
+msgstr "Povolit ukládání do mezipaměti (důrazně doporučeno - vypínejte pouze kvůli ladění)"
 
+#: /resources/settings.xml
 msgctxt "#32024"
 msgid "Default language"
-msgstr ""
+msgstr "Výchozí jazyk"
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32025"
 msgid "items in your library"
-msgstr ""
+msgstr "položek ve vaší knihovně"
 
+#: /resources/settings.xml
 msgctxt "#32026"
 msgid "Misc."
-msgstr ""
+msgstr "Různé"
 
+#: /resources/settings.xml
 msgctxt "#32027"
 msgid "Hide person appearances in reality/talk/news shows"
-msgstr ""
+msgstr "Skrýt účinkování osob v reality show, talk show a zpravodajských pořadech"
 
+#: /resources/settings.xml
 msgctxt "#32028"
-msgid "Hide person appearances in specials/documentaries/behind the scenes movies"
-msgstr ""
+msgid ""
+"Hide person appearances in specials/documentaries/behind the scenes movies"
+msgstr "Skrýt účinkování osob ve speciálech, dokumentech a filmech ze zákulisí"
 
+#: /resources/lib/listing.py
 msgctxt "#32029"
 msgid "Top rated movies"
-msgstr ""
+msgstr "Nejlépe hodnocené filmy"
 
+#: /resources/lib/listing.py
 msgctxt "#32030"
 msgid "Now playing movies"
-msgstr ""
+msgstr "Filmy právě v kinech"
 
+#: /resources/lib/listing.py
 msgctxt "#32031"
 msgid "Upcoming movies"
-msgstr ""
+msgstr "Připravované filmy"
 
+#: /resources/lib/listing.py
 msgctxt "#32032"
 msgid "Popular movies"
-msgstr ""
+msgstr "Populární filmy"
 
+#: /resources/lib/listing.py
 msgctxt "#32033"
 msgid "Top rated TV shows"
-msgstr ""
+msgstr "Nejlépe hodnocené seriály"
 
+#: /resources/lib/listing.py
 msgctxt "#32034"
 msgid "Popular TV shows"
-msgstr ""
+msgstr "Populární seriály"
 
+#: /resources/lib/listing.py
 msgctxt "#32035"
 msgid "TV shows airing today"
-msgstr ""
+msgstr "Seriály vysílané dnes"
 
+#: /resources/lib/listing.py
 msgctxt "#32036"
 msgid "TV shows airing in the next 7 days"
-msgstr ""
+msgstr "Seriály vysílané v příštích sedmi dnech"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32037"
 msgid "Collection"
-msgstr ""
+msgstr "Sbírka"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32039"
 msgid "Guest stars"
-msgstr ""
+msgstr "Hostující herci"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32040"
 msgid "Season"
-msgstr ""
+msgstr "Řada"
 
+#: /plugin.py
 msgctxt "#32038"
 msgid "Widgets"
-msgstr ""
+msgstr "Widgety"
 
+#: /resources/settings.xml
 msgctxt "#32041"
 msgid "Hide items from similar movies if they are part of the collection"
-msgstr ""
+msgstr "Skrýt u podobných filmů položky, které jsou součástí sbírky"
 
+#: /resources/lib/widgets.py
 msgctxt "#32042"
 msgid "Trending movies"
-msgstr ""
+msgstr "Aktuálně populární filmy"
 
+#: /resources/lib/widgets.py
 msgctxt "#32043"
 msgid "Trending shows"
-msgstr ""
+msgstr "Aktuálně populární seriály"
 
+#: /resources/settings.xml
 msgctxt "#32044"
 msgid "Hide upcoming items"
-msgstr ""
+msgstr "Skrýt připravované položky"
 
+#: /resources/settings.xml
 msgctxt "#32045"
 msgid "Allow items of the next [n] days"
-msgstr ""
+msgstr "Povolit položky z příštích [n] dnů"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32046"
 msgid "Watched episodes"
-msgstr ""
+msgstr "Zhlédnuté epizody"
 
+#: /resources/settings.xml
 msgctxt "#32047"
 msgid "Install context menu addon"
-msgstr ""
+msgstr "Nainstalovat doplněk kontextové nabídky"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32048"
 msgid "Next episode"
-msgstr ""
+msgstr "Další epizoda"
 
+#: /resources/lib/widgets.py
 msgctxt "#32049"
 msgid "Discover"
-msgstr ""
+msgstr "Objevovat"
 
+#: /resources/lib/widgets.py
 msgctxt "#32050"
 msgid "Discover movies"
-msgstr ""
+msgstr "Objevovat filmy"
 
+#: /resources/lib/widgets.py
 msgctxt "#32051"
 msgid "Discover TV shows"
-msgstr ""
+msgstr "Objevovat seriály"
 
+#: /resources/lib/widgets.py
 msgctxt "#32052"
 msgid "Discover movies by year"
-msgstr ""
+msgstr "Objevovat filmy podle roku"
 
+#: /resources/lib/widgets.py
 msgctxt "#32053"
 msgid "Discover movies by genre"
-msgstr ""
+msgstr "Objevovat filmy podle žánru"
 
+#: /resources/lib/widgets.py
 msgctxt "#32054"
 msgid "Discover TV shows by year"
-msgstr ""
+msgstr "Objevovat seriály podle roku"
 
+#: /resources/lib/widgets.py
 msgctxt "#32055"
 msgid "Discover TV shows by genre"
-msgstr ""
+msgstr "Objevovat seriály podle žánru"
 
+#: /resources/lib/widgets.py
 msgctxt "#32056"
 msgid "Previous page"
-msgstr ""
+msgstr "Předchozí stránka"
 
+#: /resources/lib/widgets.py
 msgctxt "#32057"
 msgid "Discover people"
-msgstr ""
+msgstr "Objevovat osoby"
 
+#: /resources/lib/widgets.py
 msgctxt "#32058"
 msgid "Next 7 days"
-msgstr ""
+msgstr "Příštích sedm dní"
 
+#: /resources/lib/widgets.py
 msgctxt "#32059"
 msgid "Next airing episodes of your TV show library"
-msgstr ""
+msgstr "Další vysílané epizody seriálů ve vaší knihovně"

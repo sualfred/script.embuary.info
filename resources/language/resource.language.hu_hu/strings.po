@@ -9,7 +9,8 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2022-02-26 21:32+0000\n"
 "Last-Translator: Christian Gade <gade@kodi.tv>\n"
-"Language-Team: Hungarian <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-embuary-info/hu_hu/>\n"
+"Language-Team: Hungarian <https://kodi.weblate.cloud/projects/kodi-add-ons-"
+"scripts/script-embuary-info/hu_hu/>\n"
 "Language: hu_hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +23,9 @@ msgid "Embuary Info Script"
 msgstr ""
 
 msgctxt "Addon Description"
-msgid "Helper script to provide The Movie DB informations for persons, shows and movies. Works best with a skin integration."
+msgid ""
+"Helper script to provide The Movie DB informations for persons, shows and "
+"movies. Works best with a skin integration."
 msgstr ""
 
 msgctxt "#32000"
@@ -30,8 +33,11 @@ msgid "Error"
 msgstr "Hiba"
 
 msgctxt "#32001"
-msgid "This is a tool to provide features to a skin and requires skin integration."
-msgstr "Ez egy olyan eszköz, amely a felszín jellemzőit biztosítja, és a felszín integrációját igényli."
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
+msgstr ""
+"Ez egy olyan eszköz, amely a felszín jellemzőit biztosítja, és a felszín "
+"integrációját igényli."
 
 msgctxt "#32002"
 msgid "(Get a free API key on www.omdbapi.com)"
@@ -113,10 +119,12 @@ msgctxt "#32023"
 msgid "API key"
 msgstr "API kulcs"
 
+#: /resources/settings.xml
 msgctxt "#32020"
 msgid "Developer settings"
 msgstr ""
 
+#: /resources/settings.xml
 msgctxt "#32021"
 msgid "Enable caching (highly recommended - only turn off for debugging)"
 msgstr ""
@@ -138,8 +146,11 @@ msgid "Hide person appearances in reality/talk/news shows"
 msgstr "Személyek megjelenésének elrejtése a reality/talk/hír műsorokban"
 
 msgctxt "#32028"
-msgid "Hide person appearances in specials/documentaries/behind the scenes movies"
-msgstr "Személyes megjelenések elrejtése speciális/dokumentum/kulisszatitkok filmekben"
+msgid ""
+"Hide person appearances in specials/documentaries/behind the scenes movies"
+msgstr ""
+"Személyes megjelenések elrejtése speciális/dokumentum/kulisszatitkok "
+"filmekben"
 
 msgctxt "#32029"
 msgid "Top rated movies"
@@ -201,18 +212,22 @@ msgctxt "#32043"
 msgid "Trending shows"
 msgstr "Népszerű sorozatok"
 
+#: /resources/settings.xml
 msgctxt "#32044"
 msgid "Hide upcoming items"
 msgstr ""
 
+#: /resources/settings.xml
 msgctxt "#32045"
 msgid "Allow items of the next [n] days"
 msgstr ""
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32046"
 msgid "Watched episodes"
 msgstr ""
 
+#: /resources/settings.xml
 msgctxt "#32047"
 msgid "Install context menu addon"
 msgstr ""
@@ -221,46 +236,57 @@ msgctxt "#32048"
 msgid "Next episode"
 msgstr "Következő rész"
 
+#: /resources/lib/widgets.py
 msgctxt "#32049"
 msgid "Discover"
 msgstr ""
 
+#: /resources/lib/widgets.py
 msgctxt "#32050"
 msgid "Discover movies"
 msgstr ""
 
+#: /resources/lib/widgets.py
 msgctxt "#32051"
 msgid "Discover TV shows"
 msgstr ""
 
+#: /resources/lib/widgets.py
 msgctxt "#32052"
 msgid "Discover movies by year"
 msgstr ""
 
+#: /resources/lib/widgets.py
 msgctxt "#32053"
 msgid "Discover movies by genre"
 msgstr ""
 
+#: /resources/lib/widgets.py
 msgctxt "#32054"
 msgid "Discover TV shows by year"
 msgstr ""
 
+#: /resources/lib/widgets.py
 msgctxt "#32055"
 msgid "Discover TV shows by genre"
 msgstr ""
 
+#: /resources/lib/widgets.py
 msgctxt "#32056"
 msgid "Previous page"
 msgstr ""
 
+#: /resources/lib/widgets.py
 msgctxt "#32057"
 msgid "Discover people"
 msgstr ""
 
+#: /resources/lib/widgets.py
 msgctxt "#32058"
 msgid "Next 7 days"
 msgstr ""
 
+#: /resources/lib/widgets.py
 msgctxt "#32059"
 msgid "Next airing episodes of your TV show library"
 msgstr ""
